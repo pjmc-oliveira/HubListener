@@ -1,0 +1,122 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{listings}
+
+\title{COMP SCI 4ZP6:\\ Development Plan\\HubListener}
+
+\author{ Authored By:
+		\\ Ahmad, Zed
+		\\ Japlan, Prakhar 
+		\\ Oliveira, Pedro
+		\\ Selvathayabaran, Piranaven
+}
+
+\date{}
+
+
+\begin{document}
+
+
+
+\newpage
+
+\maketitle
+
+The following official document is an agreed upon plan on how the COMP SCI 4ZP6 Capstone project "HubListener" will be carried out. It contains information regarding how the project will be  managed, implemented, reveiwed and any other critical details that need to be defined. The Developement Plan is subject to change and any modifications will be noted in the Revision History Section. 
+
+\tableofcontents 
+\section{Team Meeting Plan}
+The team plans to meet every Monday, Tuesday \& Thursday at the pre-defined times listed below. These dates and times are subject to change.The time-slot setup with the supervisor, Dr.Smith, is every Tuesday from 1:30PM - 2:30PM. A member of the team will email Dr.Smith with an agenda 24 hours prior to meeting.\newline 
+
+\begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|  }
+ \hline
+ \multicolumn{3}{|c|}{Tentaitve Meeting Schedule} \\
+ \hline
+ Date &Time  & Location\\
+ \hline
+ Monday   & 3:30PM - 4:30 PM    & Receiving Room - ETB\\
+ Tuesday &   1:30PM - 4:30PM   & Dr.Smith's Office \& Receiving Room - ETB  \\
+ Thursday & 2:30PM - 5:30PM & Receiving Room - ETB\\
+
+ \hline
+\end{tabular}
+\section{Team Communication Plan}
+
+The team has decided on three lines of communication: 
+
+\begin{enumerate}
+\item \textbf{Slack}: Utilized for everyday communcations regarding tasks or quick questions. Channels will be created as necessary to organize relevant infomration \& dialogue. Any questions, comments or concerns that do not belong on Github/Zenhub will be posted here. Any course updates, information from in-class sessions will be posted here as well. 
+\item \textbf{Github/Zenhub}: Utilized for communcation on tasks related to the project implementation or the project management. Information relevant to all stakeholders and may be needed for future use should be posted here.  Comments should be made on Github issues such that all parties are aware of details and rationales for decisions. Moving tasks from Backlog to Done will commmunicate progress with relevant stakeholders  
+\item \textbf{Email}: This is for any communcations with Dr.Smith, Dr.Anand and any other third party. These are meant to be formal in nature.
+\end{enumerate}
+
+\section{Team Member Roles}
+
+\textbf{Scrum Master -\emph{ Piranaven }}: In charge of making sure Zenhub/Github board is up to date. Tasks are well formed and dvided equally amongst agile team members. Responsible for  speaking to internal and external stakeholders to ensure backlog is filled. Organize and manage sprint planning meetings. \newline
+\textbf{Note Taker - \emph{Prakhar}}: Responsible for taking detailed notes during meeting's with Dr.Smith. Also, in charge of taking  meeting minutes during team meetings  scrums, standups, retrospectives, etc. \newline
+\textbf{Wiki Administrator - \emph{Zed}}:  Responsible for ensuring that the Wiki Pages on the Github Repo are up to date. Updating links, adding any necesssary references and commuting with stakeholders to make sure it is meeting high quality standards.  \newline 
+\textbf{Repo Administrator - \emph{ Pedro}}:  Responsible for ensuring that the Github Repo is up to date. In charge of making sure README.md's are accurate and verifyin any commits, merges, issues created are of standard.   \newline
+\textbf{Developer - \emph{ Piranaven, Prakhar, Zed, Pedro}}: Responsible for abiding by the coding style rules listed below. Responsible for delivering high quality code which meet the requirements of the tasks created. Provide insight towards design and development decisions.  \newline
+
+\section{Git Workflow Plan}
+\section{Proof of Concept Demonstration Plan}
+\section{Technology}
+
+Programming Language : Currently Javascript \newline
+IDE:  Visual Studio Code, Atom, Sublime , etc. There are no restrictions\newline 
+Testing Framework : TBD\newline
+Documentation Generation : Honestly,a great question\newline 
+
+\section{Coding Style}
+
+Using W3Schools Coding Style as defined below:
+\begin{enumerate}
+\item All names start with a letter.
+\item Use camelCase for identifier names (variables and functions).
+\item Always put spaces around operators ( = + - * / ), and after commas:
+\item Always use 4 spaces for indentation of code blocks: I.E.
+\begin{lstlisting} 
+function toCelsius(fahrenheit) {
+    return (5 / 9) * (fahrenheit - 32);
+}
+\end{lstlisting}
+\item Always end a simple statement with a semicolon.
+\item For complex (compond statements)
+\begin{enumerate}
+\item Put the opening bracket at the end of the first line.
+\item  Use one space before the opening bracket.
+\item  Put the closing bracket on a new line, without leading spaces.
+\item  Do not end a complex statement with a semicolon.
+\end{enumerate}
+\item Avoid lines longer than 80 characters.
+\item Global variables written in UPPERCASE 
+\item Constants (like PI) written in UPPERCASE
+\item NO Shakespeare , just good, clean, meaningful comments.
+\end{enumerate}
+\section{Project Schedule}
+
+Gannt chart \newline
+Milestones \newline
+
+
+\section{Project Review}
+
+To be completed on second revision. 
+
+\newpage
+\section{Revision History}
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+October 8th, 2018 &Piranaven Selva & Make Foundation for Development Plan as per Issue \#6 \\
+\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}
