@@ -42,43 +42,184 @@ The following official document is the requirements specification document based
 
 \newpage
 \section{Project Constraints}
-
-
 \subsection{Mandated Constraints}
+
+This section describes the constrains on the design of the HubListener service. They are the same as other requirements except they are mandatory:\newline
+\newline
+
+\noindent
+\textbf{\underline{Solutions Constraints:}}\newline
+\textbf{Describe:}  The HubListener system shall have a command line interface that has access to the GithubAPI and associated analysis tools.\newline
+\textbf{Rationale:} This is central souce of the infromation needed. \newline
+\textbf{Fit Criterion:}  The interface will conform to Github API and javascript standards \newline
+
+\noindent
+\textbf{\underline{Implementaton Environment of the Current System}}\newline
+\textbf{Describe:}  The HubListener system shall be written in the NodeJS environment.\newline
+\textbf{Rationale:} This is native way of accessing the githubAPI while also creating a web based tool.\newline 
+\textbf{Fit Criterion:}  The interface will conform to NodeJs and javascript policies and requirements. \newline
+
+\noindent
+\textbf{\underline{Off-the-Shelf Software}}\newline
+\textbf{Describe:}  The HubListener system shall utilize ay npm packages that aid in the retrieval and analysis of the repository. \newline
+\textbf{Rationale:}  This is simplest way of retrieving and analyzing the repository. This will save labour time.\newline
+\textbf{Fit Criterion:}  The interface will conform to NodeJs and javascript policies and requirements. \newline
+
+\noindent
+\textbf{\underline{Schedule Constraints:}}\newline
+\textbf{Description:} The service shall be available January 31st 2018 as a version 1 release.\newline
+\textbf{Rationale:} We want to launch the service by this date so that we can do testing and iterate over the solution so that there is a polished solution for our April presentation.\newline
+\textbf{Fit Criterion:} The HubListener serice will be available for testing by January 31st 2018 \newline
+
+\noindent
+\textbf{\underline{Budget Constraints:}} 
+The project has no financial budget. 
+
 \subsection{Naming Conventions and Definitions}
+
+A glossary containing the meanings of all names, acronyms, and abbreviations sed within the requirements specification. The following is a running, ongoing dictionary. 
+\newline
+\begin{tabular}{ |p{6cm}||p{6cm}|  }
+ \hline
+ \multicolumn{2}{|c|}{Naming Conventions List} \\
+ \hline
+ Naming        Convention & Defintion\\
+ \hline 
+Github & The online, open-source repository that is available here. \\
+\hline
+NodeJS & tbd \\
+\hline
+HubListener & The command-line service that is to be created.\\
+\hline
+Repository & tbd\\
+\hline
+Command-Line & tbd\\
+\hline
+Cyclical Complexity & tbd\\
+\hline 
+\end{tabular}
+
 \subsection{Relevant Facts and Assumptions}
 
 \newpage
 \section{Functional Requirements}
 
 \subsection{The Scope of the Work}
-\subsection{The Scope of the Project}
+
+
+The Current Situation: 
+Currently, there is no way to compare github repositories against similar repositories within the ecosystem. There is no way to anaylze your code against similar project or see how your repository is trending in comparison to similar projects within the ecosystem. 
+
+
+Context Diagram 
+
+\subsection{The Scope of the Service}
+HubListener aims to provide a service which allows the user to compare his/her repository or anyy open-source repository against similar repositories in the ecosystem. The end user will  be able to attain meaningful information that they can use to improve their current repository and guage how they are trending. 
+\newline
+
+\begin{tabular}{ |p{6cm}||p{6cm}|  }
+ \hline
+ \multicolumn{2}{|c|}{Naming Conventions List} \\
+ \hline
+ Naming        Convention & Defintion\\
+ \hline 
+Github & The online, open-source repository that is available here. \\
+\hline
+\end{tabular}
+
+Input: 
+Github Repo Clone Link
+
+Output:
+- Cyclomatic  Complexity 
+- Essential Complexity 
+- Integration Complexity 
+- Cyclomatic Density
+- Lines of Code 
+- Lines of Commens
+- Maintainability Index
+- Coupling 
+- Nmber of Methods
+- Numbe rof Variables 
+- Number of Issues
+- Number of Bugs
+- Number of Stars
+- Number of possible Logical errors 
+- Functional Coverage Score
+- Condition Coverage Score
+
+
+- 
 \subsection{Functional and Data Requirements }
 
 \newpage
 \section{Nonfunctional Reqiurements}
 
 \subsection{Look and Feel Reqiurements}
+
+1. The application should provide an easy and clear command line interace for user to use the service.
+2.The application shall comply with Open-source standards
+3.Useful information(such as help, report issues, training) should be easily accessible.
+4. When doing calculations or  data handling like repository retrievals, the application should display an animated progress bar. 
+
+More to be determined at a later date. 
+
 \subsection{Usability and Humanity Reqiurements}
+1. The software must be simple for a person aged above 18 years, and knowledge of Github/open-source technology,  in able condition to understand and use all its features.
+2. The application shall make it easy for the average user to find user-use guidelines.
+3. The system must meet all open-source software accessibility standards enforced by the gouvernment of Canada. 
+
 \subsection{Performance Requirements}
+1. After the user provides their repo link, the applicatoin shall generate charts and statisitcs ina timely manner.  10 seconds. 
+2. The applicaiton shall save the users last request and results. 
+3. The application shall analyze the results and provide recommendations and trends. 
+
 \subsection{Operational Requirements}
+Expected physical environemnt 
+-Users will use the application on their internet-connected computer 
+Expected Technological Environemnt 
+- The application should work on devices that have Node.JS installed on their machine 
+
 \subsection{Maintainability and Support Reuquirements}
+Maintainability 
+The sotware application is to be easily modifiable
+The application should notify user's to check for an npm update every 6 months. 
+The application shall be ready to be deployed on any OS. 
+
+Portability 
+The application shall be availble on any computer operating system such as MAC, Windows and Linux
+
 \subsection{Security Requirements}
 \subsection{Cultural and Political Requirements}
+1. The application should not display any offensive text or informaoitn 
+2. The application should be available in English . 
+
 \subsection{Legal Requirements}
+1. The application shall comply with all relevant information privacy acts.
+2. The application shall comply wiht all relevant open-source lawas. 
+3.  The application will abide by all developr guidelines as denoted by Windows, Apple, etc. 
+
 
 \newpage
 \section{Project Issues }
 \subsection{Open Issues}
+All open issues can be see on our Issue tracking board. ( inserrt link) 
 \subsection{Off-the-Shelf Solutions}
+Attempting to emulate similar applicaiton could greatly reduce th etime needed to design and implemnt the app. If an off the shelf solution is available and fit our reqiurements, we will use it as part of the software, providing the necessary credit as needd. 
 \subsection{New Probelms}
 \subsection{Tasks}
-\subsection{Migratoin to the New Product}
+All open taks can be seen our Issue tracking board (see link here)
+\subsection{Migration to the New Product}
+
+No new product to migrate too. This section may become obsolete. 
+
 \subsection{Risks}
 \subsection{Costs}
+
+There are no costs associated with the development of this project other than the time dedicated to development/documentation. It is developed under the open-source environemnet and therefore is useable for not-for profit purposes.   In future, there may be a cost associated with maintaining the project, hosting the project or use by professional company.  
+
 \subsection{User Documentatoin and Training}
-\subsection{Waiting Room}
-\subsection{Ideas for Solutions}
+
 
 
 

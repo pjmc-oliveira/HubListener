@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  8 NOV 2018 15:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  12 NOV 2018 16:37
 entering extended mode
 **./HubListenerRequirementsSpecificationsDocument.tex
 (HubListenerRequirementsSpecificationsDocument.tex
@@ -129,30 +129,73 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout3 = `HubListenerRequirementsSpecificationsDocument.toc'.
 
  [2] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 45--46
+Underfull \hbox (badness 10000) in paragraph at lines 47--49
 
  []
 
-[5] [6] [7] [8] [9] (HubListenerRequirementsSpecificationsDocument.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--49
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--55
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 56--61
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--67
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--73
+
+ []
+
+
+Overfull \hbox (24.03302pt too wide) in paragraph at lines 80--101
+[] 
+ []
+
+[5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 117--119
+
+ []
+
+
+Overfull \hbox (39.03302pt too wide) in paragraph at lines 120--129
+[][] 
+ []
+
+[7] [8] [9] [10] [11] (HubListenerRequirementsSpecificationsDocument.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  1767 strings out of 492970
- 24924 string characters out of 3126594
- 90069 words of memory out of 3000000
+ 25426 string characters out of 3126594
+ 90070 words of memory out of 3000000
  5685 multiletter control sequences out of 15000+200000
  8202 words of font info for 29 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 26i,9n,32p,460b,262s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Us
-ers/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx
-10.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmbx12.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmr10.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/piran/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on HubListenerRequirementsSpecificationsDocument.pdf (9 pages, 9
-1172 bytes).
+ 26i,9n,32p,460b,260s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmbx10.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmbx12.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/piran/AppData/Local/Programs/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/piran/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on HubListenerRequirementsSpecificationsDocument.pdf (11 pages, 
+100628 bytes).
 PDF statistics:
- 52 PDF objects out of 1000 (max. 8388607)
+ 58 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
