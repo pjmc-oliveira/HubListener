@@ -54,8 +54,6 @@ function parse_repo_url(url) {
     };
 }
 
-
-
 // get the repo URL
 const repo_url = process.argv[2];
 // process.argv: returns the command line arguments used as an array
@@ -78,38 +76,82 @@ client.query(`
             forkCount
         }
     }
-`, vars)
-// this block will only execute *after* the request gets its response
-.then(body => {
-    metrics.createdAt = body.data.repository.createdAt;
-    metrics.description = body.data.repository.description;
-    metrics.forkCount = body.data.repository.forkCount
-})
-// make a new request and continue cycle
-.then(_ => client.query(`
-    query repo($name: String!, $owner: String!){
-        repository(name: $name, owner: $owner){
-            collaborators (first: 10) {
-                nodes {
-                    login
-                    name
+    `, vars)
+    // this block will only execute *after* the request gets its response
+    .then(body => {
+        metrics.createdAt = body.data.repository.createdAt;
+        metrics.description = body.data.repository.description;
+        metrics.forkCount = body.data.repository.forkCount
+    })
+    // make a new request and continue cycle
+    .then(_ => client.query(`
+        query repo($name: String!, $owner: String!){
+            repository(name: $name, owner: $owner){
+                collaborators (first: 10) {
+                    nodes {
+                        login
+                        name
+                    }
                 }
             }
         }
-    }
-`, vars))
-.then(body => metrics.collaborators = body.data.repository.collaborators.nodes)
+    `, vars))
+    .then(body => metrics.collaborators = body.data.repository.collaborators.nodes)
 
-.then(_ => client.query(`
-    query repo($name: String!, $owner: String!){
-        repository(name: $name, owner: $owner){
-            collaborators (first: 10) {
-                totalCount
+    .then(_ => client.query(`
+        query repo($name: String!, $owner: String!){
+            repository(name: $name, owner: $owner){
+                collaborators (first: 10) {
+                    totalCount
+                }
             }
         }
-    }
-`, vars))
-.then(body => metrics.number_of_collaborators = body.data.repository.collaborators.totalCount)
-// at the end print acquired metrics
-.then(body => console.log(metrics))
-.catch(err => console.log(err.message));
+    `, vars))
+    .then(body => metrics.number_of_collaborators = body.data.repository.collaborators.totalCount)
+    // at the end print acquired metrics
+    .then(body => console.log(metrics))
+    .catch(err => console.log(err.message));
+
+// Clone repository and perform analysis on files
+var git = require('nodegit'); // package providing git manipulation in node
+var tmp = require('tmp'); // convenience package providing temp file/dir creation and cleanup
+var dir = require('node-dir'); // convenience package providing file/dir operations
+var path = require('path');
+
+// Async call to create temp directory for working with repo files
+tmp.dir(function _tempDirCreated(err, tmpDir) {
+   if (err) throw err;
+
+   // Clone repo to temp directory
+   console.log('Cloning repo: ' + repo_url + ' to directory: ' + tmpDir);
+   git.Clone(repo_url, tmpDir).then(function(repo) {
+        // Successfully cloned repo
+       console.log('Succesfully cloned repository to ' + tmpDir);
+       var fileMetrics = {};
+
+       // Recursively read files, excluding .git directory
+       dir.readFiles(tmpDir, {
+               excludeDir: ['.git']
+           // Callback with file content and filename
+           }, function(err, content, filename, next) {
+               if (err) throw err;
+
+               ext = path.extname(filename);
+
+               // Create new entry in fileMetrics map for extension
+               if (!fileMetrics[ext]) {
+                   fileMetrics[ext] = {files: 1, lines: content.split("\n").length};
+               // Increment filecount and linecount for extensions previously found
+               } else {
+                   fileMetrics[ext] = {files: fileMetrics[ext].files + 1, lines: fileMetrics[ext].lines + content.split("\n").length};
+               }
+               next();
+           },
+           // Finished reading files
+           function(err, files){
+               if (err) throw err;
+
+               console.log(fileMetrics);
+           });
+   });
+});
