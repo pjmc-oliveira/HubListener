@@ -54,6 +54,19 @@ function parse_repo_url(url) {
     };
 }
 
+// simple function to find the median of a **sorted** list
+function median(values) {
+    if (values.length === 0) {
+        return 0;
+    }
+
+    const half = Math.floor(values.length / 2);
+    if (values.length % 2)
+        return values[half];
+    else
+        return (values[half - 1] + values[half]) / 2.0;
+}
+
 
 
 // get the repo URL
@@ -63,8 +76,9 @@ const repo_url = process.argv[2];
 
 const vars = parse_repo_url(repo_url);
 
-// variable to store metrics
-var metrics = {};
+// variable to store key_metrics and raw_data
+var key_metrics = {};
+var raw_data = {};
 
 const client = new Client();
 
@@ -73,43 +87,105 @@ const client = new Client();
 client.query(`
     query repo($name: String!, $owner: String!){
         repository(name: $name, owner: $owner){
+            name
             createdAt
             description
             forkCount
+            collaborators {
+                totalCount
+            }
+            issues {
+                totalCount
+            }
+            open_issues: issues (states: [OPEN]) {
+                totalCount
+            }
+            closed_issues: issues (states: [CLOSED]) {
+                totalCount
+            }
         }
     }
 `, vars)
 // this block will only execute *after* the request gets its response
 .then(body => {
-    metrics.createdAt = body.data.repository.createdAt;
-    metrics.description = body.data.repository.description;
-    metrics.forkCount = body.data.repository.forkCount
+    key_metrics.name = body.data.repository.name;
+    key_metrics.createdAt = body.data.repository.createdAt;
+    key_metrics.description = body.data.repository.description;
+    key_metrics.forkCount = body.data.repository.forkCount;
+    key_metrics.number_of_collaborators = body.data.repository.collaborators.totalCount;
+    key_metrics.number_of_issues = body.data.repository.issues.totalCount;
+    key_metrics.number_of_issues_open = body.data.repository.open_issues.totalCount;
+    key_metrics.number_of_issues_closed = body.data.repository.closed_issues.totalCount;
 })
 // make a new request and continue cycle
 .then(_ => client.query(`
-    query repo($name: String!, $owner: String!){
+    query repo(
+            $name: String!, $owner: String!,
+            $number_of_collaborators: Int!, $number_of_issues: Int!){
         repository(name: $name, owner: $owner){
-            collaborators (first: 10) {
+            collaborators (first: $number_of_collaborators) {
                 nodes {
                     login
                     name
                 }
             }
-        }
-    }
-`, vars))
-.then(body => metrics.collaborators = body.data.repository.collaborators.nodes)
-
-.then(_ => client.query(`
-    query repo($name: String!, $owner: String!){
-        repository(name: $name, owner: $owner){
-            collaborators (first: 10) {
-                totalCount
+            issues_open: issues (
+                    states: [OPEN]
+                    first: $number_of_issues,
+                    orderBy: {field:CREATED_AT, direction:ASC}) {
+                nodes {
+                    state
+                    createdAt
+                }
+            }
+            issues_closed: issues (
+                    states: [CLOSED]
+                    first: $number_of_issues,
+                    orderBy: {field:CREATED_AT, direction:ASC}) {
+                nodes {
+                    state
+                    createdAt
+                    closedAt
+                }
             }
         }
     }
-`, vars))
-.then(body => metrics.number_of_collaborators = body.data.repository.collaborators.totalCount)
-// at the end print acquired metrics
-.then(body => console.log(metrics))
+`, {...vars, ...key_metrics})) // object spread [https://github.com/tc39/proposal-object-rest-spread]
+.then(body => {
+    key_metrics.collaborators = body.data.repository.collaborators.nodes;
+    raw_data.issues_open = body.data.repository.issues_open.nodes.map(
+        node => {return {timeOpen: (Date.now() - Date.parse(node.createdAt)) / (1000 * 60), ...node}});
+
+
+    raw_data.issues_closed = body.data.repository.issues_closed.nodes.map(
+        node => {return {timeToClose: (Date.parse(node.closedAt) - Date.parse(node.createdAt)) / (1000 * 60), ...node}});
+})
+// at the end print acquired key_metrics
+.then(body => {
+    // summarize percentage of issues that were closed
+    key_metrics.issue_closed_percent = (key_metrics.number_of_issues_closed / key_metrics.number_of_issues) * 100;
+
+    // analyze issue closing times
+    const issue_closing_times = raw_data.issues_closed
+        .map(issue => issue.timeToClose)
+        .sort((a, b) => a - b);
+
+    key_metrics.issue_closing_times = {};
+    key_metrics.issue_closing_times.sum = issue_closing_times.reduce((acc, val) => acc + val);
+    key_metrics.issue_closing_times.count = key_metrics.number_of_issues_closed;
+    key_metrics.issue_closing_times.mean = key_metrics.issue_closing_times.sum / key_metrics.issue_closing_times.count;
+    key_metrics.issue_closing_times.median = median(issue_closing_times);
+
+    // analyze issue open times
+    const issue_open_times = raw_data.issues_open
+        .map(issue => issue.timeOpen)
+        .sort((a, b) => a - b);
+    key_metrics.issue_open_times = {};
+    key_metrics.issue_open_times.sum = issue_open_times.reduce((acc, val) => acc + val);
+    key_metrics.issue_open_times.count = key_metrics.number_of_issues_open;
+    key_metrics.issue_open_times.mean = key_metrics.issue_open_times.sum / key_metrics.issue_open_times.count;
+    key_metrics.issue_open_times.median = median(issue_open_times);
+
+    console.log(key_metrics);
+})
 .catch(err => console.log(err.message));
