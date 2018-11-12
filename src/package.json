@@ -1,0 +1,22 @@
+{
+  "name": "hub-listener",
+  "version": "1.0.0",
+  "description": "<br /> Team Name: HubListener<br /> Team Members: Pedro Oliveira, Zed Ahmad, Piranaven Selva, Prakhar Jalan<br /> <br /> This folder and its files are the implementation of the HubListener Project.<br />",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pjmc-oliveira/HubListener.git"
+  },
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/pjmc-oliveira/HubListener/issues"
+  },
+  "homepage": "https://github.com/pjmc-oliveira/HubListener#readme",
+  "dependencies": {
+    "graphql-client": "^2.0.1"
+  }
+}
