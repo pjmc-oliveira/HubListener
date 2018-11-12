@@ -35,8 +35,25 @@ The following official document is the requirements specification document based
 
 
 \subsection{The Purpose of the Project}
+1a. The User Business or Background of the Project Effort
+Content
+The user of this product would intend on evaluating their GitHub project using our tool, and look for any possible improvements to be made. 
+Motivation
+The key motivation for this project was our search for what part of a GitHub project is the precursor to success? What key components do successful projects contain, that unsuccessful projects do not? How do we measure this ‘success’? At first, we assumed this measurement to be popularity on GitHub, or a thoroughly and well documented project. We are still in search of what specific metrics lead to success, and hope to discover a solution to this problem as we build and maintain the HubListener.  
+Considerations
+The user problem in this case is not serious, as most GitHub projects already use a variety of other tools to evaluate their growth and track their overall progress. However, by the end of the project, the user may clearly notice whether their project was a success or not. This is the moment where our tool can be valued, as it compares popular ‘completed’ projects to that of the users’. Any significant differences can be highlighted for the user, and thus, the ‘success’ problem can be solved. 
+1b. Goals of the Project
+Content
+The purpose of HubListener is provide users with relevant metrics, trends, and information regarding their GitHub project, and in some cases, push the user to make appropriate changes (can be organizational) that are intended to lean the project towards a more ‘successful’ one.
+Measurement
+After analyzing a set amount of projects (i.e. 20), and pointing out any significant/valuable metrics for the user that lead to any changes (minor or major), we can safely say that we have succeeded with the project.
+
 \subsection{The Client the Customer, and Other Stakeholders}
+?
 \subsection{Users of the Product}
+3a. The Hands-On Users of the Product
+Developers and creators with existing projects on GitHub are our primary user group for this product. Their subject matter experience can range from novice to expert, as we are simply judging their repository and putting it against GitHub’s ‘best’. Our users can be engineers, students, researchers, companies, and/or any organization looking to evaluate and improve their GitHub project in any way possible. 
+
 
 
 
@@ -100,6 +117,13 @@ Cyclical Complexity & tbd\\
 \end{tabular}
 
 \subsection{Relevant Facts and Assumptions}
+   6a. Facts
+     Content
+There are a few factors that influence the product. The first business rule to be addressed is the amount of GitHub repositories we can clone. As we are grabbing several projects for reference directly from GitHub, we are limited to clone at a ‘reasonable’ pace. Cloning the estimated 100 repositories in parallel is not something GitHub takes lightly, as it can be detected as abusive behavior by their automated measures. Another key factor that affects this product is the specific information we will be extracting from the initial list of projects. This information can vary drastically, and so we will be selective of the types of projects gathered. To elaborate, we may only take projects created in one specific programming language to even the playing field regarding any comparisons to be made. 
+    6b. Assumptions
+     Content
+There are a list of assumptions made right off the bat regarding this project. To start off, the initial database of projects we will use for comparison, will be that of the most popular and ‘successful’ GitHub projects. It is difficult to measure success of any given project, without making a set of assumptions first. We would have to assume that the most popular projects on GitHub contain quality code and documentation, as well as a progressive and steady incline in contributions and overall growth.  As these projects will be our primary models for reference, it is critical that we address these assumptions.
+Considering these assumptions, we can also precisely state what our product will not do. As we are aiming to provide quality metrics, we are not intending on ‘fixing’ project flaws. We are merely laying out relevant information for the user to make their own adjustments; whether they choose to do so, or not. Also, the information we provide may or may not be useful depending on which stage an entered project is in. We are simply comparing and analyzing projects to possibly highlight any significant differences, or none at all. It is up to the user to determine what needs change. 
 
 \newpage
 \section{Functional Requirements}
