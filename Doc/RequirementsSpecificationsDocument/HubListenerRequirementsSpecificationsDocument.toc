@@ -5,18 +5,18 @@
 \contentsline {subsection}{\numberline {2.3}Users of the Product:}{5}{subsection.2.3}
 \contentsline {section}{\numberline {3}Project Constraints}{6}{section.3}
 \contentsline {subsection}{\numberline {3.1}Mandated Constraints}{6}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Naming Conventions and Definitions}{6}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Naming Conventions and Definitions}{7}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Relevant Facts and Assumptions}{7}{subsection.3.3}
 \contentsline {section}{\numberline {4}Functional Requirements}{9}{section.4}
 \contentsline {subsection}{\numberline {4.1}The Scope of the Work}{9}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}The Scope of the Service}{9}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Functional and Data Requirements }{10}{subsection.4.3}
-\contentsline {section}{\numberline {5}Nonfunctional Reqiurements}{11}{section.5}
-\contentsline {subsection}{\numberline {5.1}Look and Feel Reqiurements}{11}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Usability and Humanity Reqiurements}{11}{subsection.5.2}
+\contentsline {section}{\numberline {5}Nonfunctional Requirements}{11}{section.5}
+\contentsline {subsection}{\numberline {5.1}Look and Feel Requirements}{11}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Usability and Humanity Requirements}{11}{subsection.5.2}
 \contentsline {subsection}{\numberline {5.3}Performance Requirements}{11}{subsection.5.3}
 \contentsline {subsection}{\numberline {5.4}Operational Requirements}{11}{subsection.5.4}
-\contentsline {subsection}{\numberline {5.5}Maintainability and Support Reuquirements}{12}{subsection.5.5}
+\contentsline {subsection}{\numberline {5.5}Maintainability and Support Requirements}{12}{subsection.5.5}
 \contentsline {subsection}{\numberline {5.6}Security Requirements}{12}{subsection.5.6}
 \contentsline {subsection}{\numberline {5.7}Cultural and Political Requirements}{12}{subsection.5.7}
 \contentsline {subsection}{\numberline {5.8}Legal Requirements}{12}{subsection.5.8}
