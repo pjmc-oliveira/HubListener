@@ -3,6 +3,13 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
 
 \title{COMP SCI 4ZP6:\\ \textbf{HubListener}\\ Requirements Specifications Document}
 
@@ -26,6 +33,7 @@
 
 \newpage
 \tableofcontents {}
+\newpage
 
 \section{Introduction}
 
@@ -35,29 +43,32 @@ The following official document is the requirements specification document based
 
 
 \subsection{The Purpose of the Project}
-1a. The User Business or Background of the Project Effort
-Content
-The user of this product would intend on evaluating their GitHub project using our tool, and look for any possible improvements to be made. 
-Motivation
-The key motivation for this project was our search for what part of a GitHub project is the precursor to success? What key components do successful projects contain, that unsuccessful projects do not? How do we measure this ‘success’? At first, we assumed this measurement to be popularity on GitHub, or a thoroughly and well documented project. We are still in search of what specific metrics lead to success, and hope to discover a solution to this problem as we build and maintain the HubListener.  
-Considerations
-The user problem in this case is not serious, as most GitHub projects already use a variety of other tools to evaluate their growth and track their overall progress. However, by the end of the project, the user may clearly notice whether their project was a success or not. This is the moment where our tool can be valued, as it compares popular ‘completed’ projects to that of the users’. Any significant differences can be highlighted for the user, and thus, the ‘success’ problem can be solved. 
-1b. Goals of the Project
-Content
-The purpose of HubListener is provide users with relevant metrics, trends, and information regarding their GitHub project, and in some cases, push the user to make appropriate changes (can be organizational) that are intended to lean the project towards a more ‘successful’ one.
-Measurement
+\textbf{The User Business or Background of the Project Effort}
+\newline
+\textbf{\textit{Content:}} The user of this product would intend on evaluating their GitHub project using our tool, and look for any possible improvements to be made. \newline
+\textbf{\textit{Motivation:}}\newline
+The key motivation for this project was our search for what part of a GitHub project is the precursor to success? What key components do successful projects contain, that unsuccessful projects do not? How do we measure this ‘success’? At first, we assumed this measurement to be popularity on GitHub, or a thoroughly and well documented project. We are still in search of what specific metrics lead to success, and hope to discover a solution to this problem as we build and maintain the HubListener.  \newline
+\textbf{\textit{Considerations}}
+The user problem in this case is not serious, as most GitHub projects already use a variety of other tools to evaluate their growth and track their overall progress. However, by the end of the project, the user may clearly notice whether their project was a success or not. This is the moment where our tool can be valued, as it compares popular ‘completed’ projects to that of the users’. Any significant differences can be highlighted for the user, and thus, the ‘success’ problem can be solved. \newline
+\textbf{1b. Goals of the Project}
+\textbf{Content}\newline
+The purpose of HubListener is provide users with relevant metrics, trends, and information regarding their GitHub project, and in some cases, push the user to make appropriate changes (can be organizational) that are intended to lean the project towards a more ‘successful’ one.\newline
+\textbf{\textit{Measurement}}
 After analyzing a set amount of projects (i.e. 20), and pointing out any significant/valuable metrics for the user that lead to any changes (minor or major), we can safely say that we have succeeded with the project.
+\subsection{The Client, The Customer, and Other Stakeholders}
+\textbf{\textit{The Client:}}
+There is no real `client' for this service. The closest to this would be Dr. Christopher Anand who requires this for completion of the capstone course in exhange for credit towards the developers degree.  \newline
+\textbf{\textit{The Customer:}}
+The consumer of this service is any member of the open-source community. Being that the service is open-source, the consumer definition can range but it is clear from our usability requirements that the service is aimed at adults who have expertise using open-source software and understand not to infringe on copyright. \newline
+\textbf{\textit{Other Stakeholders:}}
+Other stakeholders include memebers of the open-source community who wish to fork the repository and improve/maintain it after the completion of the project. These stakeholders will be address on a case by case manner. \newline
 
-\subsection{The Client the Customer, and Other Stakeholders}
-?
-\subsection{Users of the Product}
-3a. The Hands-On Users of the Product
+\subsection{Users of the Product:}
+\textbf{3a. The Hands-On Users of the Product}
 Developers and creators with existing projects on GitHub are our primary user group for this product. Their subject matter experience can range from novice to expert, as we are simply judging their repository and putting it against GitHub’s ‘best’. Our users can be engineers, students, researchers, companies, and/or any organization looking to evaluate and improve their GitHub project in any way possible. 
-
-
-
-
 \newpage
+
+
 \section{Project Constraints}
 \subsection{Mandated Constraints}
 
@@ -67,20 +78,20 @@ This section describes the constrains on the design of the HubListener service. 
 \noindent
 \textbf{\underline{Solutions Constraints:}}\newline
 \textbf{Describe:}  The HubListener system shall have a command line interface that has access to the GithubAPI and associated analysis tools.\newline
-\textbf{Rationale:} This is central souce of the infromation needed. \newline
+\textbf{Rationale:} This is central source of the infromation needed. \newline
 \textbf{Fit Criterion:}  The interface will conform to Github API and javascript standards \newline
 
 \noindent
 \textbf{\underline{Implementaton Environment of the Current System}}\newline
 \textbf{Describe:}  The HubListener system shall be written in the NodeJS environment.\newline
-\textbf{Rationale:} This is native way of accessing the githubAPI while also creating a web based tool.\newline 
+\textbf{Rationale:} This is native way of accessing the githubAPI while also setting the system up to become a web based tool.\newline 
 \textbf{Fit Criterion:}  The interface will conform to NodeJs and javascript policies and requirements. \newline
 
 \noindent
 \textbf{\underline{Off-the-Shelf Software}}\newline
 \textbf{Describe:}  The HubListener system shall utilize ay npm packages that aid in the retrieval and analysis of the repository. \newline
 \textbf{Rationale:}  This is simplest way of retrieving and analyzing the repository. This will save labour time.\newline
-\textbf{Fit Criterion:}  The interface will conform to NodeJs and javascript policies and requirements. \newline
+\textbf{Fit Criterion:}  The interface will conform to npm and javascript policies and requirements. \newline
 
 \noindent
 \textbf{\underline{Schedule Constraints:}}\newline
@@ -102,17 +113,17 @@ A glossary containing the meanings of all names, acronyms, and abbreviations sed
  \hline
  Naming        Convention & Defintion\\
  \hline 
-Github & The online, open-source repository that is available here. \\
+Github & A web-based version-control and collaboration platform for software developers. \\
 \hline
-NodeJS & tbd \\
+NodeJS &  An open source development platform for executing JavaScript code server-side \\
 \hline
 HubListener & The command-line service that is to be created.\\
 \hline
-Repository & tbd\\
+Repository & A digital directory or storage space where you can access your project, its files, and all the versions of its files that Git saves\\
 \hline
-Command-Line & tbd\\
+Command-Line Interface (CLI) & A text-based interface that is used to operate software and operating systems while allowing the user to respond to visual prompts by typing single commands into the interface and receiving a reply in the same way\\
 \hline
-Cyclical Complexity & tbd\\
+Cyclomatic Complexity &A software metric, used to indicate the complexity of a program. It is a quantitative measure of the number of linearly independent paths through a program's source code.\\
 \hline 
 \end{tabular}
 
@@ -130,122 +141,148 @@ Considering these assumptions, we can also precisely state what our product will
 
 \subsection{The Scope of the Work}
 
-
-The Current Situation: 
+\textbf{The Current Situation:} 
 Currently, there is no way to compare github repositories against similar repositories within the ecosystem. There is no way to anaylze your code against similar project or see how your repository is trending in comparison to similar projects within the ecosystem. 
 
-
-Context Diagram 
+\textbf(Context Diagram) 
 
 \subsection{The Scope of the Service}
-HubListener aims to provide a service which allows the user to compare his/her repository or anyy open-source repository against similar repositories in the ecosystem. The end user will  be able to attain meaningful information that they can use to improve their current repository and guage how they are trending. 
+HubListener aims to provide a service which allows the user to compare his/her repository or any open-source repository against similar repositories in the ecosystem. The end user will  be able to attain meaningful information that they can use to improve their current repository and guage how they are trending. 
 \newline
 
 \begin{tabular}{ |p{6cm}||p{6cm}|  }
  \hline
- \multicolumn{2}{|c|}{Naming Conventions List} \\
+ \multicolumn{2}{|c|}{Input And Output List} \\
  \hline
- Naming        Convention & Defintion\\
+Input  & Output \\
  \hline 
-Github & The online, open-source repository that is available here. \\
+Github Checkout Link & 
+- Cyclomatic  Complexity \newline
+- Essential Complexity \newline
+- Integration Complexity \newline
+- Cyclomatic Density\newline
+- Lines of Code \newline
+- Lines of Comments\newline
+- Maintainability Index\newline
+- Coupling Metric  \newline
+- Nmber of Methods\newline
+- Numbe rof Variables\newline 
+- Number of Issues\newline
+- Number of Bugs\newline
+- Number of Stars\newline
+- Number of possible Logical Errors\newline 
+- Functional Coverage Score\newline
+- Condition Coverage Score \\
 \hline
 \end{tabular}
 
-Input: 
-Github Repo Clone Link
-
-Output:
-- Cyclomatic  Complexity 
-- Essential Complexity 
-- Integration Complexity 
-- Cyclomatic Density
-- Lines of Code 
-- Lines of Commens
-- Maintainability Index
-- Coupling 
-- Nmber of Methods
-- Numbe rof Variables 
-- Number of Issues
-- Number of Bugs
-- Number of Stars
-- Number of possible Logical errors 
-- Functional Coverage Score
-- Condition Coverage Score
-
-
-- 
 \subsection{Functional and Data Requirements }
+\begin{tabular}{ |p{1cm}|p{3cm}|p{5cm}| }
+ \hline
+ \multicolumn{3}{|c|}{\textbf{Functional Requirementts}} \\
+ \hline
+\textbf{Reqt No.} & \textbf{Reqt Type} & \textbf{Description} \\
+\hline 
+1 & Functional  & HubListener must provide user selected metrics to the end user\\
+\hline 
+2 & Functional  &  HubListener must take in a git checkout link as input. \\
+\hline 
+3 & Functional  & HubListener must have a help section as part of command line interface.\\ 
+ \hline 
+4 & Functional  & Users must be able to customize which metrics to analyze \\
+ \hline 
+5 & Functional  & User must be able to install, update or uninstall HubListener through the node package manager interface.\\
+ \hline 
+6 & Functional  &  Metrics gathered from the analysis of a reposiotry must  be added into a database \\
+ \hline 
+7 & Functional & HubListener must analyze the metrics and display one or more trends. \\
+ \hline 
+8 & Functional & \\
+ \hline 
+9 & Functional & \\
+\hline
+\end{tabular}
+
 
 \newpage
 \section{Nonfunctional Reqiurements}
 
 \subsection{Look and Feel Reqiurements}
-
-1. The application should provide an easy and clear command line interace for user to use the service.
-2.The application shall comply with Open-source standards
-3.Useful information(such as help, report issues, training) should be easily accessible.
-4. When doing calculations or  data handling like repository retrievals, the application should display an animated progress bar. 
-
-More to be determined at a later date. 
-
+\begin{enumerate}
+\item The application should provide an easy and clear command line interace for user to use the service.
+\item The application shall comply with Open-source standards.
+\item Useful information(such as help, report issues, training) should be easily accessible.
+\item When doing calculations or data handling like repository retrievals, the application should display an animated progress bar. 
+\end{enumerate}
+More to be determined at a later date.
 \subsection{Usability and Humanity Reqiurements}
-1. The software must be simple for a person aged above 18 years, and knowledge of Github/open-source technology,  in able condition to understand and use all its features.
-2. The application shall make it easy for the average user to find user-use guidelines.
-3. The system must meet all open-source software accessibility standards enforced by the gouvernment of Canada. 
-
+\begin{enumerate}
+\item The software must be simple for a person aged above 18 years, with knowledge of Github/open-source technology, in able condition to understand and use all its features.
+\item The application shall make it easy for the average user to find user-use guidelines.
+\item The system must meet all open-source software accessibility standards enforced by the gouvernment of Canada. 
+\end{enumerate}
 \subsection{Performance Requirements}
-1. After the user provides their repo link, the applicatoin shall generate charts and statisitcs ina timely manner.  10 seconds. 
-2. The applicaiton shall save the users last request and results. 
-3. The application shall analyze the results and provide recommendations and trends. 
-
+\begin{enumerate}
+\item After the user provides their repo link, the applicatoin shall generate charts and statisitcs ina timely manner.  10 seconds. 
+\item The applicaiton shall save the users last request and results. 
+\item The application shall analyze the results and provide metrics and trends. 
+\end{enumerate}
 \subsection{Operational Requirements}
-Expected physical environemnt 
--Users will use the application on their internet-connected computer 
-Expected Technological Environemnt 
-- The application should work on devices that have Node.JS installed on their machine 
-
+\textbf{Expected physical environemnt }
+\begin{enumerate}
+\item Users will use the application on their internet-connected computer 
+\end{enumerate}
+\textbf{Expected Technological Environemnt }
+\begin{enumerate}
+\item The application should work on devices that have Node.JS installed on their machine 
+\end{enumerate}
 \subsection{Maintainability and Support Reuquirements}
-Maintainability 
-The sotware application is to be easily modifiable
-The application should notify user's to check for an npm update every 6 months. 
-The application shall be ready to be deployed on any OS. 
-
-Portability 
-The application shall be availble on any computer operating system such as MAC, Windows and Linux
-
+\textbf{Maintainability} 
+\begin{enumerate}
+\item The sotware application is to be easily modifiable.
+\item The application should notify user's to check for an npm update every 6 months. 
+\item The application shall be ready to be deployed on any OS. 
+\end{enumerate}
+\textbf{Portability} 
+\begin{enumerate}
+\item The application shall be availble on any computer operating system such as MAC, Windows and Linux
+\end{enumerate}
 \subsection{Security Requirements}
 \subsection{Cultural and Political Requirements}
-1. The application should not display any offensive text or informaoitn 
-2. The application should be available in English . 
-
+\begin{enumerate}
+\item The application should not display any offensive text or information 
+\item The application should be available in English. 
+\end{enumerate}
 \subsection{Legal Requirements}
-1. The application shall comply with all relevant information privacy acts.
-2. The application shall comply wiht all relevant open-source lawas. 
-3.  The application will abide by all developr guidelines as denoted by Windows, Apple, etc. 
-
+\begin{enumerate}
+\item The application shall comply with all relevant information privacy acts.
+\item The application shall comply with all relevant open-source laws. 
+\item  The application will abide by all developr guidelines as denoted by Windows, Apple, etc. 
+\end{enumerate}
 
 \newpage
 \section{Project Issues }
 \subsection{Open Issues}
-All open issues can be see on our Issue tracking board. ( inserrt link) 
+All open issues can be see on our Issue tracking board. (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
 \subsection{Off-the-Shelf Solutions}
-Attempting to emulate similar applicaiton could greatly reduce th etime needed to design and implemnt the app. If an off the shelf solution is available and fit our reqiurements, we will use it as part of the software, providing the necessary credit as needd. 
+Attempting to emulate similar applicaiton could greatly reduce the time needed to design and implemnt HubListener. If an off the shelf solution is available and fit our reqiurements, we will use it as part of the software, providing the necessary credit as needd. 
 \subsection{New Probelms}
 \subsection{Tasks}
-All open taks can be seen our Issue tracking board (see link here)
+All open taks can be seen our Issue tracking board (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
 \subsection{Migration to the New Product}
 
-No new product to migrate too. This section may become obsolete. 
+No new product to migrate to. This section may become obsolete. 
 
 \subsection{Risks}
 \subsection{Costs}
 
-There are no costs associated with the development of this project other than the time dedicated to development/documentation. It is developed under the open-source environemnet and therefore is useable for not-for profit purposes.   In future, there may be a cost associated with maintaining the project, hosting the project or use by professional company.  
+There are no costs associated with the development of this project other than the time dedicated to development/documentation. It is developed under the open-source environemnet and therefore is useable for not-for profit purposes.   In future, there may be a cost associated with maintaining the project, hosting the project or use by a professional company.  
 
-\subsection{User Documentatoin and Training}
+\subsection{User Documentation and Training}
 
-
-
+User documentation will be available on the Github Wiki as well as on the npm description section. 
+\newline
+Training will stem from this wiki and any additional information, changes made will be reflected in this document at a later point
 
 
 \newpage
@@ -262,4 +299,4 @@ November 1st, 2018 &Piranaven Selva & Make Foundation for Specifications Documen
 \end{tabularx}
 \end{table}
 
-\end{document}
+\end{document} 
