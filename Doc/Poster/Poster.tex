@@ -1,0 +1,111 @@
+\documentclass[22pt]{beamer}
+\usepackage[orientation=portrait, size=custom, width=91.44, height=91.44,scale=1.2]{beamerposter} % 36in*2.5 = 90cm
+\usepackage[absolute,overlay]{textpos}
+\usepackage{bookmark} %pdflatex says to use this to avoid errors...
+\usepackage{graphicx} %for including images
+\graphicspath{{figs/}} %location of images
+\usepackage{wrapfig} %wrap text around the images
+\usepackage{listingsutf8}    %package for code environment; use this instead of verbatim to get automatic line break; use this instead of listings to get (•)
+\usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage[export]{adjustbox}
+\usepackage[skins,theorems]{tcolorbox}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\usepackage{array}
+\usepackage{booktabs,adjustbox}
+\usepackage{subcaption} 
+
+%\mode<presentation>
+%this doesn't seem to make any difference; leave for now for trying out
+\usetheme{Berlin}
+\definecolor{MacBlue}{rgb}{0.10196,0.22353,0.53725}
+\definecolor{MacMaroon} {rgb}{0.47843, 0, 0.23137}
+\definecolor{MacMaroon2} {rgb}{0.47451, 0, 0}
+\definecolor{MacGray}{rgb}{0.50196,0.49804,0.51765}
+\definecolor{MacMaroon3}{rgb}{00.47,0.2,0.31}
+\definecolor{MacGold}{rgb}{1, 0.75,0.35}
+\usecolortheme[named=MacMaroon2]{structure}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{navigation symbols}{}
+
+\title{HubListener: Software Metrics Analysis \& Modelling for Open-Source Projects on Github }
+\subtitle{}  %probably want a better subtitle
+  \author[Zed Ahmad, Prakhar Japlan, Pedro Oliveira \& Piranaven Selvathayabaran]{Zed Ahmad, Prakhar Japlan, Pedro Oliveira, Piranaven Selvathayabaran \newline supervised by Dr.~Spencer Smith$^\dagger$ \vspace{0.3cm}}
+  \institute[McMaster University]{$^\dagger$Department of Computing and Software, McMaster University
+
+1280 Main St. W, Hamilton, Ontario, Canada L8S 4L8}
+  \date{November 27th, 2018}
+
+\begin{document}
+%compile with pdflatex
+
+%there is only one frame, because there is only one page; yeah, it's a poster
+%textblock and block seem to work nicely to organize layout
+\begin{frame}[fragile]
+
+\begin{textblock}{2}(0.7,1)
+\includegraphics[height=8.5cm]{englogo.png} % We can use CAS logo as well? 
+\end{textblock}
+
+\begin{textblock}{2}(12.7,0.80)
+\includegraphics[height=10.5cm]{caslogo.png} 
+\end{textblock}
+
+\begin{textblock}{8}(4,1)
+\titlepage
+\end{textblock}
+
+\begin{textblock}{7.25}(0.5,3.1)
+
+
+\begin{block}{Introduction}
+\end{block}
+
+\begin{block}{Inspiration }
+\end{block}
+
+
+\begin{block}{Our ``HubListener'' Tool}
+\end{block}
+\end{textblock}
+
+
+
+\begin{textblock}{7.25}(8.25,3.1)
+\begin{block}{Proof of Concept}
+\end{block}
+
+
+\begin{block}{Conclusions \& Future Work}
+\end{block}
+
+\begin{block}{Acknowledgements}
+\end{block}
+
+\begin{block}{References}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\bibliographystyle{ieeetr}
+{\scriptsize
+\bibliography{bib}}
+\end{block}
+
+\begin{comment}
+%these aren't in any particular style, it's just the basic idea
+\begin{block}{References}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\bibliographystyle{ieeetr}
+{\scriptsize
+\bibliography{bib}}
+\end{block}
+\vspace{-1.8mm}
+%will need some more graphics to thank the various people
+\end{comment}
+\begin{figure}[htbp]
+\end{figure}
+\end{textblock}
+
+
+\end{frame}
+\end{document}

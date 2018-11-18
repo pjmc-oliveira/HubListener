@@ -1,0 +1,63 @@
+
+\begin{textblock}{2}(0.7,1)
+\includegraphics[height=8.5cm]{englogo.png} % We can use CAS logo as well?
+\end{textblock}
+
+\begin{textblock}{2}(12.7,0.80)
+\includegraphics[height=10.5cm]{caslogo.png}
+\end{textblock}
+
+\begin{textblock}{8}(4,1)
+\titlepage
+\end{textblock}
+
+\begin{textblock}{7.25}(0.5,3.1)
+
+
+\begin{block}{Introduction}
+\end{block}
+
+\begin{block}{Inspiration }
+\end{block}
+
+
+\begin{block}{Our ``HubListener'' Tool}
+\end{block}
+\end{textblock}
+
+
+
+\begin{textblock}{7.25}(8.25,3.1)
+\begin{block}{Proof of Concept}
+\end{block}
+
+
+\begin{block}{Conclusions \& Future Work}
+\end{block}
+
+\begin{block}{Acknowledgements}
+\end{block}
+
+\begin{block}{References}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\bibliographystyle{ieeetr}
+{\scriptsize
+\bibliography{bib}}
+\end{block}
+
+\begin{comment}
+%these aren't in any particular style, it's just the basic idea
+\begin{block}{References}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\bibliographystyle{ieeetr}
+{\scriptsize
+\bibliography{bib}}
+\end{block}
+\vspace{-1.8mm}
+%will need some more graphics to thank the various people
+\end{comment}
+\begin{figure}[htbp]
+\end{figure}
+\end{textblock}
+
+
