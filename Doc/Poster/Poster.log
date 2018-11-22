@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  17 NOV 2018 21:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  21 NOV 2018 19:08
 entering extended mode
 **./Poster.tex
 (Poster.tex
@@ -1426,9 +1426,12 @@ line 11.
 mathkerncmss.fd"
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
-)
-No file Poster.bbl.
-) [1
+) (Poster.bbl
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <17.28> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 5.
+
+)) [1
 
 {C:/Users/piran/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./figs/engl
 ogo.png> <./figs/caslogo.png>]
@@ -1441,27 +1444,28 @@ ogo.png> <./figs/caslogo.png>]
 \tf@snm=\write9
 \openout9 = `Poster.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 111.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 111.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 112.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 112.
  (Poster.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 111.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 111.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 112.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 112.
  ) 
 Here is how much of TeX's memory you used:
- 27539 strings out of 492970
- 555005 string characters out of 3126594
- 682214 words of memory out of 3000000
- 30820 multiletter control sequences out of 15000+200000
- 16050 words of font info for 58 fonts, out of 3000000 for 9000
+ 27573 strings out of 492970
+ 556089 string characters out of 3126594
+ 683244 words of memory out of 3000000
+ 30850 multiletter control sequences out of 15000+200000
+ 16408 words of font info for 59 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,15n,100p,890b,521s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 65i,15n,100p,890b,601s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmss12.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmss17.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Poster.pdf (1 page, 240873 bytes).
+onts/type1/public/amsfonts/cm/cmssi17.pfb><C:/Users/piran/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on Poster.pdf (1 page, 253393 bytes).
 PDF statistics:
- 40 PDF objects out of 1000 (max. 8388607)
- 3 named destinations out of 1000 (max. 500000)
+ 45 PDF objects out of 1000 (max. 8388607)
+ 4 named destinations out of 1000 (max. 500000)
  53 words of extra memory for PDF output out of 10000 (max. 10000000)
 
