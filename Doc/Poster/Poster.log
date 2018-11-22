@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  21 NOV 2018 19:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  22 NOV 2018 16:30
 entering extended mode
 **./Poster.tex
 (Poster.tex
@@ -1453,7 +1453,7 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 112.
 Here is how much of TeX's memory you used:
  27573 strings out of 492970
  556089 string characters out of 3126594
- 683244 words of memory out of 3000000
+ 683239 words of memory out of 3000000
  30850 multiletter control sequences out of 15000+200000
  16408 words of font info for 59 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1463,7 +1463,7 @@ Here is how much of TeX's memory you used:
 blic/amsfonts/cm/cmss17.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmssi17.pfb><C:/Users/piran/AppData/Local/Program
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Poster.pdf (1 page, 253393 bytes).
+Output written on Poster.pdf (1 page, 253398 bytes).
 PDF statistics:
  45 PDF objects out of 1000 (max. 8388607)
  4 named destinations out of 1000 (max. 500000)
