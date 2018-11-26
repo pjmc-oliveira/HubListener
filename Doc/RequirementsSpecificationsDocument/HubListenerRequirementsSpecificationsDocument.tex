@@ -50,7 +50,8 @@ The following official document is the requirements specification document based
 The key motivation for this project was our search for the answer to the following questions: What part of a GitHub project is the precursor to success?' What key components do successful projects contain, that unsuccessful projects do not? How do we measure this ‘success’? At first, we assumed this measurement to be popularity on GitHub, or a thoroughly and well documented project. We are still in search of what specific metrics lead to success, and hope to discover a solution to this problem as we build and maintain the HubListener. \newline
 \textbf{\textit{Considerations}}
 The user problem in this case is not serious, as most GitHub projects already use a variety of other tools to evaluate their growth and track their overall progress. However, by the end of the project, the user may clearly notice whether their project was a success or not. This is the moment where our tool can be valued, as it compares popular ‘completed’ projects to that of the users’. Any significant differences can be highlighted for the user, and thus, the ‘success’ problem can be solved. \newline
-\textbf{1 Goals of the Project}
+\newline
+\textbf{Goals of the Project}
 \textbf{Content}\newline
 The purpose of HubListener is provide users with relevant metrics, trends, and information regarding their GitHub project, and in some cases, push the user to make appropriate changes (can be organizational) that are intended to lean the project towards a more ‘successful’ one.\newline
 \textbf{\textit{Measurement}}
@@ -64,7 +65,8 @@ The consumer of this service is any member of the open-source community. Being t
 Other stakeholders include members of the open-source community who wish to fork the repository and improve/maintain it after the completion of the project. These stakeholders will be address on a case by case manner. \newline
 
 \subsection{Users of the Product:}
-\textbf{2. The Hands-On Users of the Product}
+\textbf{The Hands-On Users of the Product}
+\newline
 Developers and creators with existing projects on GitHub are our primary user group for this product. Their subject matter experience can range from novice to expert, as we are simply analyzing their repository and comparing it against GitHub’s ‘best’. Our users can be engineers, students, researchers, companies, and/or any organization looking to evaluate and improve their GitHub project in any way possible. 
 \newpage
 
@@ -74,38 +76,38 @@ Developers and creators with existing projects on GitHub are our primary user gr
 
 This section describes the constrains on the design of the HubListener service. They are the same as other requirements except they are mandatory:\newline
 \newline
-
+\iffalse %Commenting a whole black till /fi
 \noindent
 \textbf{\underline{Solutions Constraints:}}\newline
-\textbf{Describe:} The HubListener system shall have a command line interface that has access to the GithubAPI and associated analysis tools.\newline
+\textbf{Describe:} The HubListener system shall have a command line interface that has access to the GitHub API and associated analysis tools.\newline
 \textbf{Rationale:} This is central source of the information needed. \newline
-\textbf{Fit Criterion:} The interface will conform to Github API and javascript standards \newline
+\textbf{Fit Criterion:} The interface will conform to GitHub API and JavaScript standards \newline
 
 \noindent
 \textbf{\underline{Implementation Environment of the Current System}}\newline
 \textbf{Describe:} The HubListener system shall be written in the NodeJS environment.\newline
 \textbf{Rationale:} This is native way of accessing the GitHub API while also setting the system up to become a web based tool.\newline 
-\textbf{Fit Criterion:} The interface will conform to NodeJs and javascript policies and requirements. \newline
+\textbf{Fit Criterion:} The interface will conform to NodeJS and JavaScript policies and requirements. \newline
 
 \noindent
 \textbf{\underline{Off-the-Shelf Software}}\newline
 \textbf{Describe:} The HubListener system shall utilize any npm packages that aids in the retrieval and analysis of the repository. \newline
 \textbf{Rationale:} This is simplest way of retrieving and analyzing the repository. This will save labour time.\newline
-\textbf{Fit Criterion:} The interface will conform to npm and javascript policies and requirements. \newline
-
+\textbf{Fit Criterion:} The interface will conform to npm and JavaScript policies and requirements. \newline
+\fi
 \noindent
 \textbf{\underline{Schedule Constraints:}}\newline
-\textbf{Description:} The service shall be available January 31st 2018 as a version 1 release.\newline
-\textbf{Rationale:} We want to launch the service by this date so that we can do testing and iterate over the solution so that there is a polished solution for our April presentation.\newline
-\textbf{Fit Criterion:} The HubListener service will be available for testing by January 31st 2018 \newline
+\textbf{Description:} The service shall be available April 1, 2018.\newline
+\textbf{Rationale:} We want to launch the service by this date as it is the date that the project is due for assessment.\newline
+\textbf{Fit Criterion:} The HubListener service will be available for evaluation April, 1 2018 \newline
 
 \noindent
 \textbf{\underline{Budget Constraints:}} 
-The project has a financial budget at zero dollars. 
+The project has a financial budget of zero dollars. 
 \newpage
 \subsection{Naming Conventions and Definitions}
 
-A glossary containing the meanings of all names, acronyms, and abbreviations sed within the requirements specification. The following is a running, ongoing dictionary. 
+A glossary containing the meanings of all names, acronyms, and abbreviations mentioned within the requirements specification. The following is a running, ongoing dictionary. 
 \newline
 \begin{tabular}{ |p{6cm}||p{6cm}| }
 \hline
@@ -113,7 +115,7 @@ A glossary containing the meanings of all names, acronyms, and abbreviations sed
 \hline
 Naming Convention & Definition\\
 \hline 
-Github & A web-based version-control and collaboration platform for software developers. \\
+GitHub & A web-based version-control and collaboration platform for software developers. \\
 \hline
 NodeJS & An open source development platform for executing JavaScript code server-side \\
 \hline
@@ -125,18 +127,32 @@ Command-Line Interface (CLI) & A text-based interface that is used to operate so
 \hline
 Cyclomatic Complexity & A software metric, used to indicate the complexity of a program. It is a quantitative measure of the number of linearly independent paths through a program's source code.\\
 \hline 
+Node Package Manager (NPM) & is a package manager for the JavaScript programming language. It is the default package manager for the JavaScript runtime environment Node.js. It consists of a command line client, also called npm, and an online database of public and paid-for private packages, called the npm registry.\\
+\hline 
+Metric &A software metric is a standard of measure of a degree to which a software system or process possesses some property.\\
+\hline 
 \end{tabular}
+\newpage
 
 \subsection{Relevant Facts and Assumptions}
-\textbf{3.3 Facts}
+\textbf{Facts}
 \newline
 There are a few factors that influence the product. The first business rule to be addressed is the amount of GitHub repositories we can clone. As we are grabbing several projects for reference directly from GitHub, we are limited to clone at a ‘reasonable’ pace. Cloning the estimated 100 repositories in parallel is not something GitHub takes lightly, as it can be detected as abusive behavior by their automated measures. Another key factor that affects this product is the specific information we will be extracting from the initial list of projects. This information can vary drastically, and so we will be selective of the types of projects gathered. To elaborate, we may only take projects created in one specific programming language to even the playing field regarding any comparisons to be made.
 \newline
 \newline 
-\textbf{3.3 Assumptions}
+\textbf{Assumptions}
 \newline
-There are a list of assumptions made right off the bat regarding this project. To start off, the initial database of projects we will use for comparison, will be that of the most popular and ‘successful’ GitHub projects. It is difficult to measure success of any given project, without making a set of assumptions first. We would have to assume that the most popular projects on GitHub contain quality code and documentation, as well as a progressive and steady incline in contributions and overall growth. As these projects will be our primary models for reference, it is critical that we address these assumptions.
-Considering these assumptions, we can also precisely state what our product will not do. As we are aiming to provide quality metrics, we are not intending on ‘fixing’ project flaws. We are merely laying out relevant information for the user to make their own adjustments; whether they choose to do so, or not. Also, the information we provide may or may not be useful depending on which stage an entered project is in. We are simply comparing and analyzing projects to possibly highlight any significant differences, or none at all. It is up to the user to determine what needs change. 
+\newline 
+There are a list of assumptions made right off the bat regarding this project:
+\begin{enumerate}
+\item The initial database of projects we will use for comparison, will be that of the most popular and ‘successful’ GitHub projects
+\item The most popular projects on GitHub contain quality code and documentation
+\item NPM packages used as dependencies are accurate, complete and correct. 
+\item Each user will have their own GitHub API Authentication token. 
+
+\end{enumerate}
+
+%The initial database of projects we will use for comparison, will be that of the most popular and ‘successful’ GitHub projects. It is difficult to measure success of any given project, without making a set of assumptions first. We would have to assume that the most popular projects on GitHub contain quality code and documentation, as well as a progressive and steady incline in contributions and overall growth. As these projects will be our primary models for reference, it is critical that we address these assumptions.Considering these assumptions, we can also precisely state what our product will not do. As we are aiming to provide quality metrics, we are not intending on ‘fixing’ project flaws. We are merely laying out relevant information for the user to make their own adjustments; whether they choose to do so, or not. Also, the information we provide may or may not be useful depending on which stage an entered project is in. We are simply comparing and analyzing projects to possibly highlight any significant differences, or none at all. It is up to the user to determine what needs change. %
 
 \newpage
 \section{Functional Requirements}
@@ -150,14 +166,14 @@ Currently, there is no way to compare GitHub repositories against similar reposi
 \subsection{The Scope of the Service}
 HubListener aims to provide a service which allows the user to compare his/her repository or any open-source repository against similar repositories in the ecosystem. The end user will be able to attain meaningful information that they can use to improve their current repository and gauge how they are trending. 
 \newline
-
+\iffalse
 \begin{tabular}{ |p{6cm}||p{6cm}| }
 \hline
 \multicolumn{2}{|c|}{Input And Output List} \\
 \hline
 Input & Output \\
 \hline 
-Github Checkout Link & 
+GitHub Checkout Link & 
 - Cyclomatic Complexity \newline
 - Essential Complexity \newline
 - Integration Complexity \newline
@@ -167,7 +183,7 @@ Github Checkout Link &
 - Maintainability Index\newline
 - Coupling Metric \newline
 - Number of Methods\newline
-- Numbe rof Variables\newline 
+- Number of Variables\newline 
 - Number of Issues\newline
 - Number of Bugs\newline
 - Number of Stars\newline
@@ -175,27 +191,27 @@ Github Checkout Link &
 - Condition Coverage Score \\
 \hline
 \end{tabular}
-
+\fi
 \subsection{Functional and Data Requirements }
-\begin{tabular}{ |p{1cm}|p{3cm}|p{5cm}| }
+\begin{tabular}{ |p{1cm}|p{2cm}|p{5cm}|p{3cm}|  }
 \hline
-\multicolumn{3}{|c|}{\textbf{Functional Requirements}} \\
+\multicolumn{4}{|c|}{\textbf{Functional Requirements}} \\
 \hline
-\textbf{Reqt No.} & \textbf{Reqt Type} & \textbf{Description} \\
+\textbf{Reqt No.} & \textbf{Reqt Type} & \textbf{Description} & \textbf{Fit-Criteria}\\
 \hline 
-1 & Functional & HubListener must provide user selected metrics to the end user\\
+1 & Functional & HubListener must provide user selected metrics to the end user & HubListener logs shall match the user input and the provided metrics.\\
 \hline 
-2 & Functional & HubListener must take in a GitHub checkout link as input. \\
+2 & Functional & HubListener must take in a GitHub checkout link as input. & HubListener logs should validate that the input link is a GitHub checkout link.\\
 \hline 
-3 & Functional & HubListener must have a help section as part of command line interface.\\ 
+3 & Functional & HubListener must have a help section as part of command line interface. & HubListener logs should validate that the main output includes a help section.\\ 
 \hline 
-4 & Functional & Users must be able to customize which metrics to analyze \\
+4 & Functional & Users must be able to customize which metrics to analyze & HubListener will run with one metric selected and all metrics selected\\
 \hline 
-5 & Functional & User must be able to install, update or uninstall HubListener through the node package manager interface.\\
+5 & Functional & User must be able to install, update or uninstall HubListener through the node package manager interface. & HubListener logs should validate a npm install, update and uninstall have succeeded when called upon. \\
 \hline 
-6 & Functional & Metrics gathered from the analysis of a repository must be added into a database \\
+6 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are view able in the database. Logs validate an addition to the database.  \\
 \hline 
-7 & Functional & HubListener must analyze the metrics and display one or more trends. \\
+7 & Functional & HubListener must analyze the metrics and display one or more trends. & HubListener logs at least one trend. \\
 \hline
 \end{tabular}
 
@@ -203,57 +219,134 @@ Github Checkout Link &
 \newpage
 \section{Non-functional Requirements}
 
+
+
 \subsection{Look and Feel Requirements}
 \begin{enumerate}
 \item The application should provide an easy and clear command line interface for user to use the service.
-\item The application shall comply with Open-source standards.
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:} 80\% of the users from our survey shall be able to navigate through the interface and utilize the service. The list of available options should be available on the main screen. 
+    \end{enumerate}
+\item The application shall comply with Open standards.
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:} 100\% of users in our survey  can verify that the application is easy to access\/adopt and open for public review and debate.
+    \end{enumerate}
 \item Useful information (such as help, report issues, training) should be easily accessible.
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:} 90\% of users in our survey with knowledge of GitHub will be able to access areas for help, reporting issues and training. 
+    \end{enumerate}
 \item When doing calculations or data handling like repository retrievals, the application should display an animated progress bar. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100\% of users in our survey  can successfully verify that the application displays an animated progress bar 
+    \end{enumerate}
 \end{enumerate}
-More to be determined at a later date.
+
+
 \subsection{Usability and Humanity Requirements}
 \begin{enumerate}
-\item The software must be simple for a person aged above 18 years, with knowledge of Github/open-source technology, in able condition to understand and use all its features.
+\item The software must be simple for a person aged above 18 years, with knowledge of GitHub/open-source technology, in able condition to understand and use all its features.
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  90 \% of the users in our survey are able to use the application and all its features and deem the application understandable.  
+    \end{enumerate}
 \item The application shall make it easy for the average user to find user-use guidelines.
-\item The system must meet all open-source software accessibility standards enforced by the government of Canada. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  80 \% of user in our survey are able to successfully find the user-use guidelines within one minute.
+    \end{enumerate}
 \end{enumerate}
+
+
 \subsection{Performance Requirements}
 \begin{enumerate}
-\item After the user provides their repo link, the application shall generate charts and statistics in a timely manner. 
+\item After the user provides their repository link, the application shall generate charts and metrics in a timely manner. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  80 \% of the users in our survey agree that the charts and metrics were delivered in a timely manner. 
+    \end{enumerate}
 \item The application shall save the users last request and results. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100 \% of users  in our survey, after their first request,  are able to navigate to the  history section where they can view their last request and results
+    \end{enumerate}
 \item The application shall analyze the results and provide metrics and trends. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}   100 \% of the user in our survey are able to successfully identify at least one metric and one trend after running the application. 
+    \end{enumerate}
 \end{enumerate}
+
+
 \subsection{Operational Requirements}
-\textbf{Expected physical environment }
+
+
+\textbf{Expected physical Environment }
 \begin{enumerate}
 \item Users will use the application on their internet-connected computer 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100 \% of the user in our survey are able to run the application on their internet-connected computer. 
+    \end{enumerate}
 \end{enumerate}
+
+\noindent
 \textbf{Expected Technological Environment }
 \begin{enumerate}
-\item The application should work on devices that have Node.JS installed on their machine 
+\item The application shall work on devices that have Node.JS installed on their machine 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100\% of users in our survey are able to run the application when they have Node.JS installed. 
+    \end{enumerate}
+\item The application shall work on devices that have an internet connection. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}   100\% of users in our survey are able to run the application when they have an internet connection. 
+    \end{enumerate}
 \end{enumerate}
+
+
 \subsection{Maintainability and Support Requirements}
 \textbf{Maintainability} 
 \begin{enumerate}
 \item The software application is to be easily modifiable.
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  80 \% of the users in our survey are able to clone the repository and make modifications to the source code. 
+    \end{enumerate}
 \item The application should notify user's to check for an npm update every 6 months. 
-\item The application shall be ready to be deployed on any OS. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  80\% of the user's in our survey will be notified in six months time, to update their npm packages. 
+    \end{enumerate}
 \end{enumerate}
+
+\noindent
 \textbf{Portability} 
 \begin{enumerate}
 \item The application shall be available on any computer operating system such as MAC, Windows and Linux
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100 \% of users in our survey are able to run the application on their device irrespective of their operating system. The survey ensures that there is at least one user on all three operating systems defined. 
+    \end{enumerate}
 \end{enumerate}
+
+
 \subsection{Security Requirements}
+
+%Not sure what to put here. 
+
 \subsection{Cultural and Political Requirements}
 \begin{enumerate}
 \item The application should not display any offensive text or information 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100\% of the users in our survey do not report any offensive text or information. 
+    \end{enumerate}
 \item The application should be available in English. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100\% of the users in our survey are able to read the application main page and successfully determine that the language is English. 
+    \end{enumerate}
 \end{enumerate}
+
+
 \subsection{Legal Requirements}
 \begin{enumerate}
-\item The application shall comply with all relevant information privacy acts.
+\item The application shall comply with the PIPEDA privacy act.
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  The application follows all  \href{https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/}{PIPEDA} rules as defined in the link.
+    \end{enumerate}
 \item The application shall comply with all relevant open-source laws. 
-\item The application will abide by all developer guidelines as denoted by Windows, Apple, etc. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  The repository is Licensed under GPL-3.0 which abides by the regulations set by the \href{https://www.fsf.org/}{Free Software Foundation} 
+    \end{enumerate}
 \end{enumerate}
 
 \newpage
@@ -261,18 +354,42 @@ More to be determined at a later date.
 \subsection{Open Issues}
 All open issues can be see on our Issue tracking board. (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
 \subsection{Off-the-Shelf Solutions}
-Attempting to emulate similar applicaiton could greatly reduce the time needed to design and implemnt HubListener. If an off the shelf solution is available and fit our requirements, we will use it as part of the software, providing the necessary credit as needed. 
+Attempting to emulate similar application could greatly reduce the time needed to design and implemnt HubListener. If an off the shelf solution is available and fit our requirements, we will use it as part of the software, providing the necessary credit as needed. 
 \subsection{New Problems}
+
+N/A
+
 \subsection{Tasks}
-All open taks can be seen our Issue tracking board (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
+All open tasks can be seen our Issue tracking board (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
 \subsection{Migration to the New Product}
 
-No new product to migrate to. This section may become obsolete. 
-
+No new product to migrate to. This section is currently not applicable, but included for completeness. 
 \subsection{Risks}
+
+All projects have risk. HubListener is no exception. Below are the risks identified and strategies as to how we will mitigating these risks:
+
+\begin{tabular}{ |p{1cm}|p{5cm}|p{8cm}| }
+\hline
+\multicolumn{3}{|c|}{\textbf{Risk Table}} \\
+\hline
+\textbf{Risk No.} & \textbf{Risk Description} & \textbf{Mitigation Strategy} \\
+\hline 
+1 & Inaccurate Metrics & As stated in the assumptions, we believe that the npm packages provided will be accurate. To ensure this, we will have test cases that verify the correctness of the npm package. Furthermore, any metrics coded by our team will be available to the open source community, such that if there are any problems in the calculations, issues on GitHub will be created and dealt with by the project team or the community. \\
+\hline 
+2 & Inadequate Metrics & HubListener strives to provide as many metrics as possible such that the stakeholders have as much information as possible. If there are any missing metrics which are required by the community, feature requests can be made on our GitHub. The requests will be resolved as per open-source policies. \\
+\hline 
+3 & Excessive Schedule Pressure & Although, HubListener is a time-constrained project, the HubListener team is governed by a supervisor and course instructor which will enforce that the project be completed on time. These quality gates ensure the milestones are delivered in a timely manner. Any changes in scope will be documented and relayed to the appropriate stakeholders. \\ 
+\hline 
+4 & Performance  & HubListener performance is based on many variables. Benchmark and threshold testing results will be provided to the end User such that they can understand how this variation can occur. \\
+\hline 
+5 & Unproven Technologies & Although, the software is new in nature , it encompasses many proven technologies. Any changes or updates in the technologies will be relayed to the stakeholders. \\
+\hline
+\end{tabular}
+
+
 \subsection{Costs}
 
-There are no costs associated with the development of this project other than the time dedicated to development/documentation. It is developed under the open-source environment and therefore is useable for not-for profit purposes. In future, there may be a cost associated with maintaining the project, hosting the project or use by a professional company. 
+There are no costs associated with the development of this project other than the time dedicated to development/documentation. It is developed under the open-source environment and therefore is usable for not-for profit purposes. In future, there may be a cost associated with maintaining the project, hosting the project or use by a professional company. 
 
 \subsection{User Documentation and Training}
 
@@ -290,6 +407,9 @@ Training will stem from this wiki and any additional information, changes made w
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
 November 1st, 2018 & Piranaven Selva & Make Foundation for Specifications Document as per Issue \#6 \\
+November 23rd, 2018 & Piranaven Selva & Add Fit-Criteria to Functional/ Non-functional Requirements as per Issue \#30 \\
+November 24th, 2018 & Piranaven Selva & Document: Constraints And Design Choice And Off-The-Shelf Solutions as per Issue \#33 \\
+November 26th, 2018 & Piranaven Selva & Maintenance  \\
 \\
 \bottomrule
 \end{tabularx}

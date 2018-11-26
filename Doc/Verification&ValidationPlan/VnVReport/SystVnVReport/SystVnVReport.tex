@@ -1,0 +1,100 @@
+\documentclass[12pt, titlepage]{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage[round]{natbib}
+
+\input{../../Comments}
+
+\begin{document}
+
+\title{HubListener: Verification \& Validation Plan} 
+\author{Zed Ahmad, Prakhar Japlan, Pedro Oliveira, Piranaven Selvathayabaran}
+\date{\today}
+	
+\maketitle
+
+\pagenumbering{roman}
+
+\section{Revision History}
+
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\midrule
+November,21 2018 & 1.0 & Template Setup\\
+\bottomrule
+\end{tabularx}
+
+~\newpage
+
+\section{Symbols, Abbreviations and Acronyms}
+
+The symbols, abbreviations and acronms used in this document include those defined in the table below. \newline
+\renewcommand{\arraystretch}{1.2}
+
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  MIS & Module Interface Specification\\
+  MG & Module Guide \\
+  TC & Test Case \\
+  VnV & Verification and Validation\\
+  \bottomrule
+\end{tabular}\\
+
+
+\newpage
+
+\tableofcontents
+
+\listoftables %if appropriate
+
+\listoffigures %if appropriate
+
+\newpage
+
+\pagenumbering{arabic}
+
+This document outlines the system verification and validation plan for the HubListener software. General informaiton regarding the system under test and the objectives of the verificaiton and validation activities are provided iin Section 3.  Overviews of the verification plans for the SRS, design, and implementation are given in Section 4, along with a summary of the validation plan for the software. Section 5 details specific system test cases fro verifying the resquirements outline in Section 6 of the SRS. A summary fo planned static verification activities can be found in Section 6 
+
+
+\section{Functional Requirements Evaluation}
+
+\section{Nonfunctional Requirements Evaluation}
+
+\subsection{Usability}
+		
+\subsection{Performance}
+
+\subsection{etc.}
+	
+\section{Comparison to Existing Implementation}	
+
+This section does not 
+
+\section{Unit Testing}
+
+\section{Changes Due to Testing}
+
+\section{Automated Testing}
+		
+\section{Trace to Requirements}
+		
+\section{Trace to Modules}		
+
+\section{Code Coverage Metrics}
+
+\bibliographystyle{plainnat}
+
+\bibliography{SRS}
+
+\end{document}
