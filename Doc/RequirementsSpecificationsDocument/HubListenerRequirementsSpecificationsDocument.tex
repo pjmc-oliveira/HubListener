@@ -166,33 +166,8 @@ Currently, there is no way to compare GitHub repositories against similar reposi
 \subsection{The Scope of the Service}
 HubListener aims to provide a service which allows the user to compare his/her repository or any open-source repository against similar repositories in the ecosystem. The end user will be able to attain meaningful information that they can use to improve their current repository and gauge how they are trending. 
 \newline
-\iffalse
-\begin{tabular}{ |p{6cm}||p{6cm}| }
-\hline
-\multicolumn{2}{|c|}{Input And Output List} \\
-\hline
-Input & Output \\
-\hline 
-GitHub Checkout Link & 
-- Cyclomatic Complexity \newline
-- Essential Complexity \newline
-- Integration Complexity \newline
-- Cyclomatic Density\newline
-- Lines of Code \newline
-- Lines of Comments\newline
-- Maintainability Index\newline
-- Coupling Metric \newline
-- Number of Methods\newline
-- Number of Variables\newline 
-- Number of Issues\newline
-- Number of Bugs\newline
-- Number of Stars\newline
-- Functional Coverage Score\newline
-- Condition Coverage Score \\
-\hline
-\end{tabular}
-\fi
-\subsection{Functional and Data Requirements }
+
+\subsection{Functional Requirements }
 \begin{tabular}{ |p{1cm}|p{2cm}|p{5cm}|p{3cm}|  }
 \hline
 \multicolumn{4}{|c|}{\textbf{Functional Requirements}} \\
@@ -212,6 +187,32 @@ GitHub Checkout Link &
 6 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are view able in the database. Logs validate an addition to the database.  \\
 \hline 
 7 & Functional & HubListener must analyze the metrics and display one or more trends. & HubListener logs at least one trend. \\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{ |p{6cm}||p{6cm}| }
+\hline
+\multicolumn{2}{|c|}{Functional Input And Output List} \\
+\hline
+Input & Output \\
+\hline 
+GitHub Checkout Link & 
+- Cyclomatic Complexity \newline
+- Essential Complexity \newline
+- Integration Complexity \newline
+- Cyclomatic Density\newline
+- Lines of Code \newline
+- Lines of Comments\newline
+- Maintainability Index\newline
+- Coupling Metric \newline
+- Number of Methods\newline
+- Number of Variables\newline 
+- Number of Issues\newline
+- Number of Bugs\newline
+- Number of Stars\newline
+- Functional Coverage Score\newline
+- Condition Coverage Score \\
 \hline
 \end{tabular}
 
@@ -354,7 +355,18 @@ GitHub Checkout Link &
 \subsection{Open Issues}
 All open issues can be see on our Issue tracking board. (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
 \subsection{Off-the-Shelf Solutions}
-Attempting to emulate similar application could greatly reduce the time needed to design and implemnt HubListener. If an off the shelf solution is available and fit our requirements, we will use it as part of the software, providing the necessary credit as needed. 
+Attempting to emulate similar application could greatly reduce the time needed to design and implemnt HubListener. If an off the shelf solution is available and fit our requirements, we will use it as part of the software, providing the necessary credit as needed. Below are the off-the-shelf solutions we are looking at right now:
+
+\begin{enumerate}
+
+\item  \href{https://www.npmjs.com/package/node-dir}{NodeDir} 
+\item  \href{https://www.npmjs.com/package/nodegit}{NodeGit}
+\item  \href{https://www.npmjs.com/package/tmp}{tmp} 
+\item  \href{https://www.npmjs.com/package/graphql-client}{Simple GraphQL Client} 
+\item  \href{https://www.npmjs.com/package/complexity-report#complexity-metrics}{Complexity Report} 
+\item \href{https://www.npmjs.com/package/jslint}{JSLint}
+
+\end{enumerate}
 \subsection{New Problems}
 
 N/A

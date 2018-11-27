@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  26 NOV 2018 17:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  26 NOV 2018 17:47
 entering extended mode
 **./HubListenerRequirementsSpecificationsDocument.tex
 (HubListenerRequirementsSpecificationsDocument.tex
@@ -358,135 +358,136 @@ Underfull \hbox (badness 10000) in paragraph at lines 138--147
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 167--195
+Underfull \hbox (badness 10000) in paragraph at lines 167--169
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 200--200
+Underfull \hbox (badness 10000) in paragraph at lines 175--175
 []|\OT1/cmr/bx/n/10 Reqt
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
+Underfull \hbox (badness 10000) in paragraph at lines 177--178
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
+Underfull \hbox (badness 10000) in paragraph at lines 177--178
 \OT1/cmr/m/n/10 shall match the
  []
 
 
-Underfull \hbox (badness 3579) in paragraph at lines 204--204
+Underfull \hbox (badness 3579) in paragraph at lines 179--179
 []|\OT1/cmr/m/n/10 HubListener must take in a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
 \OT1/cmr/m/n/10 should val-i-date
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
 \OT1/cmr/m/n/10 that the in-put
  []
 
 
-Underfull \hbox (badness 2245) in paragraph at lines 204--205
+Underfull \hbox (badness 2245) in paragraph at lines 179--180
 \OT1/cmr/m/n/10 link is a GitHub
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 206--207
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 206--207
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
 \OT1/cmr/m/n/10 should val-i-date
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 208--209
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
 []|\OT1/cmr/m/n/10 HubListener will
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 210--211
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 210--211
+Underfull \hbox (badness 3724) in paragraph at lines 185--186
 \OT1/cmr/m/n/10 should val-i-date a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 210--211
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 \OT1/cmr/m/n/10 suc-ceeded when
  []
 
 
-Underfull \hbox (badness 3364) in paragraph at lines 212--213
+Underfull \hbox (badness 3364) in paragraph at lines 187--188
 []|\OT1/cmr/m/n/10 After Hub-Lis-tener
  []
 
 
-Underfull \hbox (badness 3049) in paragraph at lines 212--213
+Underfull \hbox (badness 3049) in paragraph at lines 187--188
 \OT1/cmr/m/n/10 view able in the
  []
 
 
-Overfull \hbox (17.98026pt too wide) in paragraph at lines 196--217
+Overfull \hbox (17.98026pt too wide) in paragraph at lines 171--192
 [] 
  []
 
-[9] [10] [11] [12]
-Overfull \hbox (2.83339pt too wide) in paragraph at lines 348--349
+[9]
+Overfull \hbox (39.03302pt too wide) in paragraph at lines 194--218
+[][] 
+ []
+
+[10] [11] [12] [13]
+Overfull \hbox (2.83339pt too wide) in paragraph at lines 349--350
 []\OT1/cmr/bx/n/10 Fit-Criteria: \OT1/cmr/m/n/10 The repos-i-tory is Li-censed 
 un-der GPL-3.0 which abides
  []
 
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 375--375
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 387--387
 []|\OT1/cmr/bx/n/10 Risk
  []
 
 
-Overfull \hbox (105.93854pt too wide) in paragraph at lines 371--388
+Overfull \hbox (105.93854pt too wide) in paragraph at lines 383--400
 [][] 
  []
 
-[14] [15] [16]
-Underfull \hbox (badness 1496) in paragraph at lines 415--415
+[15] [16] [17]
+Underfull \hbox (badness 1496) in paragraph at lines 427--427
 \OT1/cmr/m/n/10 sign Choice And Off-The-Shelf
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 418.
-[17]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 418.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 430.
+[18]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 430.
  (HubListenerRequirementsSpecificationsDocument.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 418.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 418.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 430.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 430.
 Package rerunfilecheck Info: File `HubListenerRequirementsSpecificationsDocumen
 t.out' has not changed.
-(rerunfilecheck)             Checksum: 4EEBE105965E749AC1C4E9CFEBA32823;2252.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 418.
+(rerunfilecheck)             Checksum: 1978C3C77CE7979DC93D0ECB63D33B2C;2243.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 430.
  ) 
 Here is how much of TeX's memory you used:
- 6343 strings out of 492970
- 95012 string characters out of 3126594
- 185816 words of memory out of 3000000
+ 6350 strings out of 492970
+ 95061 string characters out of 3126594
+ 186816 words of memory out of 3000000
  10104 multiletter control sequences out of 15000+200000
  8561 words of font info for 30 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -499,10 +500,10 @@ ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/piran/AppData/
 Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/pi
 ran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
 
-Output written on HubListenerRequirementsSpecificationsDocument.pdf (17 pages, 
-154019 bytes).
+Output written on HubListenerRequirementsSpecificationsDocument.pdf (18 pages, 
+157434 bytes).
 PDF statistics:
- 330 PDF objects out of 1000 (max. 8388607)
- 94 named destinations out of 1000 (max. 500000)
+ 347 PDF objects out of 1000 (max. 8388607)
+ 101 named destinations out of 1000 (max. 500000)
  257 words of extra memory for PDF output out of 10000 (max. 10000000)
 
