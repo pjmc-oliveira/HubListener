@@ -17,7 +17,7 @@
 \begin{document}
 
 \title{HubListener: Verification \& Validation Plan} 
-\author{Zed Ahmad, Prakhar Japlan, Pedro Oliveira, Piranaven Selvathayabaran}
+\author{Zed Ahmad, Prakhar Jalan, Pedro Oliveira, Piranaven Selvathayabaran}
 \date{\today}
 	
 \maketitle
@@ -64,30 +64,81 @@ The symbols, abbreviations and acronms used in this document include those defin
 
 \pagenumbering{arabic}
 
-This document outlines the system verification and validation plan for the HubListener software. General informaiton regarding the system under test and the objectives of the verificaiton and validation activities are provided iin Section 3.  Overviews of the verification plans for the SRS, design, and implementation are given in Section 4, along with a summary of the validation plan for the software. Section 5 details specific system test cases fro verifying the resquirements outline in Section 6 of the SRS. A summary fo planned static verification activities can be found in Section 6 
+This document outlines the system verification and validation plan for the HubListener software. General information regarding the system under test and the objectives of the verification and validation activities are provided in Section 3.  Overviews of the verification plans for the SRS, design, and implementation are given in Section 4, along with a summary of the validation plan for the software. Section 5 details specific system test cases fro verifying the requirements outline in Section 6 of the SRS. A summary of planned static verification activities can be found in Section 6 
 
+
+\section{General Information}
+
+\subsection{Summary}
+The software being tested is the open-source software, HubListener.  HubListener provides users with relevant metrics, trends, and
+information regarding their GitHub project, and in some cases, push the user to make appropriate changes (can be organizational) that are intended to lean the project towards a more `successful' one.
+
+\subsection{Objectives}
+The purpose of the verification and validation activities is to confirm that HubListener exhibits the desired software qualities. The primary objective is to build confidence in the correctness of the software. The tests described in this document cannot definitely prove correctness, but they can build confidence by verifying that the software is correct for the cases covered by test. 
+\subsection{References}
+
+Information about the purpose and requirements of HubListener can be found in the SRS document. The latest documentation for HubListener can be found on GitHub:  \href{https://github.com/pjmc-oliveira/HubListener/}{HubListener}
+
+\section{Plan}
+
+\subsection{Verification and Validation Team}
+
+The HubListener Team, which includes all the authors of this document will be responsible for the verification and validation of HubListener. Input from our supervisor, Dr.  Smith  will also contribute to the VnV Plan and he will ensure proper procedures take place. 
+
+\subsection{SRS Verification}
+
+SRS Verification will be carried out by reviews. The HubListener team will do two reviews. One review will take place on January 31st, 2019, the expected launch date of Version 1. A second review will occur at the launch date of Version 2 which will be determined at a later date. These reviews will be done as a collective in separate meetings to confirm theories and models in the SRS are correct. Any issues identified during this review will be noted down and new Issues on GitHub will be created. These issues will have top priority and will be completed in the next possible Sprint by one member of the HubListener team. This review will be followed up by additional reviews by Dr.  Spencer Smith and Dr.  Anand ( if he wishes). Again, any issues identified by these reviewers will be recorded through the issues tracker on GitHub. A focus of these reviews will be to verify the functional and non-functional requirements of correctness and understandability by identifying information from the SRS that is incorrect or ambiguous.   
+
+\subsection{Design Verification Plan}
+
+The design of HubListener will be outlined in the Module Guide (MG) and Module Interface Specification (MIS) documents. The design will be verified by review of these documents. Dr.  Smith will review this documents. To verify correctness, part of this review til be to ensure that every module traces to a requirement and that every requirement is traced to by a module. Any issues identified during this review will be noted down and new Issues on GitHub will be created. These issues will have top priority and will be completed in the next possible Sprint by one member of the HubListener team. Reviews of these design documents will also focus on ensuring the understandability  by identifying descriptions and specifications that are ambiguous. 
+
+\subsection{Implementation Verification Plan}
+
+The implementation of HubListener will be verified by review and by testing. The HubListener team will extensively review the implementation. This will be done via bi-weekly code-reviews. In the context of agile methodologies, every sprint, each member will be assigned code from a peers to review. This code is typically from the previous sprint. If the code passes code review, it will be merged into the master-branch. Any issues identified during this review will be noted down and new Issues on GitHub will be created. These issues will have top priority and will be completed in the next possible Sprint by one member of the HubListener team. These reviews will contribute to verifying correctness and understandability of the software by identifying code that is not traceable to any specifications described in the SRS , MG or MIS.
+\newline
+
+The implementation will also be verified through testing. Specific test cases are outline in Section 5 of this document. Test cases that are directly dependent on implementation details will be outlined at a later date. All tests will be written(where applicable), reviewed and executed by the HubListener Team. 
 
 \section{Functional Requirements Evaluation}
 
+\begin{enumerate}
+  \item Requirements Testing
+  \item Error Handling Testing
+  \item Manual Support
+\end{enumerate}
+
+
+
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
-		
-\subsection{Performance}
+\begin{enumerate}
+  \item Stress Testing
+  \item Usability Testing
+  \item Performance Measurement 
+\end{enumerate}
 
-\subsection{etc.}
 	
 \section{Comparison to Existing Implementation}	
 
-This section does not 
+This section is not applicable. 
 
 \section{Unit Testing}
 
+Unit Testing will  be completed using either Mocha.js or Jasmine.js . Both tools provide the resources required to get thorough unit testing complete. We are still in the research phase and not have decided on a set tool. Jasmine.js remains the front-runner as one of members on the HubListener team has experience with this tool. 
+
 \section{Changes Due to Testing}
 
+Currently, there are no changes due to testing. This section is included for completeness. As changes occur, this field will become populated. 
+
 \section{Automated Testing}
+
+Automated testing will further enhance our testing efforts. We are investigating Travis-CI which  is a free web based service that allows  to register a trigger on GitHub so that every time a commit is pushed to GitHub an isolated Ubuntu container with the correct container that we want to test, builds the software (if needed) and then runs the test.
+
 		
 \section{Trace to Requirements}
+
+
 		
 \section{Trace to Modules}		
 
