@@ -4,6 +4,9 @@
 \usepackage{tabularx}
 \usepackage{listings}
 \usepackage{hyperref}
+
+
+
 \hypersetup{
 colorlinks=true,
 linkcolor=blue,
@@ -22,25 +25,22 @@ urlcolor=cyan,
 
 \date{}
 
-
 \begin{document}
-
-
-
 \newpage
-
 \maketitle
-
 \newpage
 \tableofcontents {}
 \newpage
+
 
 \section{Introduction}
 
 The following official document is the requirements specification document based on the Volere Template. It contains information regarding project drivers, constraints, functional/non-functional requirements and any other critical details that are defined under the templates definition. The specifications document is subject to change and any modifications will be noted in the Revision History Section. 
 \newpage
+
 \section{Project Drivers}
 
+The following section of the SRS will explain the purpose of HubListener and its scope. It will also organize the direct and indirect stakeholders and how they will be using the service that is created from the project.  
 
 \subsection{The Purpose of the Project}
 \textbf{The User Business or Background of the Project Effort}
@@ -72,10 +72,10 @@ Developers and creators with existing projects on GitHub are our primary user gr
 
 
 \section{Project Constraints}
+This section describes the constraints on the  HubListener project. Encompassed in these project constraints are the naming conventions, definitions, relevant facts and lastly, our assumptions.
 \subsection{Mandated Constraints}
+Below are the mandatory constraints that the HubListener tool is under : \newline
 
-This section describes the constrains on the design of the HubListener service. They are the same as other requirements except they are mandatory:\newline
-\newline
 \iffalse %Commenting a whole black till /fi
 \noindent
 \textbf{\underline{Solutions Constraints:}}\newline
@@ -135,7 +135,11 @@ Metric &A software metric is a standard of measure of a degree to which a softwa
 \newpage
 
 \subsection{Relevant Facts and Assumptions}
+During the planning phase of this project, the HubListener Team outlined some key facts and assumptions that all stakeholders should know. These facts and assumptions will hopefully further solidify our requirements. \newline
+
+\noindent
 \textbf{Facts}
+\newline
 \newline
 There are a few factors that influence the product. The first business rule to be addressed is the amount of GitHub repositories we can clone. As we are grabbing several projects for reference directly from GitHub, we are limited to clone at a ‘reasonable’ pace. Cloning the estimated 100 repositories in parallel is not something GitHub takes lightly, as it can be detected as abusive behavior by their automated measures. Another key factor that affects this product is the specific information we will be extracting from the initial list of projects. This information can vary drastically, and so we will be selective of the types of projects gathered. To elaborate, we may only take projects created in one specific programming language to even the playing field regarding any comparisons to be made.
 \newline
@@ -159,15 +163,16 @@ There are a list of assumptions made right off the bat regarding this project:
 
 \subsection{The Scope of the Work}
 
-\textbf{The Current Situation:} 
-Currently, there is no way to compare GitHub repositories against similar repositories within the ecosystem. There is no way to analyze your code against similar project or see how your repository is trending in comparison to similar projects within the ecosystem. 
+Currently, there is no way to compare GitHub repositories against similar repositories within the ecosystem. There is no way to analyze your code against similar projects or see how your repository is trending in comparison to similar projects in the open-source community. The scope of the work is to find a way to solve this problem given the tools at our disposable.
 
 
 \subsection{The Scope of the Service}
-HubListener aims to provide a service which allows the user to compare his/her repository or any open-source repository against similar repositories in the ecosystem. The end user will be able to attain meaningful information that they can use to improve their current repository and gauge how they are trending. 
-\newline
+HubListener aims to provide a service which allows the user to compare his/her GitHub repository or any GitHub open-source repository against similar repositories in the ecosystem. The end user will be able to attain meaningful information such as metrics or trends that they can use to improve their current project and gauge how they are trending. 
 
 \subsection{Functional Requirements }
+
+Below are the functional requirements that we have identified for HubListener.
+
 \begin{tabular}{ |p{1cm}|p{2cm}|p{5cm}|p{3cm}|  }
 \hline
 \multicolumn{4}{|c|}{\textbf{Functional Requirements}} \\
@@ -220,7 +225,7 @@ GitHub Checkout Link &
 \newpage
 \section{Non-functional Requirements}
 
-
+The following sections go into detail about the non-functional requirements for HubListener and also the fit-criteria for each. \newline
 
 \subsection{Look and Feel Requirements}
 \begin{enumerate}
@@ -274,7 +279,7 @@ GitHub Checkout Link &
 
 
 \subsection{Operational Requirements}
-
+Operational Requirements are comprised of expected physical and technological environments. \newline
 
 \textbf{Expected physical Environment }
 \begin{enumerate}
@@ -322,8 +327,12 @@ GitHub Checkout Link &
 
 
 \subsection{Security Requirements}
-
-%Not sure what to put here. 
+\begin{enumerate}
+\item The application should not contain any authentication tokens hard coded within the source code. 
+   \begin{enumerate}
+    \item \textbf{Fit-Criteria:}  100\% of the users in our survey were able to verify no authentication tokens in the source code.
+    \end{enumerate}
+\end{enumerate}
 
 \subsection{Cultural and Political Requirements}
 \begin{enumerate}
@@ -352,6 +361,8 @@ GitHub Checkout Link &
 
 \newpage
 \section{Project Issues }
+This section will contain information regarding how issues are being handled, some of the off-the-shelf solutions we will be employing as well as risks, costs and where to find documentation and training. 
+
 \subsection{Open Issues}
 All open issues can be see on our Issue tracking board. (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
 \subsection{Off-the-Shelf Solutions}

@@ -10,11 +10,11 @@
 \contentsline {section}{\numberline {4}Functional Requirements}{9}{section.4}
 \contentsline {subsection}{\numberline {4.1}The Scope of the Work}{9}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}The Scope of the Service}{9}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Functional Requirements }{10}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.3}Functional Requirements }{9}{subsection.4.3}
 \contentsline {section}{\numberline {5}Non-functional Requirements}{12}{section.5}
 \contentsline {subsection}{\numberline {5.1}Look and Feel Requirements}{12}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Usability and Humanity Requirements}{12}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Performance Requirements}{12}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.3}Performance Requirements}{13}{subsection.5.3}
 \contentsline {subsection}{\numberline {5.4}Operational Requirements}{13}{subsection.5.4}
 \contentsline {subsection}{\numberline {5.5}Maintainability and Support Requirements}{13}{subsection.5.5}
 \contentsline {subsection}{\numberline {5.6}Security Requirements}{14}{subsection.5.6}
@@ -26,7 +26,7 @@
 \contentsline {subsection}{\numberline {6.3}New Problems}{15}{subsection.6.3}
 \contentsline {subsection}{\numberline {6.4}Tasks}{15}{subsection.6.4}
 \contentsline {subsection}{\numberline {6.5}Migration to the New Product}{15}{subsection.6.5}
-\contentsline {subsection}{\numberline {6.6}Risks}{15}{subsection.6.6}
+\contentsline {subsection}{\numberline {6.6}Risks}{16}{subsection.6.6}
 \contentsline {subsection}{\numberline {6.7}Costs}{16}{subsection.6.7}
-\contentsline {subsection}{\numberline {6.8}User Documentation and Training}{16}{subsection.6.8}
+\contentsline {subsection}{\numberline {6.8}User Documentation and Training}{17}{subsection.6.8}
 \contentsline {section}{\numberline {7}Revision History}{18}{section.7}
