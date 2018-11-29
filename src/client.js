@@ -32,7 +32,7 @@ class Client {
     // simple wrapper for most common tasks
     // client available through ._client directly
     query(Q, vars) {
-        return this._client.query(Q, vars);
+        return this.client.query(Q, vars);
     }
 }
 
