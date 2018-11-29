@@ -3,7 +3,7 @@
 const {Client} = require('./client.js');
 const {Clone} = require('./clone.js');
 
-class Data {
+module.exports = class Data {
     // simple function to get the repository name and owner from the URL
     static parseURL(url) {
         const url_parts = url.split('/');
@@ -20,7 +20,7 @@ class Data {
     constructor(url) {
         const {owner, name} = Data.parseURL(url);
         this.client = new Client;
-        this.clonePromise = Clone.init(url)
+        this.clonePromise = Clone.init(url);
         this.owner = owner;
         this.name = name;
     }

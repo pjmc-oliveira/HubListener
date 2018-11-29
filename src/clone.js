@@ -3,7 +3,7 @@
 const tmp = require('tmp');
 const Git = require('nodegit');
 
-class Clone {
+module.exports = class Clone {
     static async init(url) {
         // create tmp directory
         const path = tmp.dirSync().name;
@@ -19,8 +19,4 @@ class Clone {
         this.repo = repo;
     }
 
-}
-
-module.exports = {
-    Clone: Clone
 };
