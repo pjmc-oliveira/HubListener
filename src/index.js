@@ -189,3 +189,47 @@ client.query(`
     console.log(key_metrics);
 })
 .catch(err => console.log(err.message));
+
+// Clone repository and perform analysis on files
+var git = require('nodegit'); // package providing git manipulation in node
+var tmp = require('tmp'); // convenience package providing temp file/dir creation and cleanup
+var dir = require('node-dir'); // convenience package providing file/dir operations
+var path = require('path');
+
+// Async call to create temp directory for working with repo files
+tmp.dir(function _tempDirCreated(err, tmpDir) {
+   if (err) throw err;
+
+   // Clone repo to temp directory
+   console.log('Cloning repo: ' + repo_url + ' to directory: ' + tmpDir);
+   git.Clone(repo_url, tmpDir).then(function(repo) {
+        // Successfully cloned repo
+       console.log('Succesfully cloned repository to ' + tmpDir);
+       var fileMetrics = {};
+
+       // Recursively read files, excluding .git directory
+       dir.readFiles(tmpDir, {
+               excludeDir: ['.git']
+           // Callback with file content and filename
+           }, function(err, content, filename, next) {
+               if (err) throw err;
+
+               ext = path.extname(filename);
+
+               // Create new entry in fileMetrics map for extension
+               if (!fileMetrics[ext]) {
+                   fileMetrics[ext] = {files: 1, lines: content.split("\n").length};
+               // Increment filecount and linecount for extensions previously found
+               } else {
+                   fileMetrics[ext] = {files: fileMetrics[ext].files + 1, lines: fileMetrics[ext].lines + content.split("\n").length};
+               }
+               next();
+           },
+           // Finished reading files
+           function(err, files){
+               if (err) throw err;
+
+               console.log(fileMetrics);
+           });
+   });
+});
