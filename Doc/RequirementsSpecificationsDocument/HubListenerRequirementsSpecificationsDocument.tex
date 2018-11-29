@@ -6,6 +6,10 @@
 \usepackage{hyperref}
 
 
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[nottoc]{tocbibind}
+
 
 \hypersetup{
 colorlinks=true,
@@ -49,7 +53,7 @@ The following section of the SRS will explain the purpose of HubListener and its
 \textbf{\textit{Motivation:}}\newline
 The key motivation for this project was our search for the answer to the following questions: What part of a GitHub project is the precursor to success?' What key components do successful projects contain, that unsuccessful projects do not? How do we measure this ‘success’? At first, we assumed this measurement to be popularity on GitHub, or a thoroughly and well documented project. We are still in search of what specific metrics lead to success, and hope to discover a solution to this problem as we build and maintain the HubListener. \newline
 \textbf{\textit{Considerations}}
-The user problem in this case is not serious, as most GitHub projects already use a variety of other tools to evaluate their growth and track their overall progress. However, by the end of the project, the user may clearly notice whether their project was a success or not. This is the moment where our tool can be valued, as it compares popular ‘completed’ projects to that of the users’. Any significant differences can be highlighted for the user, and thus, the ‘success’ problem can be solved. \newline
+The user problem in this case is not serious, as most GitHub projects already use a variety of other tools to evaluate their growth and track their overall progress. However, by the end of the project, the user may clearly notice whether their project was a success or not. This is the moment where our tool can be valued, as it compares popular ‘completed’ projects to that of the users’. Any significant differences can be highlighted for the user, and thus, the ‘success’ problem can be solved. We would like to also give special considerations to the research done in empirical software, most notably the work done by Tim Johnston. \cite{johnston2016toolkit} \newline
 \newline
 \textbf{Goals of the Project}
 \textbf{Content}\newline
@@ -141,7 +145,7 @@ During the planning phase of this project, the HubListener Team outlined some ke
 \textbf{Facts}
 \newline
 \newline
-There are a few factors that influence the product. The first business rule to be addressed is the amount of GitHub repositories we can clone. As we are grabbing several projects for reference directly from GitHub, we are limited to clone at a ‘reasonable’ pace. Cloning the estimated 100 repositories in parallel is not something GitHub takes lightly, as it can be detected as abusive behavior by their automated measures. Another key factor that affects this product is the specific information we will be extracting from the initial list of projects. This information can vary drastically, and so we will be selective of the types of projects gathered. To elaborate, we may only take projects created in one specific programming language to even the playing field regarding any comparisons to be made.
+There are a few factors that influence the product. The first business rule to be addressed is the amount of GitHub repositories we can clone. As we are grabbing several projects for reference directly from GitHub, we are limited to clone at a ‘reasonable’ pace. Cloning the estimated 100 repositories in parallel is not something GitHub takes lightly, as it can be detected as abusive behavior by their automated measures.\cite{GitHubLimit} Another key factor that affects this product is the specific information we will be extracting from the initial list of projects. This information can vary drastically, and so we will be selective of the types of projects gathered. To elaborate, we may only take projects created in one specific programming language to even the playing field regarding any comparisons to be made.
 \newline
 \newline 
 \textbf{Assumptions}
@@ -195,7 +199,7 @@ Below are the functional requirements that we have identified for HubListener.
 \hline
 \end{tabular}
 
-
+\iffalse
 \begin{tabular}{ |p{6cm}||p{6cm}| }
 \hline
 \multicolumn{2}{|c|}{Functional Input And Output List} \\
@@ -220,8 +224,7 @@ GitHub Checkout Link &
 - Condition Coverage Score \\
 \hline
 \end{tabular}
-
-
+\fi 
 \newpage
 \section{Non-functional Requirements}
 
@@ -418,7 +421,7 @@ There are no costs associated with the development of this project other than th
 
 User documentation will be available on the GitHub Wiki as well as on the npm description section. 
 \newline
-Training will stem from this wiki and any additional information, changes made will be reflected in this document at a later point
+Training will stem from this wiki and any additional information or changes made will be reflected in this document at a later point
 
 
 \newpage
@@ -437,5 +440,6 @@ November 26th, 2018 & Piranaven Selva & Maintenance  \\
 \bottomrule
 \end{tabularx}
 \end{table}
-
+\bibliographystyle{unsrt}
+\bibliography{bib}
 \end{document}

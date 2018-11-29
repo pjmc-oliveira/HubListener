@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  27 NOV 2018 20:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  29 NOV 2018 12:56
 entering extended mode
 **./HubListenerRequirementsSpecificationsDocument.tex
 (HubListenerRequirementsSpecificationsDocument.tex
@@ -219,25 +219,70 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip45
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 15.
+("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.sty"
+Package: inputenc 2018/04/06 v1.3b Input encoding file
+\inpenc@prehook=\toks18
+\inpenc@posthook=\toks19
+) ("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.st
+y"
+Package: babel 2018/09/26 3.24 The Babel package
+
+("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\switch.def
+"
+File: switch.def 2018/09/26 3.24 Babel switching mechanism
+)
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg"
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-english\engl
+ish.ldf"
+Language: english 2017/06/06 v3.3r English support from the babel system
+
+("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.def"
+File: babel.def 2018/09/26 3.24 Babel common definitions
+\babel@savecnt=\count111
+\U@D=\dimen131
+
+("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\txtbabel.d
+ef")
+\bbl@dirlevel=\count112
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+))
+("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tocbibind\tocbibin
+d.sty"
+Package: tocbibind 2010/10/13 v1.5k extra ToC listings
+Package tocbibind Info: The document has section divisions on input line 50.
+
+
+Package tocbibind Note: Using section or other style headings.
+
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 19.
  (HubListenerRequirementsSpecificationsDocument.aux)
 \openout1 = `HubListenerRequirementsSpecificationsDocument.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-\c@lstlisting=\count111
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+\c@lstlisting=\count113
 \AtBeginShipoutBox=\box30
 
 ("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty
@@ -257,19 +302,19 @@ File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf.mk
 ii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count112
-\scratchdimen=\dimen131
+\scratchcounter=\count114
+\scratchdimen=\dimen132
 \scratchbox=\box31
-\nofMPsegments=\count113
-\nofMParguments=\count114
-\everyMPshowfont=\toks18
-\MPscratchCnt=\count115
-\MPscratchDim=\dimen132
-\MPnumerator=\count116
-\makeMPintoPDFobject=\count117
-\everyMPtoPDFconversion=\toks19
+\nofMPsegments=\count115
+\nofMParguments=\count116
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count117
+\MPscratchDim=\dimen133
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
+\everyMPtoPDFconversion=\toks21
 )))
-Package hyperref Info: Link coloring ON on input line 28.
+Package hyperref Info: Link coloring ON on input line 32.
 
 ("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.s
 ty"
@@ -279,147 +324,132 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 estring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count118
+\c@section@level=\count120
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 32.
+LaTeX Info: Redefining \pageref on input line 32.
+LaTeX Info: Redefining \nameref on input line 32.
  (HubListenerRequirementsSpecificationsDocument.out)
 (HubListenerRequirementsSpecificationsDocument.out)
 \@outlinefile=\write3
 \openout3 = `HubListenerRequirementsSpecificationsDocument.out'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 31.
+(Font)              <12> on input line 35.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 31.
+(Font)              <8> on input line 35.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 31.
+(Font)              <6> on input line 35.
  [1
 
 {C:/Users/piran/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 (HubListenerRequirementsSpecificationsDocument.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 3.
+(Font)              <7> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 3.
+(Font)              <5> on input line 4.
 )
 \tf@toc=\write4
 \openout4 = `HubListenerRequirementsSpecificationsDocument.toc'.
 
  [2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 46--59
+Underfull \hbox (badness 10000) in paragraph at lines 50--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--66
+Underfull \hbox (badness 10000) in paragraph at lines 64--70
 
  []
 
 [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--103
+Underfull \hbox (badness 10000) in paragraph at lines 102--107
 
  []
 
 [6]
-Underfull \hbox (badness 2351) in paragraph at lines 130--131
+Underfull \hbox (badness 2351) in paragraph at lines 134--135
 \OT1/cmr/m/n/10 pro-gram-ming lan-guage. It is the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 130--131
+Underfull \hbox (badness 10000) in paragraph at lines 134--135
 \OT1/cmr/m/n/10 de-fault pack-age man-ager for the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 130--131
+Underfull \hbox (badness 10000) in paragraph at lines 134--135
 \OT1/cmr/m/n/10 JavaScript run-time en-vi-ron-ment
  []
 
 
-Overfull \hbox (24.03302pt too wide) in paragraph at lines 110--135
+Overfull \hbox (24.03302pt too wide) in paragraph at lines 114--139
 [] 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 138--139
+Underfull \hbox (badness 10000) in paragraph at lines 142--143
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--151
+Underfull \hbox (badness 10000) in paragraph at lines 144--155
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--151
+Underfull \hbox (badness 10000) in paragraph at lines 144--155
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--151
+Underfull \hbox (badness 10000) in paragraph at lines 144--155
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 180--180
+Underfull \hbox (badness 10000) in paragraph at lines 184--184
 []|\OT1/cmr/bx/n/10 Reqt
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--183
+Underfull \hbox (badness 10000) in paragraph at lines 186--187
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--183
+Underfull \hbox (badness 10000) in paragraph at lines 186--187
 \OT1/cmr/m/n/10 shall match the
  []
 
 
-Underfull \hbox (badness 3579) in paragraph at lines 184--184
+Underfull \hbox (badness 3579) in paragraph at lines 188--188
 []|\OT1/cmr/m/n/10 HubListener must take in a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--185
+Underfull \hbox (badness 10000) in paragraph at lines 188--189
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--185
-\OT1/cmr/m/n/10 should val-i-date
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 184--185
-\OT1/cmr/m/n/10 that the in-put
- []
-
-
-Underfull \hbox (badness 2245) in paragraph at lines 184--185
-\OT1/cmr/m/n/10 link is a GitHub
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 186--187
-[]|\OT1/cmr/m/n/10 HubListener logs
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 186--187
+Underfull \hbox (badness 10000) in paragraph at lines 188--189
 \OT1/cmr/m/n/10 should val-i-date
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 188--189
-[]|\OT1/cmr/m/n/10 HubListener will
+\OT1/cmr/m/n/10 that the in-put
+ []
+
+
+Underfull \hbox (badness 2245) in paragraph at lines 188--189
+\OT1/cmr/m/n/10 link is a GitHub
  []
 
 
@@ -428,85 +458,97 @@ Underfull \hbox (badness 10000) in paragraph at lines 190--191
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 190--191
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
+\OT1/cmr/m/n/10 should val-i-date
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 192--193
+[]|\OT1/cmr/m/n/10 HubListener will
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
+[]|\OT1/cmr/m/n/10 HubListener logs
+ []
+
+
+Underfull \hbox (badness 3724) in paragraph at lines 194--195
 \OT1/cmr/m/n/10 should val-i-date a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 190--191
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
 \OT1/cmr/m/n/10 suc-ceeded when
  []
 
 
-Underfull \hbox (badness 3364) in paragraph at lines 192--193
+Underfull \hbox (badness 3364) in paragraph at lines 196--197
 []|\OT1/cmr/m/n/10 After Hub-Lis-tener
  []
 
 
-Underfull \hbox (badness 3049) in paragraph at lines 192--193
+Underfull \hbox (badness 3049) in paragraph at lines 196--197
 \OT1/cmr/m/n/10 view able in the
  []
 
 
-Overfull \hbox (32.98026pt too wide) in paragraph at lines 176--197
+Overfull \hbox (32.98026pt too wide) in paragraph at lines 180--201
 [][] 
  []
 
-[9]
-Overfull \hbox (39.03302pt too wide) in paragraph at lines 199--223
-[][] 
+[9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 231--232
+
  []
 
-[10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 285--286
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 282--283
-
- []
-
-[13]
-Overfull \hbox (2.83339pt too wide) in paragraph at lines 358--359
+Overfull \hbox (2.83339pt too wide) in paragraph at lines 361--362
 []\OT1/cmr/bx/n/10 Fit-Criteria: \OT1/cmr/m/n/10 The repos-i-tory is Li-censed 
 un-der GPL-3.0 which abides
  []
 
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 398--398
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 401--401
 []|\OT1/cmr/bx/n/10 Risk
  []
 
 
-Overfull \hbox (105.93854pt too wide) in paragraph at lines 394--411
+Overfull \hbox (105.93854pt too wide) in paragraph at lines 397--414
 [][] 
  []
 
-[15] [16] [17]
-Underfull \hbox (badness 1496) in paragraph at lines 438--438
+[14] [15] [16]
+Underfull \hbox (badness 1496) in paragraph at lines 441--441
 \OT1/cmr/m/n/10 sign Choice And Off-The-Shelf
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 441.
-[18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 441.
- (HubListenerRequirementsSpecificationsDocument.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 441.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 441.
+(HubListenerRequirementsSpecificationsDocument.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 445.
+ [17]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 445.
+
+(HubListenerRequirementsSpecificationsDocument.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 445.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 445.
 Package rerunfilecheck Info: File `HubListenerRequirementsSpecificationsDocumen
 t.out' has not changed.
-(rerunfilecheck)             Checksum: 1978C3C77CE7979DC93D0ECB63D33B2C;2243.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 441.
+(rerunfilecheck)             Checksum: 5C71EB43E1425923B4727C8B8D6DC351;2291.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 445.
  ) 
 Here is how much of TeX's memory you used:
- 6352 strings out of 492970
- 95075 string characters out of 3126594
- 186816 words of memory out of 3000000
- 10104 multiletter control sequences out of 15000+200000
- 8561 words of font info for 30 fonts, out of 3000000 for 9000
+ 6965 strings out of 492970
+ 104261 string characters out of 3126594
+ 204428 words of memory out of 3000000
+ 10685 multiletter control sequences out of 15000+200000
+ 8907 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,10n,32p,1174b,461s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 28i,10n,32p,1174b,475s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmbx12.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/f
@@ -514,11 +556,12 @@ onts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/piran/AppData/Local/Progra
 ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/piran/AppData/
 Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/pi
 ran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-
-Output written on HubListenerRequirementsSpecificationsDocument.pdf (18 pages, 
-158864 bytes).
+<C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmti10.pfb>
+Output written on HubListenerRequirementsSpecificationsDocument.pdf (17 pages, 
+173272 bytes).
 PDF statistics:
- 350 PDF objects out of 1000 (max. 8388607)
- 103 named destinations out of 1000 (max. 500000)
- 257 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 359 PDF objects out of 1000 (max. 8388607)
+ 105 named destinations out of 1000 (max. 500000)
+ 265 words of extra memory for PDF output out of 10000 (max. 10000000)
 
