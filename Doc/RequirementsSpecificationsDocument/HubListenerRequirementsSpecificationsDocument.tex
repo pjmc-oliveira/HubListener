@@ -59,7 +59,7 @@ The user problem in this case is not serious, as most GitHub projects already us
 \textbf{Content}\newline
 The purpose of HubListener is provide users with relevant metrics, trends, and information regarding their GitHub project, and in some cases, push the user to make appropriate changes (can be organizational) that are intended to lean the project towards a more ‘successful’ one.\newline
 \textbf{\textit{Measurement}}
-After analyzing a set amount of projects (i.e. 20), and pointing out any significant/valuable metrics for the user that lead to any changes (minor or major), we can safely say that we have succeeded with the project.
+After analyzing a set amount of projects (e.g. 20), and pointing out any significant/valuable metrics for the user that lead to any changes (minor or major), we can safely say that we have succeeded with the project.
 \subsection{The Client, The Customer, and Other Stakeholders}
 \textbf{\textit{The Client:}}
 There is no real `client' for this service. The closest to this would be Dr. Christopher Anand who requires this for completion of the capstone course in exchange for credit towards the developer’s degree. \newline
@@ -71,7 +71,7 @@ Other stakeholders include members of the open-source community who wish to fork
 \subsection{Users of the Product:}
 \textbf{The Hands-On Users of the Product}
 \newline
-Developers and creators with existing projects on GitHub are our primary user group for this product. Their subject matter experience can range from novice to expert, as we are simply analyzing their repository and comparing it against GitHub’s ‘best’. Our users can be engineers, students, researchers, companies, and/or any organization looking to evaluate and improve their GitHub project in any way possible. 
+Developers and creators with existing projects on GitHub are our primary user group for this product. Their subject matter experience can range from novice to expert, as we are simply analyzing their repository and comparing it against GitHub’s ‘best’. Our users can be developers, students, researchers, companies, and/or any organization looking to evaluate and improve their GitHub project in any way possible. 
 \newpage
 
 
@@ -103,7 +103,6 @@ Below are the mandatory constraints that the HubListener tool is under : \newlin
 \textbf{\underline{Schedule Constraints:}}\newline
 \textbf{Description:} The service shall be available April 1, 2018.\newline
 \textbf{Rationale:} We want to launch the service by this date as it is the date that the project is due for assessment.\newline
-\textbf{Fit Criterion:} The HubListener service will be available for evaluation April, 1 2018 \newline
 
 \noindent
 \textbf{\underline{Budget Constraints:}} 
@@ -121,17 +120,17 @@ Naming Convention & Definition\\
 \hline 
 GitHub & A web-based version-control and collaboration platform for software developers. \\
 \hline
-NodeJS & An open source development platform for executing JavaScript code server-side \\
+Node.js & An open source development platform for executing JavaScript code server-side. \\
 \hline
-HubListener & The command-line service that is to be created.\\
+HubListener & The service that is to be created given the details in this document.\\
 \hline
-Repository & A digital directory or storage space where you can access your project, its files, and all the versions of its files that Git saves\\
+Repository &  A storage location that contains all of the project files (including documentation), and stores each file's revision history. \\
 \hline
-Command-Line Interface (CLI) & A text-based interface that is used to operate software and operating systems while allowing the user to respond to visual prompts by typing single commands into the interface and receiving a reply in the same way\\
+Command-Line Interface (CLI) & A text-based interface that is used to operate software and operating systems while allowing the user to respond to graphical prompts by typing single commands into the interface and receiving a reply in the same way\\
 \hline
 Cyclomatic Complexity & A software metric, used to indicate the complexity of a program. It is a quantitative measure of the number of linearly independent paths through a program's source code.\\
 \hline 
-Node Package Manager (NPM) & is a package manager for the JavaScript programming language. It is the default package manager for the JavaScript runtime environment Node.js. It consists of a command line client, also called npm, and an online database of public and paid-for private packages, called the npm registry.\\
+Node Package Manager (NPM) & Is a package manager for the JavaScript programming language. It is the default package manager for the JavaScript runtime environment Node.js. It consists of a CLI , also called npm, and an online database of public and paid-for private packages, called the npm registry.\\
 \hline 
 Metric &A software metric is a standard of measure of a degree to which a software system or process possesses some property.\\
 \hline 
@@ -185,15 +184,15 @@ Below are the functional requirements that we have identified for HubListener.
 \hline 
 1 & Functional & HubListener must provide user selected metrics to the end user & HubListener logs shall match the user input and the provided metrics.\\
 \hline 
-2 & Functional & HubListener must take in a GitHub checkout link as input. & HubListener logs should validate that the input link is a GitHub checkout link.\\
+2 & Functional & HubListener must take in a GitHub project link as input. & HubListener logs should validate that the input link is a GitHub checkout link.\\
 \hline 
 3 & Functional & HubListener must have a help section as part of command line interface. & HubListener logs should validate that the main output includes a help section.\\ 
 \hline 
-4 & Functional & Users must be able to customize which metrics to analyze & HubListener will run with one metric selected and all metrics selected\\
+4 & Functional & Users must be able to customize which metrics to analyze & HubListener logs will validate at least one metric is selected.\\
 \hline 
 5 & Functional & User must be able to install, update or uninstall HubListener through the node package manager interface. & HubListener logs should validate a npm install, update and uninstall have succeeded when called upon. \\
 \hline 
-6 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are view able in the database. Logs validate an addition to the database.  \\
+6 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are viewable in the database. Logs validate an addition to the database.  \\
 \hline 
 7 & Functional & HubListener must analyze the metrics and display one or more trends. & HubListener logs at least one trend. \\
 \hline
@@ -238,7 +237,7 @@ The following sections go into detail about the non-functional requirements for 
     \end{enumerate}
 \item The application shall comply with Open standards.
    \begin{enumerate}
-    \item \textbf{Fit-Criteria:} 100\% of users in our survey  can verify that the application is easy to access\/adopt and open for public review and debate.
+    \item \textbf{Fit-Criteria:} 100\% of users in our survey  can verify that the application is easy to access\//adopt and open for public review and debate.
     \end{enumerate}
 \item Useful information (such as help, report issues, training) should be easily accessible.
    \begin{enumerate}
@@ -257,9 +256,9 @@ The following sections go into detail about the non-functional requirements for 
    \begin{enumerate}
     \item \textbf{Fit-Criteria:}  90 \% of the users in our survey are able to use the application and all its features and deem the application understandable.  
     \end{enumerate}
-\item The application shall make it easy for the average user to find user-use guidelines.
+\item The application shall make it easy for the average user to find help guidelines.
    \begin{enumerate}
-    \item \textbf{Fit-Criteria:}  80 \% of user in our survey are able to successfully find the user-use guidelines within one minute.
+    \item \textbf{Fit-Criteria:}  80 \% of user in our survey are able to successfully find the help guidelines within one minute.
     \end{enumerate}
 \end{enumerate}
 
@@ -284,6 +283,7 @@ The following sections go into detail about the non-functional requirements for 
 \subsection{Operational Requirements}
 Operational Requirements are comprised of expected physical and technological environments. \newline
 
+\noindent
 \textbf{Expected physical Environment }
 \begin{enumerate}
 \item Users will use the application on their internet-connected computer 
@@ -295,14 +295,11 @@ Operational Requirements are comprised of expected physical and technological en
 \noindent
 \textbf{Expected Technological Environment }
 \begin{enumerate}
-\item The application shall work on devices that have Node.JS installed on their machine 
+\item The application shall work on devices that have Node.js installed on their machine 
    \begin{enumerate}
-    \item \textbf{Fit-Criteria:}  100\% of users in our survey are able to run the application when they have Node.JS installed. 
+    \item \textbf{Fit-Criteria:}  100\% of users in our survey are able to run the application when they have Node.js installed. 
     \end{enumerate}
-\item The application shall work on devices that have an internet connection. 
-   \begin{enumerate}
-    \item \textbf{Fit-Criteria:}   100\% of users in our survey are able to run the application when they have an internet connection. 
-    \end{enumerate}
+
 \end{enumerate}
 
 
@@ -311,18 +308,14 @@ Operational Requirements are comprised of expected physical and technological en
 \begin{enumerate}
 \item The software application is to be easily modifiable.
    \begin{enumerate}
-    \item \textbf{Fit-Criteria:}  80 \% of the users in our survey are able to clone the repository and make modifications to the source code. 
-    \end{enumerate}
-\item The application should notify user's to check for an npm update every 6 months. 
-   \begin{enumerate}
-    \item \textbf{Fit-Criteria:}  80\% of the user's in our survey will be notified in six months time, to update their npm packages. 
+    \item \textbf{Fit-Criteria:}  80 \% of the users in our survey are able to clone the repository and make fork requests. 
     \end{enumerate}
 \end{enumerate}
 
 \noindent
 \textbf{Portability} 
 \begin{enumerate}
-\item The application shall be available on any computer operating system such as MAC, Windows and Linux
+\item The application shall be available on any computer operating system such as macOS, Windows and Linux
    \begin{enumerate}
     \item \textbf{Fit-Criteria:}  100 \% of users in our survey are able to run the application on their device irrespective of their operating system. The survey ensures that there is at least one user on all three operating systems defined. 
     \end{enumerate}
@@ -367,7 +360,7 @@ Operational Requirements are comprised of expected physical and technological en
 This section will contain information regarding how issues are being handled, some of the off-the-shelf solutions we will be employing as well as risks, costs and where to find documentation and training. 
 
 \subsection{Open Issues}
-All open issues can be see on our Issue tracking board. (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
+All open issues can be see on our Issue tracking board. (\href{https://github.com/pjmc-oliveira/HubListener/projects/1}{HubListener on GitHub})
 \subsection{Off-the-Shelf Solutions}
 Attempting to emulate similar application could greatly reduce the time needed to design and implemnt HubListener. If an off the shelf solution is available and fit our requirements, we will use it as part of the software, providing the necessary credit as needed. Below are the off-the-shelf solutions we are looking at right now:
 
@@ -386,7 +379,7 @@ Attempting to emulate similar application could greatly reduce the time needed t
 N/A
 
 \subsection{Tasks}
-All open tasks can be seen our Issue tracking board (\href{ https://app.zenhub.com/workspaces/hublistener-5bad6c4d4b5806bc2bea488f/boards?repos=150634456}{HubListener on ZenHub})
+All open tasks can be seen our Issue tracking board (\href{https://github.com/pjmc-oliveira/HubListener/projects/1}{HubListener on GitHub})
 \subsection{Migration to the New Product}
 
 No new product to migrate to. This section is currently not applicable, but included for completeness. 
