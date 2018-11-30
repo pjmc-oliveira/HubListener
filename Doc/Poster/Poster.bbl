@@ -1,8 +1,9 @@
 \begin{thebibliography}{1}
 
-\bibitem{cerpa1996some}
-N.~Cerpa, P.~Chandler, and J.~Sweller, ``Some conditions under which integrated
-  computer-based training software can facilitate learning,'' {\em Journal of
-  Educational Computing Research}, vol.~15, no.~4, pp.~345--367, 1996.
+\bibitem{johnston2016Toolkit}
+T.~Johnston, ``Toolkit for automatic collection and predictive modelling of
+  software metrics,'' Master's thesis, McMaster University, Hamilton, Ontario,
+  Canada, 11 2016.
+\newblock Supervised by Dr. Douglas G. Down.
 
 \end{thebibliography}
