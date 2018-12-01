@@ -109,19 +109,21 @@ module.exports.Data = class Data {
             }`;
         return this.client.query(query, {}).then(
             body => body.data.repository
-        ).then(repo => ({
-            total: repo.total.nodes.map(n => ({
-                state: n.state,
-                createdAt: Date.parse(n.createdAt)
-            })),
-            open: repo.open.nodes.map(n => ({
-                createdAt: Date.parse(n.createdAt)
-            })),
-            closed: repo.closed.nodes.map(n => ({
-                createdAt: Date.parse(n.createdAt),
-                closedAt: Date.parse(n.closedAt)
-            }))
-        }))
+        ).then(
+            repo => ({
+                total: repo.total.nodes.map(n => ({
+                    state: n.state,
+                    createdAt: Date.parse(n.createdAt)
+                })),
+                open: repo.open.nodes.map(n => ({
+                    createdAt: Date.parse(n.createdAt)
+                })),
+                closed: repo.closed.nodes.map(n => ({
+                    createdAt: Date.parse(n.createdAt),
+                    closedAt: Date.parse(n.closedAt)
+                }))
+            })
+        )
 
     }
 };
