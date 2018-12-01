@@ -17,7 +17,7 @@ module.exports.Data = class Data {
     constructor(url, options = {}) {
         const {owner, name} = utils.parseURL(url);
         this.client = new Client(options.auth_token);
-        this.clonePromise = Clone.init(url);
+        this.clonePromise = options.noClone ? undefined : Clone.init(url);
         this.owner = owner;
         this.repoName = name;
     }
@@ -56,11 +56,11 @@ module.exports.Data = class Data {
 
     /**
      *  Get details from the first N issues of each kind (any/open/closed)
-     *  @param({
-     *      total:  [number],
-     *      open:   [number],
-     *      closed: [number],
-     *  })
+     *  @param {{
+     *      total:  number,
+     *      open:   number,
+     *      closed: number,
+     *  }}
      *      The first N issues to get by kind
      *
      *  @return {Promise({
@@ -125,5 +125,28 @@ module.exports.Data = class Data {
             })
         )
 
+    }
+
+    /**
+     *  Get number of stargazers of project
+     *
+     *  @return {{total: number}}
+     */
+    getNumberOfStargazers() {
+        const query = `
+            query repo{
+                repository(name: "${this.repoName}", owner: "${this.owner}"){
+                    stargazers {
+                        totalCount
+                    }
+                }
+            }`;
+        return this.client.query(query, {}).then(
+            body => body.data.repository
+        ).then(
+            repo => ({
+                total: repo.stargazers.totalCount,
+            })
+        );
     }
 };
