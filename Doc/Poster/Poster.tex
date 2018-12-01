@@ -15,7 +15,15 @@
             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 \usepackage{array}
 \usepackage{booktabs,adjustbox}
-\usepackage{subcaption} 
+\usepackage{subcaption}
+\usepackage{pgfplots}
+%plot options
+\pgfplotsset{width=7cm,compat=1.8}
+\PassOptionsToPackage{gray}{xcolor}
+
+\usetikzlibrary{shapes,shapes.geometric,arrows,fit,calc,positioning,automata,}
+
+\usepackage{wrapfig}
 
 %\mode<presentation>
 %this doesn't seem to make any difference; leave for now for trying out
@@ -36,7 +44,7 @@
   \institute[McMaster University]{$^\dagger$Department of Computing and Software, McMaster University
 
 1280 Main St. W, Hamilton, Ontario, Canada L8S 4L8}
-  \date{November 27th, 2018}
+  \date{December 5th, 2018}
 
 \begin{document}
 %compile with pdflatex
@@ -58,39 +66,89 @@
 \end{textblock}
 
 \begin{textblock}{7.25}(0.5,3.1)
-
-
-\begin{block}{Introduction}
+\begin{block}{Project Purpose}
+The HubListener tool was designed to provide users with relevant metrics, trends, and information regarding their GitHub projects. The goal here is to bring this set of organized data to the user’s attention and push them to make any improvements or corrections; as a means of project review and evaluation. Our tool puts a given repository against a set of the most popular projects on GitHub, making comparisons wherever possible. This however begs the question, “What specific metrics lead to success, and how do we measure this success?”
 \end{block}
 
-\begin{block}{Inspiration }
+\begin{block}{Target Users}
+The HubListener Tool's general consumer audience would be any member of the open-source community. We have however specifically targetted those with expertise using open-source software. As seen in the 'Proof of Concept' section, a friendly user interface has not yet been implemented, and so the user should at least be familiar with the use of a Command Line Interface.
+\newline
+\newline
+Example User Groups:
+\begin{itemize}
+\item Developers and Creators 
+\item Students (i.e. Engineers)
+\item Researchers
+\item Companies/Organizations
+\end{itemize}
 \end{block}
 
+\begin{block}{Proof of Concept}
+\begin{figure}
+  \begin{subfigure}{0.96\textwidth}
+    \centering
+     \includegraphics[width=39cm]{PowerShellPOC.png} 
+  \end{subfigure}
+\end{figure}
+The user enters the project URL via the Command Line Interface, and is provided the output in an array. This output consists of a large list of metrics that are pulled directly from GitHub.
 
-\begin{block}{Our ``HubListener'' Tool}
 \end{block}
+
 \end{textblock}
 
-
-
 \begin{textblock}{7.25}(8.25,3.1)
-\begin{block}{Proof of Concept}
+\begin{block}{Output of Metrics}
+The user provides the GitHub repository link as input, and we return the following output and more:
+\begin{itemize}
+\item Cyclomatic Complexity 
+\item Essential Complexity 
+\item Integration Complexity 
+\item Cyclomatic Density
+\item Lines of Code 
+\item Lines of Comments 
+\item Maintainability Index 
+\item Coupling Metric 
+\item Number of Methods
+\item Number of Variables 
+\item Number of Issues 
+\item Number of Bugs 
+\item Number of Stars 
+\item Functional Coverage Score
+\item Condition Coverage Score 
+\end{itemize}
+
+Below are some examples of trends that can be viewed via GitHub. However, our goal is to provide a trend pairing any of the metrics jotted above (or observe the pattern across time), as GitHub is unable to do so currently. 
+
+\begin{figure}
+  \begin{subfigure}{0.40\textwidth}
+    \includegraphics[height=11cm]{AddDeleteVisual1.png}
+        \caption*{Example 1: A visualization of additions and deletions from a GitHub repository. }
+  \end{subfigure}
+  \begin{subfigure}{0.40\textwidth}
+    \includegraphics[height=12cm, width = 18cm]{Contributions.png}
+        \caption*{Example 2: A visualization of contributions to a repository over time. }
+    \end{subfigure}
+ \end{figure}
+
 \end{block}
 
-
-\begin{block}{Conclusions \& Future Work}
+\begin{block}{Project Goals \& Future Work}
+We hope that our tool will provide valuable metrics or trends to at least 20 users, leading to any changes (minor or major) to their GitHub project; at which point our team can safely say that we have succeeded with this project. Future work includes creating a friendly user interface for easier use of our application, as well as expanding the amount of metrics and trends analyzed. We also wish to add more user options/customizability, so that they are able to be more selective when it comes to the output of HubListener.
 \end{block}
 
 \begin{block}{Acknowledgements}
+The HubListener Capstone team would like to thank Dr. Smith for supervising this project. Our shared enthusiasm for this project, along with his consistent input, has been instrumental to our ongoing success. We would also like to thank Dr. Anand for his organization of the course and the Faculty of Engineering at McMaster for providing us the platform to pursue a project of this magnitude. We greatly appreciate all the feedback the students, faculty and staff have provided on this project. Your comments and concerns continue to fuel our passion for HubListener. 
 \end{block}
-The Hublistener capstone team would like to thank Dr.Smith for his supervision through this process. His input has been instrumental to our ongoing success. 
-We would also like to thank Dr.Anand for his organization of the course and the faculty of engineering at McMaster for providing us the platform to do  a project of this size. We would also like to thank all students, faculty and staff that have and will provide feedback on this project. Your feedback continues to fuel our passion to explore. 
+
+
 \begin{block}{References}
 \setbeamertemplate{bibliography item}{\insertbiblabel}
 \bibliographystyle{ieeetr}
 {\scriptsize
 \bibliography{bib}}
 \end{block}
+
+
 
 \begin{comment}
 %these aren't in any particular style, it's just the basic idea

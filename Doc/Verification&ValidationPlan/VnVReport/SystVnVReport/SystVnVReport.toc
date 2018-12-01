@@ -13,8 +13,7 @@
 \contentsline {section}{\numberline {6}Nonfunctional Requirements Evaluation}{3}{section.6}
 \contentsline {section}{\numberline {7}Comparison to Existing Implementation}{4}{section.7}
 \contentsline {section}{\numberline {8}Unit Testing}{4}{section.8}
-\contentsline {section}{\numberline {9}Changes Due to Testing}{4}{section.9}
-\contentsline {section}{\numberline {10}Automated Testing}{4}{section.10}
-\contentsline {section}{\numberline {11}Trace to Requirements}{4}{section.11}
-\contentsline {section}{\numberline {12}Trace to Modules}{5}{section.12}
-\contentsline {section}{\numberline {13}Code Coverage Metrics}{5}{section.13}
+\contentsline {section}{\numberline {9}Automated Testing}{4}{section.9}
+\contentsline {section}{\numberline {10}Trace to Requirements}{4}{section.10}
+\contentsline {section}{\numberline {11}Trace to Modules}{4}{section.11}
+\contentsline {section}{\numberline {12}Code Coverage Metrics}{4}{section.12}
