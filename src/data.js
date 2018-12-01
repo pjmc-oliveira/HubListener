@@ -149,4 +149,27 @@ module.exports.Data = class Data {
             })
         );
     }
+
+    /**
+     *  Get number of pull requests of project
+     *
+     *  @return {{total: number}}
+     */
+    getNumberOfPullRequests() {
+        const query = `
+            query repo{
+                repository(name: "${this.repoName}", owner: "${this.owner}"){
+                    pullRequests {
+                        totalCount
+                    }
+                }
+            }`;
+        return this.client.query(query, {}).then(
+            body => body.data.repository
+        ).then(
+            repo => ({
+                total: repo.pullRequests.totalCount,
+            })
+        );
+    }
 };
