@@ -2,6 +2,14 @@
 utils.js contains utility functions
  */
 
+
+/**
+ *  Parses a GitHub project URL
+ *  @param {string} the URL
+ *
+ *  @return {{owner: string, name: string}}
+ *      The owner and the name of the project
+ */
 function parseURL(url) {
     const url_parts = url.split('/');
     const index = url_parts.indexOf('github.com');
@@ -13,6 +21,7 @@ function parseURL(url) {
         name: url_parts[index + 2]
     };
 }
+
 
 module.exports = {
     parseURL: parseURL
