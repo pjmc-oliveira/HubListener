@@ -18,6 +18,7 @@
   "homepage": "https://github.com/pjmc-oliveira/HubListener#readme",
   "dependencies": {
     "graphql-client": "^2.0.1",
+    "moment": "^2.22.2",
     "node-dir": "^0.1.17",
     "nodegit": "^0.23.0",
     "tmp": "0.0.33"

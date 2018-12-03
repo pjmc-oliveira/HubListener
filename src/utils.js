@@ -22,7 +22,37 @@ function parseURL(url) {
     };
 }
 
+/**
+ *  Zips two arrays
+ *  @param {Array} the first array
+ *  @param {Array} the sedond array
+ *
+ *  @return {Array} the zipped array
+ */
+function zip(a, b) {
+    var output = [];
+    for (const key in a) {
+        output.push([a[key], b[key]]);
+    }
+    return output;
+}
+
+/**
+ *  Adds a value to a key in a given object, and returns the new object
+ *  @param {object} the object to add the key-value to
+ *  @param {Array} the array where the first element is the key, and the second the value
+ *
+ *  @return {object} the modified object
+ */
+function addKeyValueToObject(obj, keyValue) {
+    const [key, value] = keyValue;
+    obj[key] = value;
+    return obj;
+}
+
 
 module.exports = {
-    parseURL: parseURL
+    parseURL: parseURL,
+    zip: zip,
+    addKeyValueToObject: addKeyValueToObject
 };

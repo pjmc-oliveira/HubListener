@@ -1,5 +1,7 @@
 'use strict';
 
+const moment = require('moment');
+
 const {Client} = require('./client.js');
 const {Clone} = require('./clone.js');
 const utils = require('./utils.js');
@@ -163,5 +165,76 @@ module.exports.Data = class Data {
         return this.client.query(query, {})
             .then(body => body.data.repository)
             .then(repo => ({total: repo.pullRequests.totalCount}));
+    }
+
+    /**
+     *  Get total number of commits in Master
+     *
+     *  @return {{total: number}}
+     */
+    getNumberOfCommits() {
+        const query = `
+            query repo{
+                repository(name: "${this.repoName}", owner: "${this.owner}"){
+                    ref(qualifiedName: "master") {
+                        target {
+                            ... on Commit {
+                                history {
+                                    totalCount
+                                }
+                            }
+                        }
+                    }
+                }
+            }`;
+        return this.client.query(query, {})
+            .then(body => body.data.repository)
+            .then(repo => ({total: repo.ref.target.history.totalCount}));
+    }
+
+    /**
+     *  Get total number of commits in Master in each timeDelta
+     *  @param {Date} the start of the sampling period
+     *  @param {object} the timedelta of each period
+     *
+     *  @return {object}
+     *      an object where each key is a ISO 8601 string of the date of the start of
+     *      the sampling period, and the key is the number of commits in the period.
+     */
+    getNumberOfCommitsByTime(
+            startTime = moment().subtract(6, 'months'),
+            timeDelta = {days: 7}) {
+        const start = moment(startTime);
+        const query = `
+            query repo ($start: GitTimestamp!, $end: GitTimestamp!) {
+                repository(name: "${this.repoName}", owner: "${this.owner}"){
+                    ref(qualifiedName: "master") {
+                        target {
+                            ... on Commit {
+                                history (since: $start, until: $end) {
+                                    totalCount
+                                }
+                            }
+                        }
+                    }
+                }
+            }`;
+        var queries = [];
+        var startTimes = []
+        // WARNING: moment().add(...) is in place!
+        while (start.isBefore(moment())) {
+            startTimes.push(start.toISOString());
+            queries.push(
+                this.client.query(
+                    query, {
+                        start: start.toISOString(),
+                        end: start.add(timeDelta).toISOString()}))
+        }
+
+        return Promise.all(queries)
+            .then(Qs => Qs.map(body => body.data.repository))
+            .then(repos => repos.map(repo => repo.ref.target.history.totalCount))
+            .then(commitsByWeek => utils.zip(startTimes, commitsByWeek))
+            .then(timeCountPairs => timeCountPairs.reduce(utils.addKeyValueToObject, {}));
     }
 };
