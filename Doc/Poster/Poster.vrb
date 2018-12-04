@@ -33,7 +33,7 @@ As seen in the 'Proof of Concept' section below, a friendly user interface has n
 \begin{figure}
   \begin{subfigure}{0.96\textwidth}
     \centering
-     \includegraphics[width=36cm]{PowerShellPOC_p2.png}
+     \includegraphics[width=34cm]{PowerShellPOC_p2.png}
   \end{subfigure}
 \end{figure}
 The user enters the project URL via the Command Line Interface, and is provided the output in an array. This output consists of a large list of metrics that are pulled directly from GitHub; which is accomplished through the use of GitHub GraphQL API v4.
@@ -44,7 +44,7 @@ The user enters the project URL via the Command Line Interface, and is provided 
 
 \begin{textblock}{7.25}(8.25,3.1)
 \begin{block}{Output of Metrics}
-The user provides the GitHub repository link as input, and we return the the output listed below. These metrics are in addition to the existing metrics provided by GitHub. \newline
+The user provides the GitHub repository link as input, and we return the the output listed below. These metrics are in addition to the existing metrics provided by GitHub.
 \begin{itemize}
 \item Cyclomatic Complexity
 \item Essential Complexity
@@ -57,7 +57,7 @@ The user provides the GitHub repository link as input, and we return the the out
 \item Number of Methods
 \item Number of Variables
 \item Functional Coverage Score
-\item Condition Coverage Score \newline
+\item Condition Coverage Score
 \end{itemize}
 Below are some examples of trends that can be viewed via GitHub. Our goal is to provide a trend pairing any of the metrics jotted above (or observe the pattern across time), as GitHub is unable to do so currently.
 

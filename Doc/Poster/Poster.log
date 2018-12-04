@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.22)  4 DEC 2018 12:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.22)  4 DEC 2018 13:36
 entering extended mode
 **./Poster.tex
 (Poster.tex
@@ -1496,7 +1496,7 @@ thkerncmss.
 File: figs/PowerShellPOC_p2.png Graphic file (type png)
 <use figs/PowerShellPOC_p2.png>
 Package pdftex.def Info: figs/PowerShellPOC_p2.png  used on input line 36.
-(pdftex.def)             Requested size: 1024.29921pt x 1003.03923pt.
+(pdftex.def)             Requested size: 967.39369pt x 947.1075pt.
 <figs/AddDeleteVisual1.png, id=17, 943.525pt x 671.50874pt>
 File: figs/AddDeleteVisual1.png Graphic file (type png)
 <use figs/AddDeleteVisual1.png>
@@ -1560,15 +1560,15 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 166.
 Here is how much of TeX's memory you used:
  39985 strings out of 492970
  954051 string characters out of 3135854
- 1212877 words of memory out of 3000000
+ 1213877 words of memory out of 3000000
  43062 multiletter control sequences out of 15000+200000
  16356 words of font info for 59 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,15n,100p,890b,889s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 65i,15n,100p,890b,885s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss17.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Poster.pdf (1 page, 324667 bytes).
+Output written on Poster.pdf (1 page, 324668 bytes).
 PDF statistics:
  47 PDF objects out of 1000 (max. 8388607)
  4 named destinations out of 1000 (max. 500000)
