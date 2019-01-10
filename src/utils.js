@@ -50,9 +50,50 @@ function addKeyValueToObject(obj, keyValue) {
     return obj;
 }
 
+/**
+ *  Parses an Array of strings (flags and values) into an object of flag keys,
+ *  and value values.
+ *  @param {Array} the Array of command line arguments to be parsed
+ *
+ *  @return {object} the parsed command line arguments. Where each flag
+ *      (strings beginning with '-' or '--') is a key, and the following strings
+ *      (until the next flag) are the values. If a flag has no associated value
+ *      it is simply 'true' (boolean). If it has multiple associated values they
+ *      will be stored in an Array. If it has only one, it is simply a string.
+ */
+function argParse(rawArgs) {
+    var args = {};
+    var currFlag = null;
+    // any string starting with '-' or '--' and without any whitespace
+    const flagPattern = /^(--|-)([^\s]+)$/;
+    for (const arg of rawArgs) {
+        const match = flagPattern.exec(arg)
+        // the argument is a flag
+        if (match !== null) {
+            currFlag = match[2];
+            args[currFlag] = true;
+
+        // the argument is not a flag, and the current flag is set
+        } else if (currFlag !== null) {
+            const existingArg = args[currFlag];
+            // If flag has no associated value, associate value
+            if (existingArg === true) {
+                args[currFlag] = arg;
+            // If flag has 1 associated value, make an Array with both values
+            } else if (typeof existingArg === 'string') {
+                args[currFlag] = [existingArg, arg];
+            // If flag has multiple associated values, append to Array
+            } else if (Array.isArray(existingArg)) {
+                args[currFlag].push(arg)
+            }
+        }
+    }
+    return args;
+}
 
 module.exports = {
     parseURL: parseURL,
     zip: zip,
-    addKeyValueToObject: addKeyValueToObject
+    addKeyValueToObject: addKeyValueToObject,
+    argParse: argParse
 };
