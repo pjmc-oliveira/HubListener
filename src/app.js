@@ -11,7 +11,9 @@ function main(args) {
 
     // Available options and flags
     // NOTE: Update options message whenever a new option is added or removed
-    // TODO: add option to provide path to auth token file or auth token string as an argument
+    // TODO: add option to provide auth token string as an argument
+    // TODO: add option to read auth token from environment variables
+    // TODO: add option to export output into JSON file
     const optionsMsg = `
     Usage:  node app.js [--url <url>] [options...]
 
