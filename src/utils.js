@@ -2,7 +2,8 @@
 utils.js contains utility functions
  */
 
-
+// required for reading files
+var fs = require('fs');
 /**
  *  Parses a GitHub project URL
  *  @param {string} the URL
@@ -108,9 +109,34 @@ function argParse(rawArgs) {
     return args;
 }
 
+/**
+ *  write to a JSONFile 
+ *  @param {object} the js object 
+ *
+ *  @return {String} the confirmation string 
+ */
+function writeToJSONFile(metrics){
+    //stringify to a JSON object
+    var metricsToJSON =JSON.stringify(metrics);
+    //if file exists, append to results.json 
+    if (fs.existsSync('./results.json')){
+        fs.appendFile('./results.json',metricsToJSON );
+        var succResponse = "Results were appended to JSON Fie results.json in the directory " + __dirname;
+        return succResponse;
+    }
+    //else create new file and write. 
+    else{
+        fs.writeFileSync('./results.json',metricsToJSON)
+        var succResponse = "Results were added to a new JSON Fie, results.json,  in the directory " + __dirname;
+        return succResponse;
+    }
+
+}
+
 module.exports = {
     parseURL: parseURL,
     zip: zip,
     addKeyValueToObject: addKeyValueToObject,
-    argParse: argParse
+    argParse: argParse,
+    writeToJSONFile: writeToJSONFile
 };
