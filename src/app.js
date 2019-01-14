@@ -6,9 +6,6 @@ const utils = require('./utils');
 const { Data } = require ('./data');
 
 function main(args) {
-    // Parse arguments
-    const options = utils.argParse(args);
-
     // Available options and flags
     // NOTE: Update options message whenever a new option is added or removed
     // TODO: add option to provide auth token string as an argument
@@ -24,6 +21,16 @@ function main(args) {
     Documentation can be found at:
     https://github.com/pjmc-oliveira/HubListener
     `;
+
+    // Parse arguments
+    let options;
+    try {
+        options = utils.argParse(args);
+    } catch (error) {
+        console.log(error);
+        console.log(optionsMsg);
+        return;
+    };
 
     // If help flag, display options and exit
     if (options['h'] || options['help']) {

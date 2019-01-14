@@ -63,31 +63,48 @@ function addKeyValueToObject(obj, keyValue) {
  */
 function argParse(rawArgs) {
     var args = {};
+    var parsingErrors = [];
     var currFlag = null;
-    // any string starting with '-' or '--' and without any whitespace
-    const flagPattern = /^(--|-)([^\s]+)$/;
+    // any string starting with '-' and 1 character or '--' and multiple characters
+    const validFlagPattern = /^((--([^\s]{2,}))|(-([^-\s])))$/;
+    // any string not starting with '-'
+    const validValuePattern = /^([^-\s][^\s]+)$/;
     for (const arg of rawArgs) {
-        const match = flagPattern.exec(arg)
+        const matchedFlag = validFlagPattern.exec(arg);
+        const matchedValue = validValuePattern.exec(arg);
         // the argument is a flag
-        if (match !== null) {
-            currFlag = match[2];
+        if (matchedFlag !== null) {
+            currFlag = matchedFlag[3] || matchedFlag[5];
             args[currFlag] = true;
 
-        // the argument is not a flag, and the current flag is set
-        } else if (currFlag !== null) {
+        // the argument is not a flag, the current flag is set
+        // and the current argument is valid
+        } else if (currFlag !== null && matchedValue !== null) {
+            const value = matchedValue[0];
             const existingArg = args[currFlag];
             // If flag has no associated value, associate value
             if (existingArg === true) {
-                args[currFlag] = arg;
+                args[currFlag] = value;
             // If flag has 1 associated value, make an Array with both values
             } else if (typeof existingArg === 'string') {
-                args[currFlag] = [existingArg, arg];
+                args[currFlag] = [existingArg, value];
             // If flag has multiple associated values, append to Array
             } else if (Array.isArray(existingArg)) {
-                args[currFlag].push(arg)
+                args[currFlag].push(value)
             }
+
+        // collect any parsing errors (invalid flags or values)
+        } else if (currFlag !== null && matchedValue === null) {
+            parsingErrors.push(arg);
         }
     }
+
+    // if there were any parsing errors, throw exception
+    if (parsingErrors.length > 0) {
+        const errorsMsg = '[' + parsingErrors.join(', ') + ']';
+        throw `${errorsMsg} is/are not valid flag(s) or value(s)`;
+    }
+
     return args;
 }
 
