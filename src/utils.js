@@ -120,13 +120,13 @@ function writeToJSONFile(metrics){
     var metricsToJSON =JSON.stringify(metrics);
     //if file exists, append to results.json 
     if (fs.existsSync('./results.json')){
-        fs.appendFile('./results.json',metricsToJSON );
+        fs.appendFile('./results.json', metricsToJSON);
         var succResponse = "Results were appended to JSON Fie results.json in the directory " + __dirname;
         return succResponse;
     }
     //else create new file and write. 
     else{
-        fs.writeFileSync('./results.json',metricsToJSON)
+        fs.writeFileSync('./results.json', metricsToJSON)
         var succResponse = "Results were added to a new JSON Fie, results.json,  in the directory " + __dirname;
         return succResponse;
     }
