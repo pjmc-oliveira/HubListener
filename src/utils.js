@@ -3,7 +3,10 @@ utils.js contains utility functions
  */
 
 // required for reading files
-var fs = require('fs');
+const fs = require('fs');
+// required for joining paths
+const path = require('path');
+
 /**
  *  Parses a GitHub project URL
  *  @param {string} the URL
@@ -110,27 +113,31 @@ function argParse(rawArgs) {
 }
 
 /**
- *  write to a JSONFile 
- *  @param {object} the js object 
+ *  Write an object to a JSON File .
+ *  @param {object} the object to be written to the file
+ *  @param {string} the filename that will be written to
+ *  @param {object} optional options for execution:
+ *      dirname: the name of the directory of the output file,
+ *               defaults to current directory
+ *      append:  boolean to determine if should append (true) or overwrite (false)
+ *               if file already exists. Defaults to false
  *
  *  @return {String} the confirmation string 
  */
-function writeToJSONFile(metrics){
-    //stringify to a JSON object
-    var metricsToJSON =JSON.stringify(metrics);
-    //if file exists, append to results.json 
-    if (fs.existsSync('./results.json')){
-        fs.appendFile('./results.json', metricsToJSON);
-        var succResponse = "Results were appended to JSON Fie results.json in the directory " + __dirname;
-        return succResponse;
-    }
-    //else create new file and write. 
-    else{
-        fs.writeFileSync('./results.json', metricsToJSON)
-        var succResponse = "Results were added to a new JSON Fie, results.json,  in the directory " + __dirname;
-        return succResponse;
-    }
+function writeToJSONFile(obj, filename, {dirname = __dirname, append = false}){
+    // stringify to a JSON object
+    // TODO: pretty print JSON
+    const JsonString = JSON.stringify(obj);
+    // join path of directory and file
+    const filepath = path.join(dirname, filename);
 
+    // if file exists and append is set to true, append to file
+    if (fs.existsSync(filepath) && append) {
+        fs.appendFileSync(filepath, JsonString);
+    // else create new file and write. 
+    } else {
+        fs.writeFileSync(filepath, JsonString);
+    }
 }
 
 module.exports = {

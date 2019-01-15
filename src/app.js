@@ -10,13 +10,14 @@ function main(args) {
     // NOTE: Update options message whenever a new option is added or removed
     // TODO: add option to provide auth token string as an argument
     // TODO: add option to read auth token from environment variables
-    // TODO: add option to export output into JSON file
     const optionsMsg = `
     Usage:  node app.js [--url <url>] [options...]
 
-    -h, --help  : print command line options
-    --url <url> : GitHub project url
-    --no-clone  : Don't clone repository
+    -h, --help          : print command line options
+    -u, --url <url>     : GitHub project url
+    --no-clone          : Don't clone repository
+    -o, --out <file>    : Optional output file to output results
+    -a, --append        : Append to file if exists (and output file specified)
 
     Documentation can be found at:
     https://github.com/pjmc-oliveira/HubListener
@@ -38,7 +39,7 @@ function main(args) {
         return;
     }
 
-    const repoUrl = options['url'];
+    const repoUrl = options['u'] || options['url'];
     // If no repository url was provided, display options and exit
     if (repoUrl === undefined) {
         console.log(optionsMsg);
@@ -48,8 +49,17 @@ function main(args) {
     // Create new Data object
     const data = new Data(repoUrl, {noClone: options['no-clone']});
 
+    // Set the output function. default is console.log,
+    // but can optionally write to file.
+    const outputFilename = options['o'] || options['out'];
+    const shouldAppend = options['a'] || options['append']
+    const output =  outputFilename ?
+                    (obj => utils.writeToJSONFile(
+                        obj, outputFilename, {append: shouldAppend})) :
+                    console.log;
+
     data.getNumberOfCommitsByTime().then(x => {
-        console.log(x)
+        output(x)
     });
 }
 
