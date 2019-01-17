@@ -1,6 +1,7 @@
 'use strict';
 
 const moment = require('moment');
+const dir = require('node-dir');
 
 const {Client} = require('./client.js');
 const {Clone} = require('./clone.js');
@@ -236,5 +237,36 @@ module.exports.Data = class Data {
             .then(repos => repos.map(repo => repo.ref.target.history.totalCount))
             .then(commitsByWeek => utils.zip(startTimes, commitsByWeek))
             .then(timeCountPairs => timeCountPairs.reduce(utils.addKeyValueToObject, {}));
+    }
+
+    getLinesOfCode() {
+        return new Promise(function(fulfill, reject) {
+            this.clonePromise.then(function(clone){
+                // Recursively read files, excluding .git directory
+                dir.readFiles(clone.path, {
+                        excludeDir: ['.git']
+                        // Callback with file content and filename
+                    }, function(err, content, filename, next) {
+                        if (err) reject(err);
+
+                        var ext = path.extname(filename);
+
+                        // Create new entry in fileMetrics map for extension
+                        if (!fileMetrics[ext]) {
+                            fileMetrics[ext] = {files: 1, lines: content.split("\n").length};
+                            // Increment filecount and linecount for extensions previously found
+                        } else {
+                            fileMetrics[ext] = {files: fileMetrics[ext].files + 1, lines: fileMetrics[ext].lines + content.split("\n").length};
+                        }
+                        next();
+                    },
+                    // Finished reading files
+                    function(err, files){
+                        if (err) reject(err);
+
+                        fulfill(fileMetrics);
+                    });
+            });
+        });
     }
 };
