@@ -13,7 +13,7 @@ function main(args) {
     const optionsMsg = `
     Usage:  node app.js [--url <url>] [options...]
 
-    -h, --help          : print command line options
+    -h, --help          : Print command line options
     -u, --url <url>     : GitHub project url
     --no-clone          : Don't clone repository
     -o, --out <file>    : Optional output file to output results
