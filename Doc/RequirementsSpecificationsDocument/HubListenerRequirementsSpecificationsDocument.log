@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.8)  30 NOV 2018 17:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.22)  17 JAN 2019 16:22
 entering extended mode
 **./HubListenerRequirementsSpecificationsDocument.tex
 (HubListenerRequirementsSpecificationsDocument.tex
 LaTeX2e <2018-04-01> patch level 5
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\article.cls"
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size10.clo"
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
 File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count80
@@ -20,8 +20,7 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\booktabs\booktabs.
-sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
 Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \heavyrulewidth=\dimen103
 \lightrulewidth=\dimen104
@@ -41,10 +40,10 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count91
 \@thisrulewidth=\dimen115
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\tabularx.sty
-"
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\tabularx.sty"
 Package: tabularx 2016/02/03 v2.11b `tabularx' package (DPC)
- ("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\array.sty"
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\array.sty"
 Package: array 2018/04/30 v2.4h Tabular extension package (FMi)
 \col@sep=\dimen116
 \ar@mcellbox=\box26
@@ -62,10 +61,8 @@ Package: array 2018/04/30 v2.4h Tabular extension package (FMi)
 \TX@cols=\count92
 \TX@ftn=\toks15
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.
-sty"
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.st
-y"
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 )
@@ -82,30 +79,25 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \lst@lineno=\count98
 \lst@maxwidth=\dimen126
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.s
-ty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
 File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
 \c@lstnumber=\count99
 \lst@skipnumbers=\count100
 \lst@framebox=\box29
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.
-cfg"
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.cfg"
 File: listings.cfg 2018/09/02 1.7 listings configuration
 ))
 Package: listings 2018/09/02 1.7 (Carsten Heinz)
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperref.
-sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
 Package: hyperref 2018/09/30 v6.88a Hypertext links for LaTeX
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-
-hyperref.sty"
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
 Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
 
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-
-generic.sty"
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
 Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
 Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
@@ -145,32 +137,27 @@ Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.
-sty"
+("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhook.s
-ty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty"
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions
-.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen127
 \Hy@linkcounter=\count101
 \Hy@pagecounter=\count102
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.de
-f"
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
 File: pd1enc.def 2018/09/30 v6.88a Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
 \Hy@SavedSpaceFactor=\count103
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperref.
-cfg"
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
 Package hyperref Info: Hyper figures OFF on input line 4535.
@@ -181,7 +168,8 @@ Package hyperref Info: Backreferencing OFF on input line 4555.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4788.
 \c@Hy@tempcnt=\count104
- ("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
@@ -205,58 +193,52 @@ LaTeX Info: Redefining \pageref on input line 6470.
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hpdftex.d
-ef"
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
 File: hpdftex.def 2018/09/30 v6.88a Hyperref driver for pdfTeX
 \Fld@listcount=\count109
 \c@bookmark@seq@number=\count110
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunfile
-check.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
 \Hy@SectionHShift=\skip45
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\inputenc.sty"
 Package: inputenc 2018/04/06 v1.3b Input encoding file
 \inpenc@prehook=\toks18
 \inpenc@posthook=\toks19
-) ("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.st
-y"
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.sty"
 Package: babel 2018/09/26 3.24 The Babel package
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\switch.def
-"
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\switch.def"
 File: switch.def 2018/09/26 3.24 Babel switching mechanism
 )
 *************************************
 * Local config file bblopts.cfg used
 *
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg"
+("C:\Program Files\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg"
 File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
  babel
 )
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-english\engl
-ish.ldf"
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
 Language: english 2017/06/06 v3.3r English support from the babel system
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.def"
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.def"
 File: babel.def 2018/09/26 3.24 Babel common definitions
 \babel@savecnt=\count111
 \U@D=\dimen131
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\txtbabel.d
-ef")
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\txtbabel.def")
 \bbl@dirlevel=\count112
 )
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ))
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tocbibind\tocbibin
-d.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\tocbibind\tocbibind.sty"
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
 Package tocbibind Info: The document has section divisions on input line 50.
 
@@ -285,22 +267,18 @@ LaTeX Font Info:    ... okay on input line 32.
 \c@lstlisting=\count113
 \AtBeginShipoutBox=\box30
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty
-"
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
 Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color
-.cfg"
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg"
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\pdfte
-x.def"
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def"
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf.mk
-ii"
+("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count114
 \scratchdimen=\dimen132
@@ -315,13 +293,10 @@ ii"
 \everyMPtoPDFconversion=\toks21
 )))
 Package hyperref Info: Link coloring ON on input line 32.
-
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.s
-ty"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
-("C:\Users\piran\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gettitl
-estring.sty"
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count120
@@ -329,7 +304,8 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 32.
 LaTeX Info: Redefining \pageref on input line 32.
 LaTeX Info: Redefining \nameref on input line 32.
- (HubListenerRequirementsSpecificationsDocument.out)
+
+(HubListenerRequirementsSpecificationsDocument.out)
 (HubListenerRequirementsSpecificationsDocument.out)
 \@outlinefile=\write3
 \openout3 = `HubListenerRequirementsSpecificationsDocument.out'.
@@ -342,7 +318,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 35.
  [1
 
-{C:/Users/piran/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+{C:/Users/prakh/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 (HubListenerRequirementsSpecificationsDocument.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 4.
@@ -367,148 +343,158 @@ Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 102--106
-
- []
-
 [6]
-Underfull \hbox (badness 1117) in paragraph at lines 129--130
+Underfull \hbox (badness 1117) in paragraph at lines 128--129
 \OT1/cmr/m/n/10 op-er-ate soft-ware and op-er-at-ing sys-
  []
 
 
-Underfull \hbox (badness 2351) in paragraph at lines 133--134
+Underfull \hbox (badness 2351) in paragraph at lines 132--133
 \OT1/cmr/m/n/10 pro-gram-ming lan-guage. It is the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--134
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 \OT1/cmr/m/n/10 de-fault pack-age man-ager for the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--134
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 \OT1/cmr/m/n/10 JavaScript run-time en-vi-ron-ment
  []
 
 
-Overfull \hbox (24.03302pt too wide) in paragraph at lines 113--138
+Overfull \hbox (24.03302pt too wide) in paragraph at lines 112--137
 [] 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 141--142
+Underfull \hbox (badness 10000) in paragraph at lines 140--141
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 143--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--153
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 143--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--153
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 143--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--153
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 183--183
+Underfull \hbox (badness 10000) in paragraph at lines 176--177
+
+ []
+
+
+Overfull \hbox (39.03302pt too wide) in paragraph at lines 178--202
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--207
 []|\OT1/cmr/bx/n/10 Reqt
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
+Underfull \hbox (badness 10000) in paragraph at lines 209--210
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
-\OT1/cmr/m/n/10 shall match the
+Underfull \hbox (badness 10000) in paragraph at lines 209--210
+\OT1/cmr/m/n/10 shall ver-ify the
  []
 
 
-Underfull \hbox (badness 3579) in paragraph at lines 187--187
+Underfull \hbox (badness 10000) in paragraph at lines 209--210
+\OT1/cmr/m/n/10 pro-vided set of
+ []
+
+
+Underfull \hbox (badness 3579) in paragraph at lines 211--211
 []|\OT1/cmr/m/n/10 HubListener must take in a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
 \OT1/cmr/m/n/10 should val-i-date
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
 \OT1/cmr/m/n/10 that the in-put
  []
 
 
-Underfull \hbox (badness 2245) in paragraph at lines 187--188
+Underfull \hbox (badness 2245) in paragraph at lines 211--212
 \OT1/cmr/m/n/10 link is a GitHub
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--190
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--190
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
 \OT1/cmr/m/n/10 should val-i-date
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 \OT1/cmr/m/n/10 will val-i-date at
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--194
+Underfull \hbox (badness 10000) in paragraph at lines 217--218
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 193--194
+Underfull \hbox (badness 3724) in paragraph at lines 217--218
 \OT1/cmr/m/n/10 should val-i-date a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--194
+Underfull \hbox (badness 10000) in paragraph at lines 217--218
 \OT1/cmr/m/n/10 suc-ceeded when
  []
 
 
-Underfull \hbox (badness 3364) in paragraph at lines 195--196
+Underfull \hbox (badness 3364) in paragraph at lines 219--220
 []|\OT1/cmr/m/n/10 After Hub-Lis-tener
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 195--196
+Underfull \hbox (badness 10000) in paragraph at lines 219--220
 \OT1/cmr/m/n/10 y-sis, the re-sults
  []
 
 
-Underfull \hbox (badness 2990) in paragraph at lines 195--196
+Underfull \hbox (badness 2990) in paragraph at lines 219--220
 \OT1/cmr/m/n/10 i-date an ad-di-tion
  []
 
 
-Overfull \hbox (32.98026pt too wide) in paragraph at lines 179--200
+Overfull \hbox (32.98026pt too wide) in paragraph at lines 203--224
 [][] 
  []
 
@@ -558,23 +544,21 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 438.
  ) 
 Here is how much of TeX's memory you used:
  6961 strings out of 492970
- 104233 string characters out of 3126594
- 204428 words of memory out of 3000000
+ 102203 string characters out of 3135854
+ 205428 words of memory out of 3000000
  10685 multiletter control sequences out of 15000+200000
  8907 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  28i,10n,32p,1174b,493s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmbx10.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmbx12.pfb><C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/piran/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/piran/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/pi
-ran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-<C:/Users/piran/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmti10.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmti10.pfb>
 Output written on HubListenerRequirementsSpecificationsDocument.pdf (17 pages, 
-172245 bytes).
+172820 bytes).
 PDF statistics:
  354 PDF objects out of 1000 (max. 8388607)
  101 named destinations out of 1000 (max. 500000)
