@@ -62,7 +62,7 @@ The purpose of HubListener is provide users with relevant metrics, trends, and i
 After analyzing a set amount of projects (e.g. 20), and pointing out any significant/valuable metrics for the user that lead to any changes (minor or major), we can safely say that we have succeeded with the project.
 \subsection{The Client, The Customer, and Other Stakeholders}
 \textbf{\textit{The Client:}}
-There is no real `client' for this service. The closest to this would be Dr. Christopher Anand who requires this for completion of the capstone course in exchange for credit towards the developer’s degree. \newline
+Our primary client is Dr. Smith, who aims to use this software to measure the 'quality' of scientific computing software. Our secondary client would be Dr. Christopher Anand, who requires this for completion of the capstone course in exchange for credit towards the developer’s degree. \newline
 \textbf{\textit{The Customer:}}
 The consumer of this service is any member of the open-source community. Being that the service is open-source, the consumer definition can range but it is clear from our usability requirements that the service is aimed at adults who have expertise using open-source software and understand not to infringe on copyright. \newline
 \textbf{\textit{Other Stakeholders:}}
@@ -82,30 +82,29 @@ Below are the mandatory constraints that the HubListener tool is under : \newlin
 
 \iffalse %Commenting a whole black till /fi
 \noindent
-\textbf{\underline{Solutions Constraints:}}\newline
+\textbf{{Solutions Constraints:}}\newline
 \textbf{Describe:} The HubListener system shall have a command line interface that has access to the GitHub API and associated analysis tools.\newline
 \textbf{Rationale:} This is central source of the information needed. \newline
 \textbf{Fit Criterion:} The interface will conform to GitHub API and JavaScript standards \newline
 
 \noindent
-\textbf{\underline{Implementation Environment of the Current System}}\newline
+\textbf{{Implementation Environment of the Current System}}\newline
 \textbf{Describe:} The HubListener system shall be written in the NodeJS environment.\newline
 \textbf{Rationale:} This is native way of accessing the GitHub API while also setting the system up to become a web based tool.\newline 
 \textbf{Fit Criterion:} The interface will conform to NodeJS and JavaScript policies and requirements. \newline
 
 \noindent
-\textbf{\underline{Off-the-Shelf Software}}\newline
+\textbf{{Off-the-Shelf Software}}\newline
 \textbf{Describe:} The HubListener system shall utilize any npm packages that aids in the retrieval and analysis of the repository. \newline
 \textbf{Rationale:} This is simplest way of retrieving and analyzing the repository. This will save labour time.\newline
 \textbf{Fit Criterion:} The interface will conform to npm and JavaScript policies and requirements. \newline
 \fi
 \noindent
-\textbf{\underline{Schedule Constraints:}}\newline
-\textbf{Description:} The service shall be available April 1, 2018.\newline
-\textbf{Rationale:} We want to launch the service by this date as it is the date that the project is due for assessment.\newline
+\textbf{{Schedule Constraints:}}
+The service shall be available April 1, 2018. We want to launch the service by this date as it is the date that the project is due for assessment.
 
 \noindent
-\textbf{\underline{Budget Constraints:}} 
+\textbf{{Budget Constraints:}} 
 The project has a financial budget of zero dollars. 
 \newpage
 \subsection{Naming Conventions and Definitions}
@@ -174,38 +173,15 @@ HubListener aims to provide a service which allows the user to compare his/her G
 
 \subsection{Functional Requirements }
 
-Below are the functional requirements that we have identified for HubListener.
+Below is a list of metrics that are to be outputted given a github project URL as input. This is followed by the functional requirements that we have identified for HubListener. \newline
 
-\begin{tabular}{ |p{1cm}|p{2cm}|p{5cm}|p{3cm}|  }
-\hline
-\multicolumn{4}{|c|}{\textbf{Functional Requirements}} \\
-\hline
-\textbf{Reqt No.} & \textbf{Reqt Type} & \textbf{Description} & \textbf{Fit-Criteria}\\
-\hline 
-1 & Functional & HubListener must provide user selected metrics to the end user & HubListener logs shall match the user input and the provided metrics.\\
-\hline 
-2 & Functional & HubListener must take in a GitHub project link as input. & HubListener logs should validate that the input link is a GitHub checkout link.\\
-\hline 
-3 & Functional & HubListener must have a help section as part of command line interface. & HubListener logs should validate that the main output includes a help section.\\ 
-\hline 
-4 & Functional & Users must be able to customize which metrics to analyze & HubListener logs will validate at least one metric is selected.\\
-\hline 
-5 & Functional & User must be able to install, update or uninstall HubListener through the node package manager interface. & HubListener logs should validate a npm install, update and uninstall have succeeded when called upon. \\
-\hline 
-6 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are viewable in the database. Logs validate an addition to the database.  \\
-\hline 
-7 & Functional & HubListener must analyze the metrics and display one or more trends. & HubListener logs at least one trend. \\
-\hline
-\end{tabular}
-
-\iffalse
 \begin{tabular}{ |p{6cm}||p{6cm}| }
 \hline
 \multicolumn{2}{|c|}{Functional Input And Output List} \\
 \hline
 Input & Output \\
 \hline 
-GitHub Checkout Link & 
+GitHub Project URL & 
 - Cyclomatic Complexity \newline
 - Essential Complexity \newline
 - Integration Complexity \newline
@@ -223,6 +199,30 @@ GitHub Checkout Link &
 - Condition Coverage Score \\
 \hline
 \end{tabular}
+
+\begin{tabular}{ |p{1cm}|p{2cm}|p{5cm}|p{3cm}|  }
+\hline
+\multicolumn{4}{|c|}{\textbf{Functional Requirements}} \\
+\hline
+\textbf{Reqt No.} & \textbf{Reqt Type} & \textbf{Description} & \textbf{Fit-Criteria}\\
+\hline 
+1 & Functional & HubListener must provide a set of metrics (refer to Functional Input and Output List above) to the end user. & HubListener logs shall verify the provided set of metrics.\\
+\hline 
+2 & Functional & HubListener must take in a GitHub project link as input. & HubListener logs should validate that the input link is a GitHub checkout link.\\
+\hline 
+3 & Functional & HubListener must have a man page accessible from the command line. & HubListener logs should validate that the man page exists.\\ 
+\hline 
+4 & Functional & Users must be able to customize which metrics to analyze & HubListener logs will validate at least one metric is selected.\\
+\hline 
+5 & Functional & User must be able to install, update or uninstall HubListener through the node package manager interface. & HubListener logs should validate a npm install, update and uninstall have succeeded when called upon. \\
+\hline 
+6 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are viewable in the database. Logs validate an addition to the database.  \\
+\hline 
+7 & Functional & HubListener must analyze the metrics and display one or more trends. & HubListener logs at least one trend. \\
+\hline
+\end{tabular}
+
+\iffalse
 \fi 
 \newpage
 \section{Non-functional Requirements}
