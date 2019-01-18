@@ -2,9 +2,11 @@
 
 const moment = require('moment');
 const dir = require('node-dir');
+const fs = require('mz/fs');
+const path = require('path');
 
-const {Client} = require('./client.js');
-const {Clone} = require('./clone.js');
+const { Client } = require('./client.js');
+const { Clone } = require('./clone.js');
 const utils = require('./utils.js');
 
 /**
@@ -239,34 +241,115 @@ module.exports.Data = class Data {
             .then(timeCountPairs => timeCountPairs.reduce(utils.addKeyValueToObject, {}));
     }
 
-    getLinesOfCode() {
-        return new Promise(function(fulfill, reject) {
-            this.clonePromise.then(function(clone){
-                // Recursively read files, excluding .git directory
-                dir.readFiles(clone.path, {
-                        excludeDir: ['.git']
-                        // Callback with file content and filename
-                    }, function(err, content, filename, next) {
-                        if (err) reject(err);
+    /**
+     *  Get number of lines of code and number of files by extension.
+     *  @param {Object} options - The options
+     *  @param {Array.<string>} [options.excludedDirs=['.git']]
+     *      - A list of directories to be excluded. Only '.git' by default
+     *  @param {Array.<string>} [options.excludedExts=[]]
+     *      - A list of extensions to be excluded.
+     *
+     *  @return {Object.<string, Object>} metrics
+     *      - The number of lines of code and number of files by extension
+     *  @return {number} metrics.<extension>.numberOfFiles
+     *      - The number of files with <extension>
+     *  @return {number} metrics.<extension>.numberOfLines
+     *      - The number of lines in files with <extension>
+     */
+    getLinesOfCode({
+            excludedDirs = ['.git'],
+            excludedExts = []} = {}) {
 
-                        var ext = path.extname(filename);
+        /**
+         *  A 'reducer' function to accumulate the file metrics to its extension
+         *  @param {Object} acc - The object to accumulate the metrics to.
+         *  @param {Object} file - The information of the file.
+         *  @param {string} file.ext - The extension of the file.
+         *  @param {string} file.contents - The contents of the file.
+         *
+         *  @result {Object} acc - The accumulated object.
+         *  @result {number} acc.<extension>.numberOfFiles
+         *      - The number of files with <extension>
+         *  @result {number} acc.<extension>.numberOfLines
+         *      - The number of lines in files with <extension>
+         */
+        function accumulateExtContents (acc, file) {
+            const numberOfLines = file.contents.split('\n').length;
+            // if the file extension key exists
+            // add to existing key
+            if (acc[file.ext]) {
+                acc[file.ext] = {
+                    numberOfFiles: acc[file.ext].numberOfFiles + 1,
+                    numberOfLines: acc[file.ext].numberOfLines + numberOfLines
+                };
+            // otherwise, create an new key
+            } else {
+                acc[file.ext] = {
+                    numberOfFiles: 1,
+                    numberOfLines: numberOfLines
+                };
+            }
+            return acc;
+        }
 
-                        // Create new entry in fileMetrics map for extension
-                        if (!fileMetrics[ext]) {
-                            fileMetrics[ext] = {files: 1, lines: content.split("\n").length};
-                            // Increment filecount and linecount for extensions previously found
-                        } else {
-                            fileMetrics[ext] = {files: fileMetrics[ext].files + 1, lines: fileMetrics[ext].lines + content.split("\n").length};
-                        }
-                        next();
-                    },
-                    // Finished reading files
-                    function(err, files){
-                        if (err) reject(err);
+        /**
+         *  Returns true if the file path is in an excluded directory, otherwise false
+         *  @param {string} relativePath - The relative path of the file
+         *
+         *  @return {boolean} - Returns if the file is in the list of excluded directories 
+         */
+        function isInExcludedDir(relativePath) {
+            for (const excludedDir of excludedDirs) {
+                if (relativePath.startsWith(excludedDir)) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
-                        fulfill(fileMetrics);
-                    });
-            });
-        });
+        /**
+         *  Returns true if the file name has an excluded extension, otherwise false
+         *  @param {string} relativePath - The relative path of the file
+         *
+         *  @return {boolean} - Returns if the file has an excluded extension
+         */
+        function hasExcludedExt(relativePath) {
+            for (const excludedExt of excludedExts) {
+                if (relativePath.endsWith(excludedExt)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return this.clonePromise
+            // get information from clone paths
+            .then(async (clone) => ({
+                topLevelPath: clone.path,
+                lengthOfTopLevelPath: clone.path.length,
+                fileNames: await dir.promiseFiles(clone.path)}))
+            // remove top level path from file paths
+            .then(filesInfo => ({
+                topLevelPath: filesInfo.topLevelPath,
+                fileNames: filesInfo.fileNames.map(
+                    name => name.slice(filesInfo.lengthOfTopLevelPath + 1))}))
+            // filter out excluded directories, if there are any
+            .then(filesInfo => (excludedDirs.length ? {
+                topLevelPath: filesInfo.topLevelPath,
+                fileNames: filesInfo.fileNames.filter(name => !isInExcludedDir(name))
+            } : filesInfo))
+            // filter out excluded extensions, if there are any
+            .then(filesInfo => (excludedExts.length ? {
+                topLevelPath: filesInfo.topLevelPath,
+                fileNames: filesInfo.fileNames.filter(name => !hasExcludedExt(name))
+            } : filesInfo))
+            // map files to extension and contents of each file
+            .then(({topLevelPath, fileNames}) => fileNames.map(async (name) => ({
+                ext: path.extname(name),
+                contents:  await fs.readFile(path.join(topLevelPath, name), 'utf8')})))  // TODO: revisit
+            // wait until all files have been read
+            .then(readPromises => Promise.all(readPromises))
+            // accumulate metrics into one object
+            .then(files => files.reduce(accumulateExtContents, {}));
     }
 };
