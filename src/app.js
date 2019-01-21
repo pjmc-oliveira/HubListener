@@ -31,7 +31,7 @@ function main(args) {
         console.log(error);
         console.log(optionsMsg);
         return;
-    };
+    }
 
     // If help flag, display options and exit
     if (options['h'] || options['help']) {
@@ -52,14 +52,14 @@ function main(args) {
     // Set the output function. default is console.log,
     // but can optionally write to file.
     const outputFilename = options['o'] || options['out'];
-    const shouldAppend = options['a'] || options['append']
+    const shouldAppend = options['a'] || options['append'];
     const output =  outputFilename ?
                     (obj => utils.writeToJSONFile(
                         obj, outputFilename, {append: shouldAppend})) :
                     console.log;
 
     data.getLinesOfCode().then(x => {
-        output(x)
+        output(x);
     });
 }
 

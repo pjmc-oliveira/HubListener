@@ -128,7 +128,7 @@ module.exports.Data = class Data {
                         closedAt: Date.parse(n.closedAt)
                     }))
                 })
-            )
+            );
 
     }
 
@@ -223,7 +223,7 @@ module.exports.Data = class Data {
                 }
             }`;
         var queries = [];
-        var startTimes = []
+        var startTimes = [];
         // WARNING: moment().add(...) is in place!
         while (start.isBefore(moment())) {
             startTimes.push(start.toISOString());
@@ -231,7 +231,7 @@ module.exports.Data = class Data {
                 this.client.query(
                     query, {
                         start: start.toISOString(),
-                        end: start.add(timeDelta).toISOString()}))
+                        end: start.add(timeDelta).toISOString()}));
         }
 
         return Promise.all(queries)

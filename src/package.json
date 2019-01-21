@@ -23,5 +23,8 @@
     "node-dir": "^0.1.17",
     "nodegit": "^0.23.0",
     "tmp": "0.0.33"
+  },
+  "jshintConfig": {
+    "esversion": 6
   }
 }
