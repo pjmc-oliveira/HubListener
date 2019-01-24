@@ -11,8 +11,6 @@ const { Client } = require('./client.js');
 const { Clone } = require('./clone.js');
 const utils = require('./utils.js');
 
-
-
 /**
  *  @class The Data class is used as the central point where all raw
  *  data is fetched from. It holds a client connection to the GitHub project
@@ -22,7 +20,7 @@ class Data {
     /**
      *  Construct a {@link Data} object, create a [clone]{@link Clone} from the
      *  Git repository asynchronously, and initialize
-     *  [GitHub API]{@link https://developer.github.com/v4/} [client]{@link Clone}
+     *  [GitHub API]{@link https://developer.github.com/v4/} [client]{@link Client}
      *
      *  @param {string} url - GitHub project URL
      *  @param {object} options - Configuration arguments
@@ -70,11 +68,9 @@ class Data {
                     }
                 }
             }`;
-        // Query the client
         return this.client.query(query, {})
-            // Unwrap the data
             .then(body => body.data.repository)
-            // Format the data
+            // Unwrap the data
             .then(repo => utils.unwrap(repo, 'totalCount'));
     }
 
@@ -131,12 +127,14 @@ class Data {
                     }
                 }
             }`;
+
         return this.client.query(query, {})
             .then(body => body.data.repository)
             .then(
                 repo => ({
                     total: repo.total.nodes.map(n => ({
                         state: n.state,
+                        // Parse the dates from strings
                         createdAt: Date.parse(n.createdAt)
                     })),
                     open: repo.open.nodes.map(n => ({
@@ -251,10 +249,12 @@ class Data {
             }`;
         const now = moment();
 
+        // Set up initial arrays
         let queries = [];
         let startTimes = [];
         let endTimes = [];
 
+        // Get the time stamps used to sample the project
         // WARNING: moment().add(...) is in place!
         const times = utils.gen(
                 startTime.clone(),
@@ -262,6 +262,7 @@ class Data {
                 t => !t.isBefore(now)
             );
 
+        // Create queries to sample the periods in between the time stamps
         for (const [start, end] of utils.pairs(times)) {
             startTimes.push(start.toDate());
             endTimes.push(end.toDate());
@@ -276,43 +277,37 @@ class Data {
         return Promise.all(queries)
             .then(Qs => Qs.map(body => body.data.repository))
             .then(repos => repos.map(repo => repo.ref.target.history.totalCount))
+            // Zip the query results with the start and end times for the periods
             .then(commitsByWeek => utils.zip(startTimes, endTimes, commitsByWeek))
+            // Transform results into objects
             .then(datetimeCountTuples => datetimeCountTuples.map(
                 tuple => ({start: tuple[0], end: tuple[1], count: tuple[2]})));
     }
 
     /**
+     *  A summary of a file extension
+     *  @typedef {object} ExtensionSummary
+     *  @property {number} numberOfFiles - The number of files with that extension
+     *  @property {number} numberOfLines - The lines of code with that extension
+     */
+
+    /**
      *  Get number of lines of code and number of files by extension.
-     *  @param {Object} options - The options
-     *  @param {Array.<string>} [options.excludedDirs=['.git']]
-     *      - A list of directories to be excluded. Only '.git' by default
-     *  @param {Array.<string>} [options.excludedExts=[]]
-     *      - A list of extensions to be excluded.
+     *  @param {Object} [options] - The options
+     *  @param {Array<string>} [options.excludedDirs=['.git']]
+     *      A list of directories to be excluded. Only '.git' by default.
+     *  @param {Array<string>} [options.excludedExts=[]]
+     *      A list of extensions to be excluded.
      *
-     *  @return {Object.<string, Object>} metrics
-     *      - The number of lines of code and number of files by extension
-     *  @return {number} metrics.<extension>.numberOfFiles
-     *      - The number of files with <extension>
-     *  @return {number} metrics.<extension>.numberOfLines
-     *      - The number of lines in files with <extension>
+     *  @return {Object<string, ExtensionSummary>}
+     *      An object with file extensions as keys and an object with
+     *      lines of code and number of files as value.
      */
     getLinesOfCode({
             excludedDirs = ['.git'],
             excludedExts = []} = {}) {
 
-        /**
-         *  A 'reducer' function to accumulate the file metrics to its extension
-         *  @param {Object} acc - The object to accumulate the metrics to.
-         *  @param {Object} file - The information of the file.
-         *  @param {string} file.ext - The extension of the file.
-         *  @param {string} file.contents - The contents of the file.
-         *
-         *  @result {Object} acc - The accumulated object.
-         *  @result {number} acc.<extension>.numberOfFiles
-         *      - The number of files with <extension>
-         *  @result {number} acc.<extension>.numberOfLines
-         *      - The number of lines in files with <extension>
-         */
+        // A 'reducer' function to accumulate the file metrics to its extension
         function accumulateExtContents (acc, file) {
             const numberOfLines = file.contents.split('\n').length;
             // if the file extension key exists
@@ -332,12 +327,8 @@ class Data {
             return acc;
         }
 
-        /**
-         *  Returns true if the file path is in an excluded directory, otherwise false
-         *  @param {string} relativePath - The relative path of the file
-         *
-         *  @return {boolean} - Returns if the file is in the list of excluded directories 
-         */
+        // Returns true if the file path is in an excluded directory,
+        // otherwise false
         function isInExcludedDir(relativePath) {
             for (const excludedDir of excludedDirs) {
                 if (relativePath.startsWith(excludedDir)) {
@@ -347,12 +338,8 @@ class Data {
             return false;
         }
 
-        /**
-         *  Returns true if the file name has an excluded extension, otherwise false
-         *  @param {string} relativePath - The relative path of the file
-         *
-         *  @return {boolean} - Returns if the file has an excluded extension
-         */
+        // Returns true if the file name has an excluded extension,
+        // otherwise false
         function hasExcludedExt(relativePath) {
             for (const excludedExt of excludedExts) {
                 if (relativePath.endsWith(excludedExt)) {
@@ -384,15 +371,18 @@ class Data {
                 fileNames: filesInfo.fileNames.filter(name => !hasExcludedExt(name))
             } : filesInfo))
             // map files to extension and contents of each file
+            // QUESTION: In this case, does async/await mean the function
+            //           will wait for each file to be read? or not?
+            // TODO: revisit? possibly parallize?
             .then(({topLevelPath, fileNames}) => fileNames.map(async (name) => ({
                 ext: path.extname(name),
-                contents:  await fs.readFile(path.join(topLevelPath, name), 'utf8')})))  // TODO: revisit
+                contents:  await fs.readFile(path.join(topLevelPath, name), 'utf8')})))
             // wait until all files have been read
             .then(readPromises => Promise.all(readPromises))
             // accumulate metrics into one object
             .then(files => files.reduce(accumulateExtContents, {}));
     }
-};
+}
 
 module.exports = {
     Data: Data
