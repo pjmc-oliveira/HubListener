@@ -27,31 +27,86 @@ function parseURL(url) {
 }
 
 /**
- *  Zips two arrays
- *  @param {Array} the first array
- *  @param {Array} the sedond array
+ *  Zip takes any number of arrays (e.g. xs = [x_0...x_n], ys = [y_0...y_m])
+ *  and returns an array where each element is an array of the n^th elements of
+ *  the input arrays (i.e. zip(xs, ys) = [[x_0, y_0] ... [x_k, y_k] | k = min(n, m)]).
+ *  Similarly for larger number of input arrays.
  *
- *  @return {Array} the zipped array
+ *  @param {...Array<*>} arrays - The input arrays
+ *
+ *  @return {Array<*>} zipped - The zipped array
  */
-function zip(a, b) {
-    var output = [];
-    for (const key in a) {
-        output.push([a[key], b[key]]);
+function zip(...arrays) {
+    let zipped = [];
+    let index = 0;
+    for (let index = 0 ;; index++) {
+        let step = [];
+        for (const array of arrays) {
+            if (index < array.length) {
+                const elem = array[index];
+                step.push(elem);
+            } else {
+                return zipped;
+            }
+        }
+        zipped.push(step);
     }
-    return output;
 }
 
 /**
- *  Adds a value to a key in a given object, and returns the new object
- *  @param {object} the object to add the key-value to
- *  @param {Array} the array where the first element is the key, and the second the value
- *
- *  @return {object} the modified object
+ *  @callback stepperFunction
+ *  @param {T} curr - The current value
+ *  @return {T} next - The next value
+ *  @template T
  */
-function addKeyValueToObject(obj, keyValue) {
-    const [key, value] = keyValue;
-    obj[key] = value;
-    return obj;
+
+ /**
+ *  @callback stopperFunction
+ *  @param {T} curr - The current value
+ *  @return {boolean} stop - Whether to stop generation or not
+ *  @template T
+ */
+
+/**
+ *  Gen takes in a starting value, a stepper function and a stopper function,
+ *  and generates an array:
+ *  [stepper^0(start), ... stepper^n(start) | stop(stepper^n(start)) === true]
+ *  In other words, an array starting at the starting value, applying the
+ *  stepper function to create each subsequent value, until the stopper function
+ *  for that value returns true.
+ *
+ *  @param {T} start - The starting value
+ *  @param {stepperFunction<T>} step - The stepper funtion
+ *  @param {stopperFunction<T>} stop - The stopper function
+ *
+ *  @return {Array<T>} The generated array
+ *  @tempate T
+ */
+function gen(start, step, stop) {
+    let curr = start;
+    let result = [curr];
+    while (!stop(curr)) {
+        curr = step(curr);
+        result.push(curr);
+    }
+    return result;
+}
+
+/**
+ *  Pairs takes in an array and returns and array of consecutive pairs
+ *  (i.e. pairs([x_0, x_1, ... x_n]) = [[x_0, x_1], [x_1, x_2], ... [x_(n-1), x_n]])
+ *
+ *  @param {Array<T>} array - The input array
+ *
+ *  @return {Array<Array<T>>} The resulting array of pairs
+ *  @template T
+ */
+function pairs(array) {
+    let result = [];
+    for (let index = 0; (index + 1) < array.length; index++) {
+        result.push([array[index], array[index + 1]]);
+    }
+    return result;
 }
 
 /**
@@ -140,10 +195,31 @@ function writeToJSONFile(obj, filename, {dirname = __dirname, append = false}){
     }
 }
 
+/**
+ *  Unwrap takes in an object, and a leaf key and moves the values of
+ *  the leaf keys up a level in the object tree
+ *  (i.e. object.sub_level.leaf = object.leaf, for all 'leaf' in 'object')
+ *  @param {object} obj - The object to unwrap
+ *  @param {string} leaf - The leaf key
+ *
+ *  @return {object} The unwrapped object
+ */
+function unwrap(obj, leaf) {
+    const unwrapped = {};
+    for (const [key, node] of Object.entries(obj)) {
+        unwrapped[key] = node[leaf];
+    }
+    return unwrapped;
+}
+
+
+
 module.exports = {
     parseURL: parseURL,
     zip: zip,
-    addKeyValueToObject: addKeyValueToObject,
+    gen: gen,
+    pairs: pairs,
     argParse: argParse,
-    writeToJSONFile: writeToJSONFile
+    writeToJSONFile: writeToJSONFile,
+    unwrap: unwrap
 };

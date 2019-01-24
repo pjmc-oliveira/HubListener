@@ -58,7 +58,7 @@ function main(args) {
                         obj, outputFilename, {append: shouldAppend})) :
                     console.log;
 
-    data.getLinesOfCode().then(x => {
+    data.getNumberOfCommitsByTime().then(x => {
         output(x);
     });
 }
