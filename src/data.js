@@ -1,36 +1,58 @@
 'use strict';
 
+// node and npm modules
 const moment = require('moment');
 const dir = require('node-dir');
 const fs = require('mz/fs');
 const path = require('path');
 
+// user defined modules
 const { Client } = require('./client.js');
 const { Clone } = require('./clone.js');
 const utils = require('./utils.js');
 
+
+
 /**
- * @class {Data} Data class specification
+ *  @class The Data class is used as the central point where all raw
+ *  data is fetched from. It holds a client connection to the GitHub project
+ *  and a cloned instance of the Git repository.
  */
-module.exports.Data = class Data {
+class Data {
     /**
-     *  Construct a {Data} object, create a clone from the
-     *  GitHub project asynchronously, and initialize API
-     *  @param {string} GitHub repository URL
-     *  @param {{auth_token: {string}}} Provide optional arguments
+     *  Construct a {@link Data} object, create a [clone]{@link Clone} from the
+     *  Git repository asynchronously, and initialize
+     *  [GitHub API]{@link https://developer.github.com/v4/} [client]{@link Clone}
+     *
+     *  @param {string} url - GitHub project URL
+     *  @param {object} options - Configuration arguments
+     *  @param {string} options.auth_token - The GitHub authentication token
+     *  @param {boolean} options.noClone - Flag on whether to clone the Git project or not
      */
     constructor(url, options = {}) {
+        // Parse the GitHub URL into project owner and project name
         const {owner, name} = utils.parseURL(url);
         this.client = new Client(options.auth_token);
+        // If `noClone` option is specified, don't clone the repository
+        // Useful to get metrics only depending on the GitHub API
+        // without waiting for the repository to clone
         this.clonePromise = options.noClone ? undefined : Clone.init(url);
         this.owner = owner;
         this.repoName = name;
     }
 
     /**
-     *  Get total the *number* of issues, as well as OPEN and CLOSED
+     *  The number of issues in total and by state
+     *  @typedef {object} IssuesCount
+     *  @property {number} total - The total number of issues
+     *  @property {number} open - The number of open issues
+     *  @property {number} closed - The number of closed issues
+     */
+
+    /**
+     *  Get total the number of issues, as well as number of issues OPEN and CLOSED.
      *
-     *  @return {Promise({total: number, open: number, closed: number})}
+     *  @return {Promise<IssuesCount>}
      *      The number of issues
      */
     getNumberOfIssues() {
@@ -48,40 +70,37 @@ module.exports.Data = class Data {
                     }
                 }
             }`;
+        // Query the client
         return this.client.query(query, {})
+            // Unwrap the data
             .then(body => body.data.repository)
-            .then(
-                repo => ({
-                    total: repo.total.totalCount,
-                    open: repo.open.totalCount,
-                    closed: repo.closed.totalCount,
-                })
-            );
+            // Format the data
+            .then(repo => utils.unwrap(repo, 'totalCount'));
     }
 
     /**
-     *  Get details from the first N issues of each kind (any/open/closed)
-     *  @param {{
-     *      total:  number,
-     *      open:   number,
-     *      closed: number,
-     *  }}
-     *      The first N issues to get by kind
+     *  The information of issues per state
+     *  @typedef {object} IssuesInfo
      *
-     *  @return {Promise({
-     *      total: {state: [string], createdAt: [Date]},
-     *      open: {createdAt: [Date]},
-     *      closed: {createdAt: [Date], closedAt: [Date]}
-     *  })}
-     *      The info for the issues
+     *  @property {Array<object>} total - The information for all the issues
+     *  @property {string} total.state - The state of each issue (i.e. OPEN, CLOSED)
+     *  @property {Date} total.cratedAt - The date and time each issue was created
+     *
+     *  @property {Array<object>} open - The information for open issues
+     *  @property {Date} open.cratedAt - The date and time each issue was created
+     *
+     *  @property {Array<object>} closed - The information for closed issues
+     *  @property {Array<Date>} closed.createdAt - The date and time each issue was created
+     *  @property {Array<Date>} closed.closedAt - The date and time each issue was closed
+     */
+
+    /**
+     *  Get details from the first N issues of each kind (any/open/closed)
+     *  @param {IssuesCount} numberOfIssues - The number of issues per state
+     *
+     *  @return {Promise<IssuesInfo>} The information for the issues
      */
     getIssuesInfo({total, open, closed} = {}) {
-        // TODO: better guards or optional args
-        const assert = require('assert');
-        assert(total !== undefined, 'total must be defined!');
-        assert(open !== undefined, 'open must be defined!');
-        assert(closed !== undefined, 'closed must be defined!');
-
         const query = `
             query repo{
                 repository(name: "${this.repoName}", owner: "${this.owner}"){
@@ -133,9 +152,9 @@ module.exports.Data = class Data {
     }
 
     /**
-     *  Get number of stargazers of project
+     *  Get number of stargazers of the project
      *
-     *  @return {{total: number}}
+     *  @return {number} The number of stargazers
      */
     getNumberOfStargazers() {
         const query = `
@@ -148,13 +167,13 @@ module.exports.Data = class Data {
             }`;
         return this.client.query(query, {})
             .then(body => body.data.repository)
-            .then(repo => ({total: repo.stargazers.totalCount}));
+            .then(repo => repo.stargazers.totalCount);
     }
 
     /**
-     *  Get number of pull requests of project
+     *  Get number of pull requests of the project
      *
-     *  @return {{total: number}}
+     *  @return {number} The number of pull requests
      */
     getNumberOfPullRequests() {
         const query = `
@@ -167,15 +186,15 @@ module.exports.Data = class Data {
             }`;
         return this.client.query(query, {})
             .then(body => body.data.repository)
-            .then(repo => ({total: repo.pullRequests.totalCount}));
+            .then(repo => repo.pullRequests.totalCount);
     }
 
     /**
-     *  Get total number of commits in Master
+     *  Get total number of commits in Master branch
      *
-     *  @return {{total: number}}
+     *  @return {number} The number of commits
      */
-    getNumberOfCommits() {
+    getNumberOfCommitsInMaster() {
         const query = `
             query repo{
                 repository(name: "${this.repoName}", owner: "${this.owner}"){
@@ -192,22 +211,30 @@ module.exports.Data = class Data {
             }`;
         return this.client.query(query, {})
             .then(body => body.data.repository)
-            .then(repo => ({total: repo.ref.target.history.totalCount}));
+            .then(repo => repo.ref.target.history.totalCount);
     }
 
     /**
-     *  Get total number of commits in Master in each timeDelta
-     *  @param {Date} the start of the sampling period
-     *  @param {object} the timedelta of each period
+     *  Count of commits in period
+     *  @typedef {object} CommitPeriodCount
+     *  @property {Date} start - The start of the counting period
+     *  @property {Date} end - The end of the counting period
+     *  @property {number} count - The number of commits in the period
+     */
+
+    /**
+     *  Get total number of commits in Master branch in each time period
+     *  @param {Date} [startTime=moment().subtract(6, 'months')]
+     *      The start of the sampling period
+     *  @param {object} [timeDelta={days: 7}]
+     *      The timedelta of each period, see [reference]{@link https://momentjs.com/docs/#/manipulating/add/}
      *
-     *  @return {object}
-     *      an object where each key is a ISO 8601 string of the date of the start of
-     *      the sampling period, and the key is the number of commits in the period.
+     *  @return {Array<CommitPeriodCount>}
+     *      The number of commits in each period
      */
     getNumberOfCommitsByTime(
             startTime = moment().subtract(6, 'months'),
             timeDelta = {days: 7}) {
-        const start = moment(startTime);
         const query = `
             query repo ($start: GitTimestamp!, $end: GitTimestamp!) {
                 repository(name: "${this.repoName}", owner: "${this.owner}"){
@@ -222,23 +249,36 @@ module.exports.Data = class Data {
                     }
                 }
             }`;
-        var queries = [];
-        var startTimes = [];
+        const now = moment();
+
+        let queries = [];
+        let startTimes = [];
+        let endTimes = [];
+
         // WARNING: moment().add(...) is in place!
-        while (start.isBefore(moment())) {
-            startTimes.push(start.toISOString());
+        const times = utils.gen(
+                startTime.clone(),
+                t => t.clone().add(timeDelta),
+                t => !t.isBefore(now)
+            );
+
+        for (const [start, end] of utils.pairs(times)) {
+            startTimes.push(start.toDate());
+            endTimes.push(end.toDate());
             queries.push(
                 this.client.query(
                     query, {
                         start: start.toISOString(),
-                        end: start.add(timeDelta).toISOString()}));
+                        end: end.toISOString()
+                    }));
         }
 
         return Promise.all(queries)
             .then(Qs => Qs.map(body => body.data.repository))
             .then(repos => repos.map(repo => repo.ref.target.history.totalCount))
-            .then(commitsByWeek => utils.zip(startTimes, commitsByWeek))
-            .then(timeCountPairs => timeCountPairs.reduce(utils.addKeyValueToObject, {}));
+            .then(commitsByWeek => utils.zip(startTimes, endTimes, commitsByWeek))
+            .then(datetimeCountTuples => datetimeCountTuples.map(
+                tuple => ({start: tuple[0], end: tuple[1], count: tuple[2]})));
     }
 
     /**
@@ -352,4 +392,8 @@ module.exports.Data = class Data {
             // accumulate metrics into one object
             .then(files => files.reduce(accumulateExtContents, {}));
     }
+};
+
+module.exports = {
+    Data: Data
 };
