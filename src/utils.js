@@ -38,7 +38,6 @@ function parseURL(url) {
  */
 function zip(...arrays) {
     let zipped = [];
-    let index = 0;
     for (let index = 0 ;; index++) {
         let step = [];
         for (const array of arrays) {
