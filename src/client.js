@@ -7,6 +7,9 @@ const fs = require('fs');
 const graphqlClient = require('graphql-client');
 
 // a simple wrapper that initializes our GraphQL client with the auth token
+/**
+ *  @class The Client class
+ */
 module.exports.Client = class Client {
     constructor(givenToken) {
         try {

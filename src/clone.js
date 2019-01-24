@@ -3,6 +3,10 @@
 const tmp = require('tmp');
 const Git = require('nodegit');
 
+
+/**
+ *  @class The Clone class
+ */
 module.exports.Clone = class Clone {
     static async init(url) {
         // create tmp directory
