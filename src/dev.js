@@ -23,6 +23,7 @@ function updatedDoc(src) {
  *  Main function
  */
 function main(args) {
+    console.log('Running dev.js script, press ^C to exit.');
     // Update all the docs when first run
     updatedDoc('.');
     // Set up a watch to update any newly changed files
