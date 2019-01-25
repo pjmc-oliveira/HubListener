@@ -1,10 +1,13 @@
-/**
-    app.js serves as the main entry point for Hublistener.
- */
 
+// user defined modules
 const utils = require('./utils');
 const { Data } = require ('./data');
 
+/**
+ *  Serves as the main entry point to the HubListener CLI app
+ *  @function
+ *  @param {Array<string>} args - The un-parsed array of command-line arguments
+ */
 function main(args) {
     // Available options and flags
     // NOTE: Update options message whenever a new option is added or removed
