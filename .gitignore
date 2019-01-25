@@ -2,3 +2,4 @@ node_modules/
 auth_token.txt
 .DS_Store
 *.idea
+src/out/
