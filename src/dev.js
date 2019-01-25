@@ -22,7 +22,7 @@ function updatedDoc(src) {
 /**
  *  Main function
  */
-function main(args) {
+function dev(args) {
     console.log('Running dev.js script, press ^C to exit.');
     // Update all the docs when first run
     updatedDoc('.');
@@ -41,4 +41,4 @@ function main(args) {
     });
 }
 
-main(process.argv);
+dev(process.argv);
