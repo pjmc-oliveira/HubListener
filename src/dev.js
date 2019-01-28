@@ -1,8 +1,5 @@
-/**
- *  Simple script to automate routine dev functions.
- *  Should be updated accordingly.
- */
 
+// node and npm modules
 const { exec } = require('child_process');
 const fs = require('fs');
 
@@ -20,7 +17,9 @@ function updatedDoc(src) {
 }
 
 /**
- *  Main function
+ *  Simple script to automate routine dev functions.
+ *  Should be updated accordingly.
+ *  @function
  */
 function dev(args) {
     console.log('Running dev.js script, press ^C to exit.');
