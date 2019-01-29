@@ -10,7 +10,7 @@ const fs = require('fs');
 function updatedDoc(src) {
     console.log(`Running JSDoc on '${src}'...`);
     exec(`jsdoc ${src}`, (err, stdout, stderr) => {
-        if (err) console.log('err: ', err);
+        if (err)    console.log('err: ', err);
         if (stdout) console.log('stdout: ', stdout);
         if (stderr) console.log('stderr: ', stderr);
     });
