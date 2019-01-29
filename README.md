@@ -14,7 +14,7 @@ HubListener
 
 
 
-## Finding / Building JsDocs Documentation
+## Finding / Building JSDoc Documentation
 
 
 -------------------------------------------------
