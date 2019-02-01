@@ -5,6 +5,7 @@ const moment = require('moment');
 const dir = require('node-dir');
 const fs = require('mz/fs');
 const path = require('path');
+const escomplex = require('escomplex');
 
 // user defined modules
 const { Client } = require('./client.js');
@@ -283,6 +284,7 @@ class Data {
                 tuple => ({start: tuple[0], end: tuple[1], count: tuple[2]})));
     }
 
+    //TODO: this method needs to be restructured
     /**
      *  A summary of a file extension
      *  @typedef {object} ExtensionSummary
@@ -302,28 +304,110 @@ class Data {
      *      An object with file extensions as keys and an object with
      *      lines of code and number of files as value.
      */
-    getLinesOfCode({
+    getStaticAnalysis({
             excludedDirs = ['.git'],
-            excludedExts = []} = {}) {
+            excludedExts = []} = {}) { //TODO: consider changing to includedExts to avoid processing unknown/non-text types
 
-        // A 'reducer' function to accumulate the file metrics to its extension
-        function accumulateExtContents (acc, file) {
+        // Perform preliminary analysis and prepare JSON tree for further processing
+        function buildFileDetails (fileDetails, file) {
             const numberOfLines = file.contents.split('\n').length;
-            // if the file extension key exists
-            // add to existing key
-            if (acc[file.ext]) {
-                acc[file.ext] = {
-                    numberOfFiles: acc[file.ext].numberOfFiles + 1,
-                    numberOfLines: acc[file.ext].numberOfLines + numberOfLines
-                };
-            // otherwise, create an new key
+
+            // if the file extension key exists, add to existing key
+            if (fileDetails[file.ext]) {
+                fileDetails[file.ext].numberOfFiles += 1;
+                fileDetails[file.ext].numberOfLines += numberOfLines;
+                fileDetails[file.ext].files.push(file.path);
+            // otherwise, create a new key
             } else {
-                acc[file.ext] = {
+                fileDetails[file.ext] = {
                     numberOfFiles: 1,
-                    numberOfLines: numberOfLines
+                    numberOfLines: numberOfLines,
+                    files: [file.path]
                 };
             }
-            return acc;
+
+            // TODO: move this functionality elsewhere
+            switch (file.ext) {
+                case '.js':
+                    // Count lines of code
+                    // TODO: separate to a function
+
+                    /*
+                        The following regular expression is designed to capture comments in Javascript.
+
+                        Non-capturing group 1: matches all string literals, including multi-line strings.  This is
+                        necessary to prevent falsely matching string literals as comments.  Contains capture group 1
+                        which captures the type of quote used, necessary for backreferencing.
+
+                        Non-capturing group 2: matches regular expressions.  This is necessary to prevent
+                        falsely matching non-escaped quotes or slashes as strings or comments.
+
+                        Capture group 2: block comments
+
+                        Capture group 3: line comments
+                     */
+                    let commentPattern = /(?:(?<!\\)("|'|`)[\s\S]*?(?<!\\)\1)|(?:\/(?!\*)[^\r\n\f]+(?<!\\)\/)|(\/\*[\s\S]*?\*\/)|(\/\/[^\r\n\f]*)/g;
+                    let commentLines = 0;
+                    let match;
+
+                    while(match = commentPattern.exec(file.contents)) {
+                        // Group 2 = block comments
+                        if (match[2]) {
+                            // TODO: consider quantifying comments by bytes as opposed to lines?
+                            commentLines += match[2].split('\n').length;
+                        }
+                        // Group 3 = line comments
+                        if (match[3]) {
+                            commentLines++;
+                        }
+                    }
+
+                    if (fileDetails[file.ext].numberOfCommentLines) {
+                        fileDetails[file.ext].numberOfCommentLines += commentLines;
+                    } else {
+                        fileDetails[file.ext].numberOfCommentLines = commentLines;
+                    }
+
+                    break;
+                case '.py':
+                    // TODO
+                    break;
+                default:
+                    // TODO: add non-code analyses if necessary (documentation?)
+                    break;
+            }
+
+            return fileDetails;
+        }
+
+        // Process fully formed file details object
+        // TODO: external python analysis, review aggregated escomplex analysis
+        async function processFiles(fileDetails) {
+            // JS static analysis
+            if (fileDetails['.js']) {
+                let source = [];
+
+                for (let file of fileDetails['.js'].files) {
+                    let code = await fs.readFile(file, 'utf8');
+
+                    source.push({
+                        path: file,
+                        code: code
+                    });
+                }
+
+                let escomplexReport = escomplex.analyse(source, {});
+
+                // TODO: review aggregated results, add/remove metrics as necessary
+                fileDetails['.js'].staticAnalysis = {
+                    cyclomatic: escomplexReport.cyclomatic,
+                    effort: escomplexReport.effort,
+                    maintainability: escomplexReport.maintainability,
+                    changeCost: escomplexReport.changeCost
+                };
+            }
+
+            return fileDetails;
         }
 
         // Returns true if the file path is in an excluded directory,
@@ -351,35 +435,32 @@ class Data {
         return this.clonePromise
             // get information from clone paths
             .then(async (clone) => ({
-                topLevelPath: clone.path,
-                lengthOfTopLevelPath: clone.path.length,
-                fileNames: await dir.promiseFiles(clone.path)}))
-            // remove top level path from file paths
-            .then(filesInfo => ({
-                topLevelPath: filesInfo.topLevelPath,
-                fileNames: filesInfo.fileNames.map(
-                    name => name.slice(filesInfo.lengthOfTopLevelPath + 1))}))
+                repoPath: clone.path,
+                files: await dir.promiseFiles(clone.path)}))
             // filter out excluded directories, if there are any
             .then(filesInfo => (excludedDirs.length ? {
-                topLevelPath: filesInfo.topLevelPath,
-                fileNames: filesInfo.fileNames.filter(name => !isInExcludedDir(name))
+                repoPath: filesInfo.repoPath,
+                files: filesInfo.files.filter(file => !isInExcludedDir(file.slice(filesInfo.repoPath.length + 1)))
             } : filesInfo))
             // filter out excluded extensions, if there are any
             .then(filesInfo => (excludedExts.length ? {
-                topLevelPath: filesInfo.topLevelPath,
-                fileNames: filesInfo.fileNames.filter(name => !hasExcludedExt(name))
+                repoPath: filesInfo.repoPath,
+                files: filesInfo.files.filter(file => !hasExcludedExt(file.slice(filesInfo.repoPath.length + 1)))
             } : filesInfo))
             // map files to extension and contents of each file
             // QUESTION: In this case, does async/await mean the function
             //           will wait for each file to be read? or not?
-            // TODO: revisit? possibly parallize?
-            .then(({topLevelPath, fileNames}) => fileNames.map(async (name) => ({
-                ext: path.extname(name),
-                contents:  await fs.readFile(path.join(topLevelPath, name), 'utf8')})))
+            // TODO: revisit? possibly parallelize?
+            .then(({files}) => files.map(async (file) => ({
+                path: file,
+                name: path.basename(file),
+                ext: path.extname(file),
+                contents:  await fs.readFile(file, 'utf8')})))
             // wait until all files have been read
             .then(readPromises => Promise.all(readPromises))
             // accumulate metrics into one object
-            .then(files => files.reduce(accumulateExtContents, {}));
+            .then(files => files.reduce(buildFileDetails, {}))
+            .then(fileDetails => processFiles(fileDetails));
     }
 }
 

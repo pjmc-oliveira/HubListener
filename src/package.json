@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/pjmc-oliveira/HubListener#readme",
   "dependencies": {
+    "escomplex": "^2.0.0-alpha",
+    "esprima": "^4.0.1",
     "graphql-client": "^2.0.1",
     "moment": "^2.22.2",
     "mz": "^2.7.0",
