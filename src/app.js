@@ -61,7 +61,7 @@ function main(args) {
                         obj, outputFilename, {append: shouldAppend})) :
                     console.log;
 
-    data.getNumberOfCommitsByTime().then(x => {
+    data.getStaticAnalysis().then(x => {
         output(x);
     });
 }
