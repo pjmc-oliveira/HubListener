@@ -1,5 +1,6 @@
-
 const fs = require('fs');
+const { spawn } = require('child_process');
+const os = require('os');
 
 /**
  *  A namespace containing analyser functions.
@@ -40,7 +41,25 @@ const analyse = {
     },
 
     python: function(paths) {
-        return Promise.resolve({});
+        // By default macOS `python` is v2.*
+        // call user aliased `python3`
+        const pythonExe = os.platform() === 'darwin' ? 'python3' : 'python';
+        const scriptName = 'external/analyse.py';
+
+        // converts function that takes in JSON, into function that takes in bytes
+        const jsonifyBytes = fn => bytes => fn(JSON.parse(bytes.toString('utf8')));
+
+        return new Promise((resolve, reject) => {
+            const program = spawn(pythonExe, [scriptName, ...paths]);
+
+            // Allow functions to take in bytes
+            resolve = jsonifyBytes(resolve);
+            reject  = jsonifyBytes(reject);
+
+            program.stdout.on('data', resolve);
+            program.stderr.on('data', reject);
+
+        });
     }
 };
 
