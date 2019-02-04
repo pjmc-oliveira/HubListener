@@ -32,5 +32,15 @@ const analyse = {
             numberOfFiles: paths.lenth,
             numberOfLines: totalLines
         });
+    },
+
+    javascript: function(paths) {
+        return Promise.resolve({});
+    },
+
+    python: function(paths) {
+        return Promise.resolve({});
     }
 };
+
+module.exports = analyse;
