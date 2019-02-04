@@ -13,6 +13,7 @@ const analyse = {
      *  @property {number} numberOfLines
      *      The total number of physical lines with the extension
      */
+
     /**
      *  Analyses a generic text files.
      *  @param {Array<string>} paths - The paths to all the files
