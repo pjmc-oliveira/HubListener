@@ -5,12 +5,12 @@ const moment = require('moment');
 const dir = require('node-dir');
 const fs = require('mz/fs');
 const path = require('path');
-const escomplex = require('escomplex');
 
 // user defined modules
 const { Client } = require('./client.js');
 const { Clone } = require('./clone.js');
 const utils = require('./utils.js');
+const analyse = require('./analyse.js');
 
 /**
  *  @class The Data class is used as the central point where all raw
@@ -325,9 +325,26 @@ class Data {
 
         // Process fully formed file details object
         async function processFiles(fileDetails) {
-            //TODO: Call analyses functions and build final fileDetails object
+            let output = {};
 
-            return fileDetails;
+            for (let ext in fileDetails) {
+                switch (ext) {
+                    case '.js':
+                        let jsReport = await analyse.javascript(fileDetails[ext].files);
+                        output[ext] = jsReport;
+                        break;
+                    case '.py':
+                        let pyReport = await analyse.python(fileDetails[ext].files);
+                        output[ext] = pyReport;
+                        break;
+                    default:
+                        let report = await analyse.generic(fileDetails[ext].files);
+                        output[ext] = report;
+                        break;
+                }
+            }
+
+            return output;
         }
 
         // Returns true if the file path is in an excluded directory,
