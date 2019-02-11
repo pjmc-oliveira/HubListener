@@ -13,6 +13,7 @@ HubListener is an analysis tool designed to provide users with relevant metrics,
 
 
 ## Finding / Building JSDoc Documentation
+See [Contributor's Guide](https://github.com/pjmc-oliveira/HubListener/wiki/Contributor%27s-Guide#jsdoc)
 
 
 -------------------------------------------------
