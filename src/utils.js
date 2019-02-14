@@ -230,6 +230,26 @@ const utils = {
             unwrapped[key] = node[leaf];
         }
         return unwrapped;
+    },
+
+    /**
+     *    Takes in a list of flat json objects and outputs a CSV string.
+     *    @param {Array<Object>} objs - The objects
+     *    @param {Array<string>} [header]
+     *        The header, keys of the first object will be used if none provided.
+     *    @param {string} [sep=','] - The separator for each column.
+     *    @param {string} [end='\n'] - The separator for each row.
+     */
+    jsonToCsv: function (objs, header, sep=',', end='\n') {
+        header = header || Object.keys(objs[0]);
+        let body = [];
+        for (const obj of objs) {
+            const row = header.map(h => obj[h])
+            body.push(row);
+        }
+        const csv = [header, ...body].map(row => row.join(sep)).join(end);
+        return csv;
+
     }
 };
 
