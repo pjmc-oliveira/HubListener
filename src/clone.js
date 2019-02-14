@@ -37,6 +37,80 @@ class Clone {
         this.repo = repo;
     }
 
+    /**
+     *    Gets the commit history from the HEAD commit
+     *
+     *    @return {Promise<Array<Commit>>}
+     *        The commit history. See [Commit]{@link https://www.nodegit.org/api/commit/}.
+     */
+    async headCommitHistory() {
+        const walker = this.repo.createRevWalk();
+        const head = await this.repo.getHeadCommit();
+        const sleep = ms => new Promise(res => {setTimeout(res, ms)});
+        let done = false;
+        let commits = [];
+        walker.walk(head.id(), (error, commit) => {
+            if (error && error.errno == Git.Error.CODE.ITEROVER) {
+                done = true;
+            } else {
+                commits.push(commit);
+            }
+        });
+        while (!done) {
+            await sleep(1000);
+        }
+        return commits;
+    }
+
+    /**
+     *    @callback commitActionFunction
+     *    @param {Commit} commit - The commit it's applied to.
+     *    @param {number} index - The index of the commit, 1-based.
+     *
+     *    @return T - The return value.
+     *    @template T
+     */
+
+    /**
+     *    @callback commitCatcherFunction
+     *    @param {Commit} commit - The commit it was applied to.
+     *    @param {Error} error - The error thrown.
+     *    @param {number} index
+     *        The index of the commit it was applied to, 1 - based.
+     *
+     *    @return T - The return value.
+     *    @template T
+     */
+
+    /**
+     *    Maps an action function to all the commits provided. If the action
+     *    function throws an error, applies the catcher funtion to that commit.
+     *    Then returns the results in the order given.
+     *    @param {Array<Commit>} commits
+     *        The list of [Commit]{@link https://www.nodegit.org/api/commit/}.
+     *    @param {commitActionFunction<T>} action
+     *        The function to apply to each commit
+     *    @param {commitCatcherFunction<S>} catcher
+     *        The function to catch errors if the action function throws.
+     *
+     *    @return {Array<T|S>} - The results
+     *    @template T
+     *    @template S
+     */
+    async foreachCommit(commits, action, catcher) {
+        let results = [];
+        let i = 1;
+        for (const commit of commits) {
+            await Git.Reset.reset(
+                this.repo, commit, Git.Reset.TYPE.HARD);
+            const result = await action(commit, i)
+                .catch(e => catcher(commit, e, i));
+            results.push(result);
+            i++
+        }
+        return results;
+    }
+
 }
 
 module.exports = {

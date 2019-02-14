@@ -7,9 +7,9 @@ HubListener
 ## What is HubListener? 
 HubListener is an analysis tool designed to provide users with relevant metrics, trends, and information regarding their GitHub projects. It aims to bring this set of organized data to the user’s attention and push them to make any improvements or corrections; as a means of project review and evaluation. The tool puts a given repository against a set of the most popular projects on GitHub, making comparisons wherever possible. 
 
+
 ## Quick Start 
 See [Quick Start Guide](https://github.com/pjmc-oliveira/HubListener/wiki/Quick-Start)
-
 
 
 ## Finding / Building JSDoc Documentation
