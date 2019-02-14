@@ -1,2 +1,10 @@
+colorama==0.4.1
+entrypoints==0.3
+flake8==3.7.5
+flake8-polyfill==1.0.2
+mando==0.6.4
+mccabe==0.6.1
+pycodestyle==2.5.0
+pyflakes==2.1.0
 radon==3.0.1
-
+six==1.12.0
