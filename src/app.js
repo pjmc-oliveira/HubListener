@@ -61,8 +61,29 @@ function main(args) {
                         obj, outputFilename, {append: shouldAppend})) :
                     console.log;
 
-    data.getStaticAnalysis().then(x => {
-        output(x);
+    data.clonePromise.then(async (clone) => {
+        console.log(clone.path);
+        const commits = (await clone.headCommitHistory()).reverse();
+        const results = await clone.foreachCommit(commits,
+            async (commit, index) => ({
+                commit: commit.id().tostrS(),
+                author: commit.author().toString(),
+                index: index,
+                data: commit.date(),
+                analisys: await data.getStaticAnalysis()}),
+            (commit, error, index) => ({
+                commit: commit.id().tostrS(),
+                author: commit.author().toString(),
+                index: index,
+                date: commit.date(),
+                error: error
+            }));
+        console.log(results.length);
+
+        output({results: results});
+
+        console.log('done!');
+        console.log(clone.path);
     });
 }
 
