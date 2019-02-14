@@ -3,3 +3,7 @@ auth_token.txt
 .DS_Store
 *.idea
 src/out/
+src/bin/
+src/lib/
+src/pip-selfcheck.json
+pyvenv.cfg
