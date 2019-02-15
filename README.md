@@ -29,7 +29,8 @@ Documentation for the project
 - Requirements Specifications Document
 - Test Plan
 - User Guide 
-- Verification & Validation Plan
+- Verification & Validation Plan  
+- Architecture & Design
   
 **ReferenceMaterial** 
   - Research Material used as foundations for the project
