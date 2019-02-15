@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{graphicx}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -56,16 +57,13 @@ The symbols, abbreviations and acronyms used in this document include those defi
 
 \tableofcontents
 
-\listoftables %if appropriate
-
-\listoffigures %if appropriate
+\listoftables
 
 \newpage
 
 \pagenumbering{arabic}
 
 This document outlines the system verification and validation plan for the HubListener software. General information regarding the system under test and the objectives of the verification and validation activities are provided in Section 3.  Overviews of the verification plans for the SRS, design, and implementation are given in Section 4, along with a summary of the validation plan for the software. 
-
 
 \section{General Information}
 
@@ -83,15 +81,15 @@ Information about the purpose and requirements of HubListener can be found in th
 
 \subsection{Verification and Validation Team}
 
-The HubListener Team, which includes all the authors of this document will be responsible for the verification and validation of HubListener. Input from our supervisor, Dr.  Smith  will also contribute to the VnV Plan and he will ensure proper procedures take place. 
+The HubListener Team, which includes all the authors of this document will be responsible for the verification and validation of HubListener. Input from our supervisor, Dr.~Smith will also contribute to the VnV Plan and he will ensure proper procedures take place. 
 
 \subsection{SRS Verification}
 
-SRS Verification will be carried out by reviews. The HubListener team will do two reviews. One review will take place on January 31st, 2019, the expected launch date of Version 1. A second review will occur at the launch date of Version 2 which will be determined at a later date. These reviews will be done as a collective in separate meetings to confirm theories and models in the SRS are correct. Any issues identified during this review will be noted down and new Issues on GitHub will be created. These issues will have top priority and will be completed in the next possible Sprint by one member of the HubListener team. This review will be followed up by additional reviews by Dr.  Spencer Smith and Dr.  Anand ( if he wishes). Again, any issues identified by these reviewers will be recorded through the issues tracker on GitHub. A focus of these reviews will be to verify the functional and non-functional requirements of correctness and understandability by identifying information from the SRS that is incorrect or ambiguous.   
+SRS Verification will be carried out by reviews. The HubListener team will do two reviews. One review will take place on January 31st, 2019, the expected launch date of Version 1. A second review will occur at the launch date of Version 2 which will be determined at a later date. These reviews will be done as a collective in separate meetings to confirm theories and models in the SRS are correct. Any issues identified during this review will be noted down and new Issues on GitHub will be created. These issues will have top priority and will be completed in the next possible Sprint by one member of the HubListener team. This review will be followed up by additional reviews by Dr.~Spencer Smith and Dr.~Anand ( if he wishes). Again, any issues identified by these reviewers will be recorded through the issues tracker on GitHub. A focus of these reviews will be to verify the functional and non-functional requirements of correctness and understandability by identifying information from the SRS that is incorrect or ambiguous. 
 
 \subsection{Design Verification Plan}
 
-The design of HubListener will be outlined in the Module Guide (MG) and Module Interface Specification (MIS) documents. The design will be verified by review of these documents. Dr.  Smith will review this documents. To verify correctness, part of this review til be to ensure that every module traces to a requirement and that every requirement is traced to by a module. Any issues identified during this review will be noted down and new Issues on GitHub will be created. These issues will have top priority and will be completed in the next possible Sprint by one member of the HubListener team. Reviews of these design documents will also focus on ensuring the understandability  by identifying descriptions and specifications that are ambiguous. 
+The design of HubListener will be outlined in the Module Guide (MG) and Module Interface Specification (MIS) documents. The design will be verified by review of these documents. Dr.~Smith will review this documents. To verify correctness, part of this review til be to ensure that every module traces to a requirement and that every requirement is traced to by a module. Any issues identified during this review will be noted down and new Issues on GitHub will be created. These issues will have top priority and will be completed in the next possible Sprint by one member of the HubListener team. Reviews of these design documents will also focus on ensuring the understandability  by identifying descriptions and specifications that are ambiguous. 
 
 \subsection{Implementation Verification Plan}
 
@@ -101,84 +99,134 @@ The implementation of HubListener will be verified by review and by testing. The
 The implementation will also be verified through testing. Specific test cases are outline in Section 5 of this document. Test cases that are directly dependent on implementation details will be outlined at a later date. All tests will be written(where applicable), reviewed and executed by the HubListener Team. 
 
 \section{System Test Description}
-In this section, we will describe and define the tests for functional and non-functional requirements as well as for HubListener's design module.
+In this section, we will describe and define the test cases that will be used for testing functional requirements. 
 
-\subsection{Tests for Functional Requirements }
-This section will describe the test cases that will be used for testing the functional requirements.
-
-\subsubsection{Valid User Input}
-The following set of test cases are intended to cover different forms of valid user input 
+\subsection{Expected Program Output}
+The following test case covers the user input and its appropriate output. 
 
 \begin{enumerate}
-\item{test-id1\\}
+\item[TC1:] test-metricsOut 
 
-Control: Manual versus Automatic
+Control: Automatic
 					
-Initial State: 
+Initial State: New session 
 					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Input: GitHub project link
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Output: The following list of metrics - in any order - is expected given a github project link as input. This output will be provided on the CLI, and in JSON format. Once our UI design is confirmed, it will be outputted on-screen as well.
+
+- Cyclomatic Complexity \newline
+- Cyclomatic Density\newline
+- Lines of Code \newline
+- Lines of Comments\newline
+- Logical Lines of Code \newline
+- Halstead Metric \newline
+- Number of Methods\newline
+- Number of Variables\newline 
+- Number of Issues\newline
+- Number of Bugs\newline
+- Number of Stars\newline
+- Functional Coverage Score\newline
+- Condition Coverage Score 
 					
-How test will be performed: 
+How test will be performed: Automated test on BATS testing framework. 
+
+\item[TC2:] test-trendsOut
+
+Control: Manual
+		
+Initial State: New session 
+					
+Input: GitHub project link
+					
+Output: Any pair(s) of the listed metrics above will be analyzed, and one or more trends will be displayed on the UI. These trends will be in the form of graphs, in order to easily notice any patterns, or make observations. 
+
+How test will be performed: A pair of metrics will be selected, and every combination of a graph will be manually created via 
 \end{enumerate}
 
-\subsubsection{Requirements Testing}
-The following set of test cases are intended to cover testing of each functional requirement 
-\paragraph{Requirement 1}
+\subsection{User Interaction and Navigation}
+The following set of test cases are intended to cover Hublistener's UI navigation. 
 \begin{enumerate}
-\item{test-id1\\}
+\item[TC3:] test-interact1
 
-Control: Manual versus Automatic
+Control: Manual
+			
+Initial State: New Session
 					
-Initial State: 
+Input: User selects which metrics they wish to analyze via the User Interface (website). This will be accomplished through the use of check boxes for every metric.
 					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Output: Only the selected metrics will be displayed on the UI. 
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+How test will be performed: Visual inspection of output
+
+\item[TC4:] test-nav1
+
+Control: Manual 
 					
-How test will be performed: 
+Initial State: New Session
+
+Input: TBD 
+					
+Output: TBD
+
+How test will be performed: TBD
+
 \end{enumerate}
-\paragraph{Requirement 2}
+
+\subsection{Installability, Help, and Storage}
+The following set of test cases are intended to cover Hublistener's installability, help dialogue functionality, and analysis storage within the database.
 \begin{enumerate}
-\item{test-id1\\}
+\item[TC5:] test-inst1 
 
-Control: Manual versus Automatic
+Control: Automatic
+	
+Initial State: New Session
+			
+Input: To install the tool, the `npm install hublistener' command is entered as input into the CLI. To then uninstall, the `npm uninstall hublistener' command is entered. 
 					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Output/Result: The appropriate packages (files, dependencies etc.) are successfully installed and a large set of details regarding what is installed is displayed in sequence onto the CLI (with no errors).   
+		
+How test will be performed: This test will consist of 2 components; installing, and uninstalling the HubListener tool. It will be automated using BATS testing framework.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\item[TC6:] test-update1 
+
+Control: Automatic
+	
+Initial State: New Session
+			
+Input: To update the tool, the `npm update' command is entered into the CLI.
 					
-How test will be performed: 
+Output/Result: The appropriate packages (files, dependencies etc.) are successfully updated in any sequence, or a verification message regarding the tool being up-to-date, is outputted on the CLI.  
+		
+How test will be performed: This test is for updating the HubListener package(s). It will be automated using BATS testing framework.
+
+\item[TC7:] test-help
+
+Control: Automatic
+					
+Initial State: New session
+					
+Input: Either the `hublistener -h' OR `hublistener --help' command will be used to bring up the help dialogue within the CLI. 
+					
+Output/Result: The help dialogue is successfully displayed onto the CLI, details of which are TBD. 
+				
+How test will be performed: Automated using BATS testing framework. 
+
+\item[TC8:] test-db1 
+
+Control: Automatic 
+					
+Initial State: New session
+					
+Input: Github link
+					
+Output/Result: An entry is successfully added to the database.
+				
+How test will be performed: The database will be queried for the appropriate github link and its respective metrics; which verifies that it was added to the database. This will be automated using Jasmine testing framework.  
+
 \end{enumerate}
-\paragraph{Requirement 3}
-...
-\subsubsection{ Error Handling Testing}
-The following set of test cases are intended to cover error handling situations. 
-\begin{enumerate}
-\item{test-id1\\}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-\end{enumerate}
-
+\iffalse
 \subsection{Nonfunctional Requirements Evaluation}
 
 \subsubsection{Usability Testing}
@@ -242,6 +290,28 @@ Will include matrix here. The purpose of the traceability matrix is provide easy
 
 In this section, a matrix will  be included to trace which modules are verified by which test cases, and which test cases need to be updated 
 
+\fi
+
+\subsection{Traceability Between Test Cases and Requirements}
+
+\noindent The purpose of the traceability matrix shown in Table 1 below, is to provide easy references on which requirements are verified by which test cases, and which test cases need to be updated if a requirement changes.  If a requirement is changed, the items in the column of that requirement that are marked with an ``X'' may have to be modified as well. 
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+          & R1 & R2 & R3 & R4 & R5 & R6 & R7 \\ \hline
+TC1       & X  & X  &    &    &    &    &    \\ \hline
+TC2       &    &    & X  &    &    &    &    \\ \hline
+TC3       &    &    &    & X  &    &    &    \\ \hline
+TC4       &    &    &    & X  &    &    &    \\ \hline
+TC5 - TC6 &    &    &    &    & X  &    &    \\ \hline
+TC7       &    &    &    &    &    & X  &    \\ \hline
+TC8       &    &    &    &    &    &    & X \\ \hline
+\end{tabular}
+\caption{Traceability matrix showing the connections between functional requirements and test cases}
+\end{table}
+
 \section{Unit Testing}
 
 Unit Testing will  be completed using either Mocha.js or Jasmine.js . Both tools provide the resources required to get thorough unit testing complete. We are still in the research phase and not have decided on a set tool. Jasmine.js remains the front-runner as one of members on the HubListener team has experience with this tool. 
@@ -249,7 +319,7 @@ Unit Testing will  be completed using either Mocha.js or Jasmine.js . Both tools
 
 \section{Automated Testing}
 
-Automated testing will further enhance our testing efforts. We are investigating Travis-CI which  is a free web based service that allows  to register a trigger on GitHub so that every time a commit is pushed to GitHub an isolated Ubuntu container with the correct container that we want to test, builds the software (if needed) and then runs the test.
+Automated testing will further enhance our testing efforts. We are looking into testing frameworks for the command line, such as Bats: Bash Automated Testing System which can be used for some of our system tests. We are also investigating Travis-CI, which is a free web based service that allows to register a trigger on GitHub so that every time a commit is pushed to GitHub an isolated Ubuntu container with the correct container that we want to test, builds the software (if needed) and then runs the test.
 
 
 \section{Appendix}

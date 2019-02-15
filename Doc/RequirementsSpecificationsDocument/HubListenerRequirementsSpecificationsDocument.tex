@@ -183,13 +183,11 @@ Input & Output \\
 \hline 
 GitHub Project URL & 
 - Cyclomatic Complexity \newline
-- Essential Complexity \newline
-- Integration Complexity \newline
 - Cyclomatic Density\newline
 - Lines of Code \newline
 - Lines of Comments\newline
-- Maintainability Index\newline
-- Coupling Metric \newline
+- Logical Lines of Code\newline
+- Halstead Metric \newline
 - Number of Methods\newline
 - Number of Variables\newline 
 - Number of Issues\newline
@@ -206,19 +204,19 @@ GitHub Project URL &
 \hline
 \textbf{Reqt No.} & \textbf{Reqt Type} & \textbf{Description} & \textbf{Fit-Criteria}\\
 \hline 
-1 & Functional & HubListener must provide a set of metrics (refer to Functional Input and Output List above) to the end user. & HubListener logs shall verify the provided set of metrics.\\
+1 & Functional & HubListener must take in a GitHub project link as input. & HubListener logs should validate that the input link is a GitHub checkout link. \\
 \hline 
-2 & Functional & HubListener must take in a GitHub project link as input. & HubListener logs should validate that the input link is a GitHub checkout link.\\
+2 & Functional & HubListener must provide a set of metrics (refer to Functional Input and Output List above) to the end user, both printed onto the CLI as well as in JSON format. & HubListener logs shall verify the set of metrics outputted on the CLI and the JSON file. \\
 \hline 
-3 & Functional & HubListener must have a man page accessible from the command line. & HubListener logs should validate that the man page exists.\\ 
+3 & Functional & HubListener must analyze the metrics and display one or more trends. & HubListener logs at least one trend. \\ 
 \hline 
-4 & Functional & Users must be able to customize which metrics to analyze & HubListener logs will validate at least one metric is selected.\\
+4 & Functional & Users must be able to customize which metrics to analyze & HubListener logs will validate at least one metric is selected. \\
 \hline 
 5 & Functional & User must be able to install, update or uninstall HubListener through the node package manager interface. & HubListener logs should validate a npm install, update and uninstall have succeeded when called upon. \\
 \hline 
-6 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are viewable in the database. Logs validate an addition to the database.  \\
+6 & Functional & HubListener must have a help dialogue accessible from the command line. & Hublistener logs should validate that the help dialogue exists. \\
 \hline 
-7 & Functional & HubListener must analyze the metrics and display one or more trends. & HubListener logs at least one trend. \\
+7 & Functional & Metrics gathered from the analysis of a repository must be added into a database & After HubListener has done an analysis, the results are viewable in the database. Logs validate an addition to the database. \\
 \hline
 \end{tabular}
 
