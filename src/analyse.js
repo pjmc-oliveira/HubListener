@@ -70,7 +70,16 @@ const analyse = {
                 totalComments += commentLines;
             }
 
-            let escomplexReport = escomplex.analyse(source, {});
+            let escomplexReport;
+
+            try {
+                escomplexReport = escomplex.analyse(source, {});
+            } catch (e) {
+                // Parse failure, skip and return basic analysis
+                console.log(e);
+                resolve(analyse.generic(paths));
+            }
+
 
             // Total physical lines of code
             let sloc = 0;
@@ -121,7 +130,6 @@ const analyse = {
 
             program.stdout.on('data', resolve);
             program.stderr.on('data', reject);
-
         });
     }
 };
