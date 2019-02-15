@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.22)  17 JAN 2019 16:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.22)  14 FEB 2019 16:44
 entering extended mode
 **./HubListenerRequirementsSpecificationsDocument.tex
 (HubListenerRequirementsSpecificationsDocument.tex
@@ -394,13 +394,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 176--177
  []
 
 
-Overfull \hbox (39.03302pt too wide) in paragraph at lines 178--202
+Overfull \hbox (39.03302pt too wide) in paragraph at lines 178--200
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 207--207
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/bx/n/10 Reqt
+ []
+
+
+Underfull \hbox (badness 3579) in paragraph at lines 207--207
+[]|\OT1/cmr/m/n/10 HubListener must take in a
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--208
+[]|\OT1/cmr/m/n/10 HubListener logs
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--208
+\OT1/cmr/m/n/10 should val-i-date
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--208
+\OT1/cmr/m/n/10 that the in-put
+ []
+
+
+Underfull \hbox (badness 2245) in paragraph at lines 207--208
+\OT1/cmr/m/n/10 link is a GitHub
  []
 
 
@@ -414,68 +439,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 209--210
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
-\OT1/cmr/m/n/10 pro-vided set of
- []
-
-
-Underfull \hbox (badness 3579) in paragraph at lines 211--211
-[]|\OT1/cmr/m/n/10 HubListener must take in a
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 211--212
-[]|\OT1/cmr/m/n/10 HubListener logs
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 211--212
-\OT1/cmr/m/n/10 should val-i-date
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 211--212
-\OT1/cmr/m/n/10 that the in-put
- []
-
-
-Underfull \hbox (badness 2245) in paragraph at lines 211--212
-\OT1/cmr/m/n/10 link is a GitHub
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 213--214
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 213--214
-\OT1/cmr/m/n/10 should val-i-date
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 215--216
-[]|\OT1/cmr/m/n/10 HubListener logs
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 215--216
 \OT1/cmr/m/n/10 will val-i-date at
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 []|\OT1/cmr/m/n/10 HubListener logs
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 217--218
+Underfull \hbox (badness 3724) in paragraph at lines 215--216
 \OT1/cmr/m/n/10 should val-i-date a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 \OT1/cmr/m/n/10 suc-ceeded when
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 217--218
+[]|\OT1/cmr/m/n/10 Hublistener logs
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 217--218
+\OT1/cmr/m/n/10 should val-i-date
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 217--218
+\OT1/cmr/m/n/10 that the help
  []
 
 
@@ -494,53 +494,53 @@ Underfull \hbox (badness 2990) in paragraph at lines 219--220
  []
 
 
-Overfull \hbox (32.98026pt too wide) in paragraph at lines 203--224
+Overfull \hbox (32.98026pt too wide) in paragraph at lines 201--222
 [][] 
  []
 
 [9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 230--231
+Underfull \hbox (badness 10000) in paragraph at lines 228--229
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 284--285
+Underfull \hbox (badness 10000) in paragraph at lines 282--283
 
  []
 
 [12]
-Overfull \hbox (2.83339pt too wide) in paragraph at lines 354--355
+Overfull \hbox (2.83339pt too wide) in paragraph at lines 352--353
 []\OT1/cmr/bx/n/10 Fit-Criteria: \OT1/cmr/m/n/10 The repos-i-tory is Li-censed 
 un-der GPL-3.0 which abides
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 394--394
+Underfull \hbox (badness 10000) in paragraph at lines 392--392
 []|\OT1/cmr/bx/n/10 Risk
  []
 
 
-Overfull \hbox (105.93854pt too wide) in paragraph at lines 390--407
+Overfull \hbox (105.93854pt too wide) in paragraph at lines 388--405
 [][] 
  []
 
 [14] [15] [16]
-Underfull \hbox (badness 1496) in paragraph at lines 434--434
+Underfull \hbox (badness 1496) in paragraph at lines 432--432
 \OT1/cmr/m/n/10 sign Choice And Off-The-Shelf
  []
 
 (HubListenerRequirementsSpecificationsDocument.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 438.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 436.
  [17]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 438.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 436.
 
 (HubListenerRequirementsSpecificationsDocument.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 438.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 438.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 436.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 436.
 Package rerunfilecheck Info: File `HubListenerRequirementsSpecificationsDocumen
 t.out' has not changed.
 (rerunfilecheck)             Checksum: 5C71EB43E1425923B4727C8B8D6DC351;2291.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 438.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 436.
  ) 
 Here is how much of TeX's memory you used:
  6961 strings out of 492970
@@ -558,7 +558,7 @@ fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmti10.pfb>
 Output written on HubListenerRequirementsSpecificationsDocument.pdf (17 pages, 
-172820 bytes).
+172887 bytes).
 PDF statistics:
  354 PDF objects out of 1000 (max. 8388607)
  101 named destinations out of 1000 (max. 500000)
