@@ -50,23 +50,18 @@ def analyse(paths):
     #Retursn Dictionary
     h = CCHarvester(paths, config)
     ccResults = h._to_dicts()
-    print(ccResults)
     
     # Returns JSON without key value pair... 
     i = HCHarvester(paths, config2)
     hcResults = i._to_dicts()
-    print(hcResults)
   
     j = MIHarvester(paths, config3)
     miResults = dict(j.filtered_results)
-    print(miResults)
 
     k = RawHarvester(paths, config4)
     rawResults = (dict(k.results))
-    print(rawResults)
-    # return a python dictionary
-    #fname = 'C:\\Users\\piran\\Documents\\McMaster\\Year 4\\COMPSCI 4ZP6 - Capstone\\django\\django\\shortcuts.py'
-    # results = merge(ccResults[fname], hcResults[fname])
+
+    return [ccResults, hcResults, miResults, rawResults]
  
 
 def merge(*dicts):
@@ -76,10 +71,13 @@ def merge(*dicts):
         merged[k].extend(v)
     return merged
 
+
 if __name__ == '__main__':
     # First system argument should be script name
     paths = sys.argv[1:]
-    analyse(paths)
+    results = analyse(paths)
+    print(json.dumps(results[0]))
+
 
 
 
