@@ -239,17 +239,63 @@ const utils = {
      *        The header, keys of the first object will be used if none provided.
      *    @param {string} [sep=','] - The separator for each column.
      *    @param {string} [end='\n'] - The separator for each row.
+     *
+     *    @return {string} - The CSV string
      */
     jsonToCsv: function (objs, header, sep=',', end='\n') {
-        header = header || Object.keys(objs[0]);
+        // TODO: Not ideal, optimize?
+        header = utils.uniques(objs.map(Object.keys)
+            .reduce((acc, keys) => acc.concat(keys), []));
+
         let body = [];
         for (const obj of objs) {
-            const row = header.map(h => obj[h])
+            const row = header.map(h => obj[h]);
             body.push(row);
         }
         const csv = [header, ...body].map(row => row.join(sep)).join(end);
         return csv;
+    },
 
+
+    /**
+     *    Gets values of the list excluding duplicates
+     *    @param {Array<T>} elements - The list with potential duplicates
+     *
+     *    @return {Array<T>} - The list with duplicate elements removed
+     *    @template T
+     */
+    uniques: function(elements) {
+        let present = new Set();
+        let uniqued = [];
+        for (const element of elements) {
+            if (!present.has(element)) {
+                uniqued.push(element);
+                present.add(element);
+            }
+        }
+        return uniqued;
+    },
+
+    /**
+     *    Flattens a nested object.
+     *    @param {Object} obj - The object to flatten
+     *    @param {string} [prefix=''] - The prefix for the flattened keys.
+     *
+     *    @return {Object} - The flattened object.
+     */
+    flatten: function(obj, prefix='') {
+        let flattened = {};
+        for (const key of Object.keys(obj)) {
+            const value = obj[key];
+            const path = prefix + ':' + key;
+            if (typeof value == 'object') {
+                flattened = Object.assign(
+                    flattened, utils.flatten(value, path));
+            } else {
+                flattened[path] = value;
+            }
+        }
+        return flattened;
     }
 };
 
