@@ -69,21 +69,25 @@ function main(args) {
                 commit: commit.id().tostrS(),
                 author: commit.author().toString(),
                 index: index,
-                data: commit.date(),
+                date: commit.date().toISOString(),
                 analisys: await data.getStaticAnalysis()}),
             (commit, error, index) => ({
                 commit: commit.id().tostrS(),
                 author: commit.author().toString(),
                 index: index,
-                date: commit.date(),
+                date: commit.date().toISOString(),
                 error: error
             }));
-        console.log(results.length);
 
-        output({results: results});
+        let flattened = [];
+        for (const result of results) {
+            flattened.push(utils.flatten(result));
+        }
 
-        console.log('done!');
-        console.log(clone.path);
+        const csv = utils.jsonToCsv(flattened);
+        // Need to make writeToJSONFile polymorphic enough to take in CSV strings
+        const fs = require('fs');
+        fs.writeFileSync(outputFilename, csv);
     });
 }
 
