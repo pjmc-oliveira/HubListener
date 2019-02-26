@@ -7,117 +7,7 @@ const path = require('path');
  *  A namespace containing useful utility functions.
  *  @namespace
  */
-const utils = {
-    /**
-     *  Information about the GitHub project
-     *  @typedef {object} ProjectInfo
-     *  @property {string} owner - The GitHub username of the project owner
-     *  @property {string} name - The name of the project
-     */
-
-    /**
-     *  Parses a GitHub project URL
-     *  @param {string} url
-     *      The GitHub project URL, must contain 'github.com'
-     *
-     *  @return {ProjectInfo}
-     *      The owner and the name of the project
-     */
-    parseURL: function (url) {
-        const url_parts = url.split('/');
-        const index = url_parts.indexOf('github.com');
-        // TODO: remove '.git' from url if present
-        if (index === -1) {
-            throw 'Not a valid GitHub url (' + url + ')';
-        }
-        return {
-            owner: url_parts[index + 1],
-            name: url_parts[index + 2]
-        };
-    },
-
-    /**
-     *  Zip takes any number of arrays (e.g. xs = [x_0...x_n], ys = [y_0...y_m])
-     *  and returns an array where each element is an array of the n^th elements of
-     *  the input arrays (i.e. zip(xs, ys) = [[x_0, y_0] ... [x_k, y_k] | k = min(n, m)]).
-     *  Similarly for larger number of input arrays.
-     *
-     *  @param {...Array<*>} arrays - The input arrays
-     *
-     *  @return {Array<*>} zipped - The zipped array
-     */
-    zip: function (...arrays) {
-        let zipped = [];
-        for (let index = 0 ;; index++) {
-            let step = [];
-            for (const array of arrays) {
-                if (index < array.length) {
-                    const elem = array[index];
-                    step.push(elem);
-                } else {
-                    return zipped;
-                }
-            }
-            zipped.push(step);
-        }
-    },
-
-    /**
-     *  @callback stepperFunction
-     *  @param {T} curr - The current value
-     *  @return {T} next - The next value
-     *  @template T
-     */
-
-     /**
-     *  @callback stopperFunction
-     *  @param {T} curr - The current value
-     *  @return {boolean} stop - Whether to stop generation or not
-     *  @template T
-     */
-
-    /**
-     *  Gen takes in a starting value, a stepper function and a stopper function,
-     *  and generates an array:
-     *  [stepper^0(start), ... stepper^n(start) | stop(stepper^n(start)) === true]
-     *  In other words, an array starting at the starting value, applying the
-     *  stepper function to create each subsequent value, until the stopper function
-     *  for that value returns true.
-     *
-     *  @param {T} start - The starting value
-     *  @param {stepperFunction<T>} step - The stepper funtion
-     *  @param {stopperFunction<T>} stop - The stopper function
-     *
-     *  @return {Array<T>} The generated array
-     *  @tempate T
-     */
-    gen: function (start, step, stop) {
-        let curr = start;
-        let result = [curr];
-        while (!stop(curr)) {
-            curr = step(curr);
-            result.push(curr);
-        }
-        return result;
-    },
-
-    /**
-     *  Pairs takes in an array and returns and array of consecutive pairs
-     *  (i.e. pairs([x_0, x_1, ... x_n]) = [[x_0, x_1], [x_1, x_2], ... [x_(n-1), x_n]])
-     *
-     *  @param {Array<T>} array - The input array
-     *
-     *  @return {Array<Array<T>>} The resulting array of pairs
-     *  @template T
-     */
-    pairs: function (array) {
-        let result = [];
-        for (let index = 0; (index + 1) < array.length; index++) {
-            result.push([array[index], array[index + 1]]);
-        }
-        return result;
-    },
-
+const utils = {  
     /**
      *  Parses an Array of strings (flags and values) into an object of flag keys,
      *  and value values.
@@ -176,6 +66,172 @@ const utils = {
 
         return args;
     },
+    
+    /**
+     *    Flattens a nested object.
+     *    @param {Object} obj - The object to flatten
+     *    @param {string} [prefix=''] - The prefix for the flattened keys.
+     *
+     *    @return {Object} - The flattened object.
+     */
+    flatten: function(obj, prefix='') {
+        let flattened = {};
+        for (const key of Object.keys(obj)) {
+            const value = obj[key];
+            const path = prefix + ':' + key;
+            if (typeof value == 'object') {
+                flattened = Object.assign(
+                    flattened, utils.flatten(value, path));
+            } else {
+                flattened[path] = value;
+            }
+        }
+        return flattened;
+    },
+
+    /**
+     *  @callback stepperFunction
+     *  @param {T} curr - The current value
+     *  @return {T} next - The next value
+     *  @template T
+     */
+
+     /**
+     *  @callback stopperFunction
+     *  @param {T} curr - The current value
+     *  @return {boolean} stop - Whether to stop generation or not
+     *  @template T
+     */
+
+    /**
+     *  Gen takes in a starting value, a stepper function and a stopper function,
+     *  and generates an array:
+     *  [stepper^0(start), ... stepper^n(start) | stop(stepper^n(start)) === true]
+     *  In other words, an array starting at the starting value, applying the
+     *  stepper function to create each subsequent value, until the stopper function
+     *  for that value returns true.
+     *
+     *  @param {T} start - The starting value
+     *  @param {stepperFunction<T>} step - The stepper funtion
+     *  @param {stopperFunction<T>} stop - The stopper function
+     *
+     *  @return {Array<T>} The generated array
+     *  @tempate T
+     */
+    gen: function (start, step, stop) {
+        let curr = start;
+        let result = [curr];
+        while (!stop(curr)) {
+            curr = step(curr);
+            result.push(curr);
+        }
+        return result;
+    },
+
+    /**
+     *    Takes in a list of flat json objects and outputs a CSV string.
+     *    @param {Array<Object>} objs - The objects
+     *    @param {Array<string>} [header]
+     *        The header, keys of the first object will be used if none provided.
+     *    @param {string} [sep=','] - The separator for each column.
+     *    @param {string} [end='\n'] - The separator for each row.
+     *
+     *    @return {string} - The CSV string
+     */
+    jsonToCsv: function (objs, header, sep=',', end='\n') {
+        // TODO: Not ideal, optimize?
+        header = utils.uniques(objs.map(Object.keys)
+            .reduce((acc, keys) => acc.concat(keys), []));
+
+        let body = [];
+        for (const obj of objs) {
+            const row = header.map(h => obj[h]);
+            body.push(row);
+        }
+        const csv = [header, ...body].map(row => row.join(sep)).join(end);
+        return csv;
+    },
+
+    /**
+     *  Pairs takes in an array and returns and array of consecutive pairs
+     *  (i.e. pairs([x_0, x_1, ... x_n]) = [[x_0, x_1], [x_1, x_2], ... [x_(n-1), x_n]])
+     *
+     *  @param {Array<T>} array - The input array
+     *
+     *  @return {Array<Array<T>>} The resulting array of pairs
+     *  @template T
+     */
+    pairs: function (array) {
+        let result = [];
+        for (let index = 0; (index + 1) < array.length; index++) {
+            result.push([array[index], array[index + 1]]);
+        }
+        return result;
+    },
+
+    /**
+     *  Information about the GitHub project
+     *  @typedef {object} ProjectInfo
+     *  @property {string} owner - The GitHub username of the project owner
+     *  @property {string} name - The name of the project
+     */
+
+    /**
+     *  Parses a GitHub project URL
+     *  @param {string} url
+     *      The GitHub project URL, must contain 'github.com'
+     *
+     *  @return {ProjectInfo}
+     *      The owner and the name of the project
+     */
+    parseURL: function (url) {
+        const url_parts = url.split('/');
+        const index = url_parts.indexOf('github.com');
+        // TODO: remove '.git' from url if present
+        if (index === -1) {
+            throw 'Not a valid GitHub url (' + url + ')';
+        }
+        return {
+            owner: url_parts[index + 1],
+            name: url_parts[index + 2]
+        };
+    },
+
+   /**
+     *    Gets values of the list excluding duplicates
+     *    @param {Array<T>} elements - The list with potential duplicates
+     *
+     *    @return {Array<T>} - The list with duplicate elements removed
+     *    @template T
+     */
+    uniques: function(elements) {
+        let present = new Set();
+        let uniqued = [];
+        for (const element of elements) {
+            if (!present.has(element)) {
+                uniqued.push(element);
+                present.add(element);
+            }
+        }
+        return uniqued;
+    },
+
+    /**
+     *  Unwrap takes in an object, and a leaf key and moves the values of
+     *  the leaf keys up a level in the object tree
+     *  (i.e. object.sub_level.leaf = object.leaf, for all 'leaf' in 'object')
+     *  @param {object} obj - The object to unwrap
+     *  @param {string} leaf - The leaf key
+     *
+     *  @return {object} The unwrapped object
+     */
+    unwrap: function (obj, leaf) {
+        const unwrapped = {};
+        for (const [key, node] of Object.entries(obj)) {
+            unwrapped[key] = node[leaf];
+        }
+        return unwrapped;
+    },
 
     /**
      *  Configuration options for writing to a file
@@ -216,90 +272,30 @@ const utils = {
     },
 
     /**
-     *  Unwrap takes in an object, and a leaf key and moves the values of
-     *  the leaf keys up a level in the object tree
-     *  (i.e. object.sub_level.leaf = object.leaf, for all 'leaf' in 'object')
-     *  @param {object} obj - The object to unwrap
-     *  @param {string} leaf - The leaf key
+     *  Zip takes any number of arrays (e.g. xs = [x_0...x_n], ys = [y_0...y_m])
+     *  and returns an array where each element is an array of the n^th elements of
+     *  the input arrays (i.e. zip(xs, ys) = [[x_0, y_0] ... [x_k, y_k] | k = min(n, m)]).
+     *  Similarly for larger number of input arrays.
      *
-     *  @return {object} The unwrapped object
-     */
-    unwrap: function (obj, leaf) {
-        const unwrapped = {};
-        for (const [key, node] of Object.entries(obj)) {
-            unwrapped[key] = node[leaf];
-        }
-        return unwrapped;
-    },
-
-    /**
-     *    Takes in a list of flat json objects and outputs a CSV string.
-     *    @param {Array<Object>} objs - The objects
-     *    @param {Array<string>} [header]
-     *        The header, keys of the first object will be used if none provided.
-     *    @param {string} [sep=','] - The separator for each column.
-     *    @param {string} [end='\n'] - The separator for each row.
+     *  @param {...Array<*>} arrays - The input arrays
      *
-     *    @return {string} - The CSV string
+     *  @return {Array<*>} zipped - The zipped array
      */
-    jsonToCsv: function (objs, header, sep=',', end='\n') {
-        // TODO: Not ideal, optimize?
-        header = utils.uniques(objs.map(Object.keys)
-            .reduce((acc, keys) => acc.concat(keys), []));
-
-        let body = [];
-        for (const obj of objs) {
-            const row = header.map(h => obj[h]);
-            body.push(row);
-        }
-        const csv = [header, ...body].map(row => row.join(sep)).join(end);
-        return csv;
-    },
-
-
-    /**
-     *    Gets values of the list excluding duplicates
-     *    @param {Array<T>} elements - The list with potential duplicates
-     *
-     *    @return {Array<T>} - The list with duplicate elements removed
-     *    @template T
-     */
-    uniques: function(elements) {
-        let present = new Set();
-        let uniqued = [];
-        for (const element of elements) {
-            if (!present.has(element)) {
-                uniqued.push(element);
-                present.add(element);
+    zip: function (...arrays) {
+        let zipped = [];
+        for (let index = 0 ;; index++) {
+            let step = [];
+            for (const array of arrays) {
+                if (index < array.length) {
+                    const elem = array[index];
+                    step.push(elem);
+                } else {
+                    return zipped;
+                }
             }
+            zipped.push(step);
         }
-        return uniqued;
     },
-
-    /**
-     *    Flattens a nested object.
-     *    @param {Object} obj - The object to flatten
-     *    @param {string} [prefix=''] - The prefix for the flattened keys.
-     *
-     *    @return {Object} - The flattened object.
-     */
-    flatten: function(obj, prefix='') {
-        let flattened = {};
-        for (const key of Object.keys(obj)) {
-            const value = obj[key];
-            const path = prefix + ':' + key;
-            if (typeof value == 'object') {
-                flattened = Object.assign(
-                    flattened, utils.flatten(value, path));
-            } else {
-                flattened[path] = value;
-            }
-        }
-        return flattened;
-    }
 };
-
-
-
 
 module.exports = utils;
