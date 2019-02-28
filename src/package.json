@@ -25,7 +25,8 @@
     "mz": "^2.7.0",
     "node-dir": "^0.1.17",
     "nodegit": "^0.23.0",
-    "tmp": "0.0.33"
+    "tmp": "0.0.33",
+    "winston": "^3.2.1"
   },
   "jshintConfig": {
     "esversion": 6

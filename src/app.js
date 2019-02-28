@@ -1,7 +1,11 @@
 
 // user defined modules
 const utils = require('./utils');
+const mkLogger = require('./log.js');
 const { Data } = require ('./data');
+
+// create our logger object
+const logger = mkLogger({label: __filename});
 
 /**
  *  Serves as the main entry point to the HubListener CLI app
@@ -9,6 +13,9 @@ const { Data } = require ('./data');
  *  @param {Array<string>} args - The un-parsed array of command-line arguments
  */
 function main(args) {
+    logger.debug('Started main function, with args:');
+    logger.debug(args);
+
     // Available options and flags
     // NOTE: Update options message whenever a new option is added or removed
     // TODO: add option to provide auth token string as an argument
@@ -30,14 +37,22 @@ function main(args) {
     let options;
     try {
         options = utils.argParse(args);
-    } catch (error) {
-        console.log(error);
+        logger.debug('Successfully parsed command-line into:');
+        logger.debug(options);
+    } catch (err) {
+        // Log exception
+        logger.error('Failed parsing command-line arguments');
+        logger.error(err.stack);
+
+        // Advise possible solutions to user and exit
+        console.log(err.message);
         console.log(optionsMsg);
         return;
     }
 
     // If help flag, display options and exit
     if (options['h'] || options['help']) {
+        logger.debug('Printing help message...');
         console.log(optionsMsg);
         return;
     }
@@ -45,6 +60,7 @@ function main(args) {
     const repoUrl = options['u'] || options['url'];
     // If no repository url was provided, display options and exit
     if (repoUrl === undefined) {
+        logger.debug('No URL provided, printing help message...');
         console.log(optionsMsg);
         return;
     }
@@ -91,4 +107,9 @@ function main(args) {
     });
 }
 
-main(process.argv);
+try {
+    main(process.argv);
+} catch (err) {
+    logger.error('Main function crashed!');
+    logger.error(err.stack);
+}

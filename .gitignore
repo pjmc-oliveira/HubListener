@@ -8,3 +8,4 @@ src/lib/
 src/include/
 src/pip-selfcheck.json
 pyvenv.cfg
+src/logs/
