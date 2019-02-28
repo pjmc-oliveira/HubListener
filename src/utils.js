@@ -49,7 +49,7 @@ const utils = {
                     args[currFlag] = [existingArg, value];
                 // If flag has multiple associated values, append to Array
                 } else if (Array.isArray(existingArg)) {
-                    args[currFlag].push(value)
+                    args[currFlag].push(value);
                 }
 
             // collect any parsing errors (invalid flags or values)
@@ -61,7 +61,7 @@ const utils = {
         // if there were any parsing errors, throw exception
         if (parsingErrors.length > 0) {
             const errorsMsg = '[' + parsingErrors.join(', ') + ']';
-            throw `${errorsMsg} is/are not valid flag(s) or value(s)`;
+            throw Error(`${errorsMsg} is/are not valid flag(s) or value(s)`);
         }
 
         return args;
