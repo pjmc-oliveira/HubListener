@@ -4,6 +4,7 @@ const port = 8080;
 const {Data} = require('./data');
 
 app.use(express.static('static'));
+app.use(express.json());
 
 /**
  * Runs HubListener metrics gathering.
@@ -15,10 +16,9 @@ app.use(express.static('static'));
  *      An object containing all project analysis broken down by commits.
  */
 app.post('/run', (req, res) => {
-    let url = req.query.url;
-    let options = req.query.options;
+    const { url, options } = req.body;
 
-    let data = new Data(url, {});
+    const data = new Data(url, options);
 
     // TODO: should not run for EVERY commit - define through options
     data.clonePromise.then(async (clone) => {
