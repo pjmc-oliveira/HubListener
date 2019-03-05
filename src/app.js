@@ -86,7 +86,7 @@ function main(args) {
                 author: commit.author().toString(),
                 index: index,
                 date: commit.date().toISOString(),
-                analisys: await data.getStaticAnalysis()}),
+                analysis: await data.getStaticAnalysis()}),
             (commit, error, index) => ({
                 commit: commit.id().tostrS(),
                 author: commit.author().toString(),
