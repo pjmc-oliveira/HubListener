@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "test",
+    "test": "npx ava --watch",
     "dev": "clear && node dev.js"
   },
   "repository": {
