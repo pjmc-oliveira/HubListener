@@ -3,7 +3,6 @@
 // node and npm modules
 const moment = require('moment');
 const dir = require('node-dir');
-const fs = require('mz/fs');
 const path = require('path');
 
 // user defined modules
