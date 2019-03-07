@@ -121,7 +121,7 @@ class Clone {
             const result = await action(commit, i)
                 .catch(e => catcher(commit, e, i));
             results.push(result);
-            i++
+            i++;
         }
         return results;
     }
