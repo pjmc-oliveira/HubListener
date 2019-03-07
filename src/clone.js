@@ -3,6 +3,10 @@
 // node and npm modules
 const tmp = require('tmp');
 const Git = require('nodegit');
+const URLPath = require('url');
+var fs = require('fs-extra');
+const utils = require('./utils.js');
+const path = require('path');
 
 
 /**
@@ -17,9 +21,20 @@ class Clone {
      */
     static async init(url) {
         // create tmp directory
-        const path = tmp.dirSync().name;
-        const repo = await Git.Clone(url, path);
-        return new Clone(path, repo);
+        const {owner, name } = utils.parseURL(url);
+        const clonePath = path.join( __dirname, 'repos', owner, name);
+        // If clonePath directory does not exist, create directory
+        if (!fs.existsSync(clonePath)){
+            fs.ensureDirSync(clonePath);
+        }
+        else{
+            // empty directory, rmdirectory and re-create directory 
+            fs.emptyDirSync(clonePath);
+            fs.rmdirSync(clonePath);
+            fs.ensureDirSync(clonePath);
+        }
+        const repo = await Git.Clone(url, clonePath);
+        return new Clone(clonePath, repo);
     }
 
     /**
