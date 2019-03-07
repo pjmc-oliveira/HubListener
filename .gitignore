@@ -10,3 +10,4 @@ src/pip-selfcheck.json
 pyvenv.cfg
 src/logs/
 src/results.*
+*.sqlite3
