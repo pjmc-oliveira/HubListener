@@ -1,13 +1,13 @@
 'use strict';
 
 // node and npm modules
-const tmp = require('tmp');
 const Git = require('nodegit');
-const URLPath = require('url');
-var fs = require('fs-extra');
+const fs = require('fs-extra');
 const utils = require('./utils.js');
 const path = require('path');
 
+const mkLogger = require('./log.js');
+const logger = mkLogger({label: __filename});
 
 /**
  *  @class The Clone class to clone and manage the Git repository
@@ -19,22 +19,47 @@ class Clone {
      *
      *  @return {Promise<Clone>} A promise to a {@link Clone} instance.
      */
-    static async init(url) {
-        // create tmp directory
-        const {owner, name } = utils.parseURL(url);
-        const clonePath = path.join( __dirname, 'repos', owner, name);
-        // If clonePath directory does not exist, create directory
-        if (!fs.existsSync(clonePath)){
-            fs.ensureDirSync(clonePath);
+    static async init(url, {
+            clonePath = ''
+        } = {}) {
+        logger.debug(`Initializing repository Clone from: '${url}'`);
+
+        // if clone path is not set, create a new path from URL
+        if (!clonePath) {
+            logger.debug('clonePath not passed, creating from URL')
+            const { owner, name } = utils.parseURL(url);
+            clonePath = path.join( __dirname, 'repos', owner, name);
         }
-        else{
-            // empty directory, rmdirectory and re-create directory 
-            fs.emptyDirSync(clonePath);
-            fs.rmdirSync(clonePath);
+
+        // check if repository was already cloned,
+        // if so pull changes
+        if (fs.existsSync(clonePath)) {
+            logger.debug(`Clone directory found at: '${clonePath}'`);
+            // See: https://github.com/nodegit/nodegit/blob/master/examples/pull.js
+            let repo;
+            logger.debug('Pulling latest changes...');
+            await Git.Repository.open(clonePath)
+            .then(r => {
+                repo = r;
+                repo.fetchAll({
+                    callbacks: {
+                        credentials: (url, user) => Git.Cred.sshKeyFromAgent(user),
+                        certificateCheck: () => 0
+                    }
+                })
+            })
+            .then(() => repo.mergeBranches('master', 'origin/master'))
+            logger.debug('Changes successfuly pulled!');
+            return new Clone(clonePath, repo);
+        } else {
+            // if repository not found, create directory and clone repository
+            logger.debug(`Clone directory not found, creating new directory: '${clonePath}'`);
             fs.ensureDirSync(clonePath);
+            logger.debug('Cloning git repository...');
+            const repo = await Git.Clone(url, clonePath);
+            logger.debug('Successfully cloned!');
+            return new Clone(clonePath, repo);
         }
-        const repo = await Git.Clone(url, clonePath);
-        return new Clone(clonePath, repo);
     }
 
     /**
