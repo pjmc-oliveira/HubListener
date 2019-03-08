@@ -1,6 +1,6 @@
 
 const path = require('path');
-const {  createLogger, format, transports } = require('winston');
+const { createLogger, format, transports } = require('winston');
 
 const formatter = format.printf(({level, message, timestamp, label}) => {
         message = typeof message === 'string' ? message : JSON.stringify(message, null, 4);
@@ -13,7 +13,7 @@ const mkLogger = ({label = 'HubListener', level = 'debug'}) => (
         level: level,
         format: format.combine(
             format.timestamp({
-                format: 'YYYY-MM-DD HH:mm:ss'
+                format: 'YYYY-MM-DD HH:mm:ss.SSS'
             }),
             format.errors({ stack: true }),
             format.splat(),
