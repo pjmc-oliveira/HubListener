@@ -2,6 +2,7 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const os = require('os');
 const escomplex = require('escomplex');
+const {isText} = require('istextorbinary');
 const mkLogger = require('./log.js');
 
 const logger = mkLogger({label: __filename});
@@ -29,7 +30,14 @@ const analyse = {
 
         const readFile = path => fs.readFileSync(path, 'utf8');
         const countLines = contents => contents.split('\n').length;
-        const getLinesFromFile = path => countLines(readFile(path));
+        const getLinesFromFile = path => {
+            let contents = readFile(path);
+            if (isText(path, contents)) {
+                return countLines(contents);
+            } else {
+                return 0;
+            }
+        };
         const totalLines = paths
             .map(getLinesFromFile)
             .reduce((a, b) => a + b, 0);
