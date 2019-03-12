@@ -12,15 +12,10 @@ const logger = mkLogger({label: __filename});
  */
 const analyse = {
     /**
-     *  Metric
-     *  @typedef {object} Metric
-     *  @property {string} name - short human readable text describing the metric
-     *  @value {number} value - the value of the metric
-     *
      *  Summary for a generic file extension
      *  @typedef {object} GenericAnalysisReport
-     *  @property {Metric} numberOfFiles - The number of files with the extension
-     *  @property {Metric} numberOfLines
+     *  @property {number} numberOfFiles - The number of files with the extension
+     *  @property {number} numberOfLines
      *      The total number of physical lines with the extension
      */
 
@@ -40,28 +35,23 @@ const analyse = {
             .reduce((a, b) => a + b, 0);
 
         return Promise.resolve({
-            numberOfFiles: {name: 'Number of files', value: paths.length},
-            numberOfLines: {name: 'Number of lines', value: totalLines}
+            numberOfFiles: paths.length,
+            numberOfLines: totalLines
         });
     },
 
     /**
-     *  Metric
-     *  @typedef {object} Metric
-     *  @property {string} name - short human readable text describing the metric
-     *  @value {number} value - the value of the metric
-     *
      *  Static Analysis report for Javascript code
      *  @typedef {object} JsAnalysisReport
-     *  @property {Metric} numberOfFiles
-     *  @property {Metric} cyclomatic
-     *  @property {Metric} maintainability
-     *  @property {Metric} numberOfComments
-     *  @property {Metric} numberOfLines
-     *  @property {Metric} numberOfLogicalLines
-     *  @property {Metric} effort
-     *  @property {Metric} changeCost
-     *  @property {Metric} avgDependencies
+     *  @property {number} numberOfFiles
+     *  @property {number} cyclomatic
+     *  @property {number} maintainability
+     *  @property {number} numberOfComments
+     *  @property {number} numberOfLines
+     *  @property {number} numberOfLogicalLines
+     *  @property {number} effort
+     *  @property {number} changeCost
+     *  @property {number} anumbervgDependencies
      */
 
     /**
@@ -130,15 +120,15 @@ const analyse = {
             }
 
             let finalReport = {
-                numberOfFiles: {name: 'Number of files', value: paths.length},
-                cyclomatic: {name: 'Cyclomatic complexity', value: escomplexReport.cyclomatic},
-                maintainability: {name: 'Maintainability index', value: escomplexReport.maintainability},
-                numberOfComments: {name: 'Number of lines of comments', value: totalComments},
-                numberOfLines: {name: 'Physical lines of code', value: sloc},
-                numberOfLogicalLines: {name: 'Logical lines of code', value: lsloc},
-                effort: {name: 'Halstead effort', value: escomplexReport.effort},
-                changeCost: {name: 'Change cost', value: escomplexReport.changeCost},
-                avgDependencies: {name: 'Average number of dependencies per file', value: (dependencies / escomplexReport.reports.length)}
+                numberOfFiles: paths.length,
+                cyclomatic: escomplexReport.cyclomatic,
+                maintainability: escomplexReport.maintainability,
+                numberOfComments: totalComments,
+                numberOfLines: sloc,
+                numberOfLogicalLines: lsloc,
+                effort: escomplexReport.effort,
+                changeCost: escomplexReport.changeCost,
+                avgDependencies: dependencies / escomplexReport.reports.length
             };
 
             resolve(finalReport);
