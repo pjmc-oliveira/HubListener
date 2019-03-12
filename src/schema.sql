@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS MetricValues (
     file_extension text NOT NULL,
     metric_type_id integer NOT NULL,
     metric_value float NOT NULL,
+    UNIQUE(repo_id, commit_id, file_extension, metric_type_id),
         FOREIGN KEY (repo_id) REFERENCES Repositories(id),
         FOREIGN KEY (metric_type_id) REFERENCES MetricTypes(id)
 );
