@@ -2,6 +2,9 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const os = require('os');
 const escomplex = require('escomplex');
+const mkLogger = require('./log.js');
+
+const logger = mkLogger({label: __filename});
 
 /**
  *  A namespace containing analyser functions.
@@ -76,7 +79,7 @@ const analyse = {
                 escomplexReport = escomplex.analyse(source, {});
             } catch (e) {
                 // Parse failure, skip and return basic analysis
-                console.log(e);
+                logger.warn(e);
                 resolve(analyse.generic(paths));
             }
 
@@ -134,8 +137,8 @@ const analyse = {
                 program.stderr.on('data', reject);
 
             } catch (e) {
-                console.log("Python analysis failed.  Falling back to default.  Details:");
-                console.log(e);
+                logger.warn("Python analysis failed.  Falling back to default.  Details:");
+                logger.warn(e);
                 resolve(analyse.generic(paths));
             }
         });

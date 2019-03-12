@@ -11,6 +11,9 @@ const { Client } = require('./client.js');
 const { Clone } = require('./clone.js');
 const utils = require('./utils.js');
 const analyse = require('./analyse.js');
+const mkLogger = require('./log.js');
+
+const logger = mkLogger({label: __filename});
 
 /**
  *  @class The Data class is used as the central point where all raw
