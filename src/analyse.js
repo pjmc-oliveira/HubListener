@@ -12,18 +12,23 @@ const logger = mkLogger({label: __filename});
  */
 const analyse = {
     /**
+     *  Metric
+     *  @typedef {object} Metric
+     *  @property {string} name - short human readable text describing the metric
+     *  @value {number} value - the value of the metric
+     *
      *  Summary for a generic file extension
-     *  @typedef {object} GenericExtSummary
-     *  @property {number} numberOfFiles - The number of files with the extension
-     *  @property {number} numberOfLines
+     *  @typedef {object} GenericAnalysisReport
+     *  @property {Metric} numberOfFiles - The number of files with the extension
+     *  @property {Metric} numberOfLines
      *      The total number of physical lines with the extension
      */
 
     /**
      *  Analyses a generic text files.
-     *  @param {Array<string>} paths - The paths to all the files
+     *  @param {Array<string>} paths - An array of absolute file paths
      *
-     *  @return {GenericExtSummary} The extension summary
+     *  @return {GenericAnalysisReport} A report of all analyses performed on the given extension
      */
     generic: function(paths) {
 
@@ -35,11 +40,36 @@ const analyse = {
             .reduce((a, b) => a + b, 0);
 
         return Promise.resolve({
-            numberOfFiles: paths.length,
-            numberOfLines: totalLines
+            numberOfFiles: {name: 'Number of files', value: paths.length},
+            numberOfLines: {name: 'Number of lines', value: totalLines}
         });
     },
 
+    /**
+     *  Metric
+     *  @typedef {object} Metric
+     *  @property {string} name - short human readable text describing the metric
+     *  @value {number} value - the value of the metric
+     *
+     *  Static Analysis report for Javascript code
+     *  @typedef {object} JsAnalysisReport
+     *  @property {Metric} numberOfFiles
+     *  @property {Metric} cyclomatic
+     *  @property {Metric} maintainability
+     *  @property {Metric} numberOfComments
+     *  @property {Metric} numberOfLines
+     *  @property {Metric} numberOfLogicalLines
+     *  @property {Metric} effort
+     *  @property {Metric} changeCost
+     *  @property {Metric} avgDependencies
+     */
+
+    /**
+     *  Performs static code analysis on a set of javascript files
+     *  @param {Array<string>} paths - An array of absolute file paths
+     *
+     *  @return {JsAnalysisReport} A report of static analysis performed on javascript code
+     */
     javascript: function(paths) {
         return new Promise((resolve, reject) => {
             let source = [];
@@ -100,15 +130,15 @@ const analyse = {
             }
 
             let finalReport = {
-                numberOfFiles: paths.length,
-                cyclomatic: escomplexReport.cyclomatic,
-                maintainability: escomplexReport.maintainability,
-                numberOfComments: totalComments,
-                numberOfLines: sloc,
-                numberOfLogicalLines: lsloc,
-                effort: escomplexReport.effort,
-                changeCost: escomplexReport.changeCost,
-                avgDependencies: dependencies / escomplexReport.reports.length
+                numberOfFiles: {name: 'Number of files', value: paths.length},
+                cyclomatic: {name: 'Cyclomatic complexity', value: escomplexReport.cyclomatic},
+                maintainability: {name: 'Maintainability index', value: escomplexReport.maintainability},
+                numberOfComments: {name: 'Number of lines of comments', value: totalComments},
+                numberOfLines: {name: 'Physical lines of code', value: sloc},
+                numberOfLogicalLines: {name: 'Logical lines of code', value: lsloc},
+                effort: {name: 'Halstead effort', value: escomplexReport.effort},
+                changeCost: {name: 'Change cost', value: escomplexReport.changeCost},
+                avgDependencies: {name: 'Average number of dependencies per file', value: (dependencies / escomplexReport.reports.length)}
             };
 
             resolve(finalReport);
