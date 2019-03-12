@@ -199,21 +199,16 @@ const utils = {
 
    /**
      *    Gets values of the list excluding duplicates
-     *    @param {Array<T>} elements - The list with potential duplicates
+     *    @param {Array<T>} duplicates - The list with potential duplicates
      *
      *    @return {Array<T>} - The list with duplicate elements removed
      *    @template T
      */
-    uniques: function(elements) {
-        let present = new Set();
-        let uniqued = [];
-        for (const element of elements) {
-            if (!present.has(element)) {
-                uniqued.push(element);
-                present.add(element);
-            }
-        }
-        return uniqued;
+    uniques: function(duplicates) {
+        let seen = new Set();
+        return duplicates.filter(item =>
+            seen.has(item) ? false : seen.add(item)
+        );
     },
 
     /**

@@ -1,5 +1,6 @@
 
-const {  createLogger, format, transports } = require('winston');
+const path = require('path');
+const { createLogger, format, transports } = require('winston');
 
 const formatter = format.printf(({level, message, timestamp, label}) => {
         message = typeof message === 'string' ? message : JSON.stringify(message, null, 4);
@@ -7,24 +8,19 @@ const formatter = format.printf(({level, message, timestamp, label}) => {
     }
 );
 
-const filename = path => {
-    const splitPath = path.split('/');
-    return splitPath[splitPath.length - 1];
-};
-
 const mkLogger = ({label = 'HubListener', level = 'debug'}) => (
     createLogger({
         level: level,
         format: format.combine(
             format.timestamp({
-                format: 'YYYY-MM-DD HH:mm:ss'
+                format: 'YYYY-MM-DD HH:mm:ss.SSS'
             }),
             format.errors({ stack: true }),
             format.splat(),
             format.json(),
             formatter
         ),
-        defaultMeta: { label: filename(label)},
+        defaultMeta: { label: path.basename(label) },
         transports: [
             new transports.Console({
                 format: format.combine(
