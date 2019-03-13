@@ -38,7 +38,7 @@ async function makeDB(name) {
 
     // Keep a local copy of metrics
     // so we can refer to it internally
-    const metrics = loadMetricTypes(_db)
+    const metrics = await loadMetricTypes(_db);
     
     return {
         // change to two way
@@ -71,14 +71,13 @@ async function makeDB(name) {
                 const query = 'INSERT OR IGNORE INTO Repositories (owner, name) VALUES (?, ?);';
                 return _run(query, [owner, name]);
             },
-            // UNTESTED!
             values: (repo_id, commit_id, commit_date, valuesByExt) => {
-                let stmt = db.prepare(`
+                let stmt = _db.prepare(`
                     INSERT OR IGNORE INTO MetricValues
                     (repo_id, commit_id, commit_date, file_extension, metric_type_id, metric_value)
                     VALUES (?, ?, ?, ?, ?, ?)`);
-                for (const [ext, metrics] of Object.entries(valuesByExt)) {
-                    for (const [type, value] of Object.entries(metrics)) {
+                for (const [ext, metricsValues] of Object.entries(valuesByExt)) {
+                    for (const [type, value] of Object.entries(metricsValues)) {
                         // only add defined metrics
                         if (type_id = metrics.byName[type]) {
                             const row = [repo_id, commit_id, commit_date, ext, type_id, value];
