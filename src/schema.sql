@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS Repositories (
 CREATE TABLE IF NOT EXISTS MetricTypes (
     id integer PRIMARY KEY,
     name text NOT NULL UNIQUE,
-    human_name text NOT NULL,  -- can be empty string, but not NULL
-    description text NOT NULL  -- can be empty string, but not NULL
+    human_name text,  -- can be empty string, but not NULL
+    description text  -- can be empty string, but not NULL
 );
 
 CREATE TABLE IF NOT EXISTS MetricValues (
@@ -23,6 +23,9 @@ CREATE TABLE IF NOT EXISTS MetricValues (
     metric_type_id integer NOT NULL,
     metric_value float NOT NULL,
     UNIQUE(repo_id, commit_id, file_extension, metric_type_id),
-        FOREIGN KEY (repo_id) REFERENCES Repositories(id),
-        FOREIGN KEY (metric_type_id) REFERENCES MetricTypes(id)
+    FOREIGN KEY (repo_id) REFERENCES Repositories(id),
+    FOREIGN KEY (metric_type_id) REFERENCES MetricTypes(id)
 );
+
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfFiles');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfLines');
