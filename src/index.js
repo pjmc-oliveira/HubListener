@@ -58,7 +58,7 @@ app.post('/analyse', async (req, res) => {
     const { owner, name } = utils.parseURL(url);
 
     // ensure repo is in database
-    const repoId = db.get.repo({owner, name})
+    const repo_id = db.get.repo({owner, name})
         // if repo not present, insert it
         .then(repo => repo ?
             repo :
@@ -71,12 +71,22 @@ app.post('/analyse', async (req, res) => {
 
     // clone and update repo
     const data = new Data(url, options);
+    // begin static analysis when ready
+    const analysis = data.clonePromise.then(_ => data.getStaticAnalysis());
 
     // wait for both
-    const results = Promise.all([data.clonePromise, repoId]).then(async ([clone, info]) => {
-        console.log('in promise...');
-        console.log(info);
-        return {};
+    const results = Promise.all([data.clonePromise, analysis, repo_id])
+        .then(async ([clone, analysis, repo_id]) => {
+            console.log('in promise...');
+            console.log(repo_id);
+
+            const head = await clone.repo.getHeadCommit();
+            const commit_id = head.id().tostrS();
+            const commit_date = head.date();
+
+            db.safeInsert.values(repo_id, commit_id, commit_date, analysis)
+
+            return analysis;
     });
 
     res.send({data: await results});
