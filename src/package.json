@@ -27,6 +27,7 @@
     "moment": "^2.22.2",
     "node-dir": "^0.1.17",
     "nodegit": "^0.23.0",
+    "sqlite3": "^4.0.6",
     "winston": "^3.2.1"
   },
   "jshintConfig": {
