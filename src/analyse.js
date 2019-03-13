@@ -2,6 +2,10 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const os = require('os');
 const escomplex = require('escomplex');
+const {isText} = require('istextorbinary');
+const mkLogger = require('./log.js');
+
+const logger = mkLogger({label: __filename});
 
 /**
  *  A namespace containing analyser functions.
@@ -10,7 +14,7 @@ const escomplex = require('escomplex');
 const analyse = {
     /**
      *  Summary for a generic file extension
-     *  @typedef {object} GenericExtSummary
+     *  @typedef {object} GenericAnalysisReport
      *  @property {number} numberOfFiles - The number of files with the extension
      *  @property {number} numberOfLines
      *      The total number of physical lines with the extension
@@ -18,15 +22,22 @@ const analyse = {
 
     /**
      *  Analyses a generic text files.
-     *  @param {Array<string>} paths - The paths to all the files
+     *  @param {Array<string>} paths - An array of absolute file paths
      *
-     *  @return {GenericExtSummary} The extension summary
+     *  @return {GenericAnalysisReport} A report of all analyses performed on the given extension
      */
     generic: function(paths) {
 
         const readFile = path => fs.readFileSync(path, 'utf8');
         const countLines = contents => contents.split('\n').length;
-        const getLinesFromFile = path => countLines(readFile(path));
+        const getLinesFromFile = path => {
+            let contents = readFile(path);
+            if (isText(path, contents)) {
+                return countLines(contents);
+            } else {
+                return 0;
+            }
+        };
         const totalLines = paths
             .map(getLinesFromFile)
             .reduce((a, b) => a + b, 0);
@@ -37,6 +48,26 @@ const analyse = {
         });
     },
 
+    /**
+     *  Static Analysis report for Javascript code
+     *  @typedef {object} JsAnalysisReport
+     *  @property {number} numberOfFiles
+     *  @property {number} cyclomatic
+     *  @property {number} maintainability
+     *  @property {number} numberOfComments
+     *  @property {number} numberOfLines
+     *  @property {number} numberOfLogicalLines
+     *  @property {number} effort
+     *  @property {number} changeCost
+     *  @property {number} anumbervgDependencies
+     */
+
+    /**
+     *  Performs static code analysis on a set of javascript files
+     *  @param {Array<string>} paths - An array of absolute file paths
+     *
+     *  @return {JsAnalysisReport} A report of static analysis performed on javascript code
+     */
     javascript: function(paths) {
         return new Promise((resolve, reject) => {
             let source = [];
@@ -76,7 +107,7 @@ const analyse = {
                 escomplexReport = escomplex.analyse(source, {});
             } catch (e) {
                 // Parse failure, skip and return basic analysis
-                console.log(e);
+                logger.warn(e);
                 resolve(analyse.generic(paths));
             }
 
@@ -134,8 +165,8 @@ const analyse = {
                 program.stderr.on('data', reject);
 
             } catch (e) {
-                console.log("Python analysis failed.  Falling back to default.  Details:");
-                console.log(e);
+                logger.warn("Python analysis failed.  Falling back to default.  Details:");
+                logger.warn(e);
                 resolve(analyse.generic(paths));
             }
         });
