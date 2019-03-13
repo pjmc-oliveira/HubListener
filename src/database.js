@@ -20,7 +20,7 @@ async function makeDB(name) {
     const _all = promisify(_db.all.bind(_db));
     
     return {
-        metrics: await loadMetricTypes(_db),
+        metrics: loadMetricTypes(_db),
         get: {
             repo: ({id, owner, name}) => {
                 if (id) {
