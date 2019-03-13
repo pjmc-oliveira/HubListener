@@ -29,3 +29,10 @@ CREATE TABLE IF NOT EXISTS MetricValues (
 
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfFiles');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfLines');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('cyclomatic');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('maintainability');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfComments');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfLogicalLines');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('effort');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('changeCost');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('anumbervgDependencies');
