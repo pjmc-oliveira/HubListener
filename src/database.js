@@ -2,25 +2,49 @@ const sqlite3 = require('sqlite3');
 const { promisify } = require('util');
 
 async function loadMetricTypes(db) {
-    let mapping = {};
+    let byId = {};
+    let byName = {};
     const query = 'SELECT id, name FROM MetricTypes;';
     const _all = promisify(db.all.bind(db));
     await _all(query, [])
-        .then(rs => rs.forEach(r => mapping[r.id] = r.name))
-        .catch(err => console.log(err));
-    return mapping;
+        .then(rs => rs.forEach(r => {
+            byId[r.id] = r.name;
+            byName[r.name] = r.id;
+        }))
+        // .catch(err => console.log(err));
+    return { byId, byName };
 }
 
 async function makeDB(name) {
     // make our wrapped db pointer
     const _db = new sqlite3.Database(name, sqlite3.OPEN_READWRITE);
+    // promisify functions
     // for this to work properly we need to bind the databse to the function
     const _get = promisify(_db.get.bind(_db));
-    const _run = promisify(_db.run.bind(_db));
     const _all = promisify(_db.all.bind(_db));
+    // `run` has a weird format where it always calls the callback
+    // either passing an error as the parameter
+    // or with some information bound to the `this` of the function
+    const _run = (q, ps) => new Promise((resolve, reject) => 
+        _db.run(q, ps, function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(this);
+            }
+        })
+    );
+    //promisify(_db.run.bind(_db));
+
+    // Keep a local copy of metrics
+    // so we can refer to it internally
+    const metrics = loadMetricTypes(_db)
     
     return {
-        metrics: loadMetricTypes(_db),
+        // change to two way
+        // metrics.id[x] -> ...
+        // metrics.type[y] -> ...
+        metrics: metrics,
         get: {
             repo: ({id, owner, name}) => {
                 if (id) {
@@ -46,7 +70,24 @@ async function makeDB(name) {
             repo: ({owner, name}) => {
                 const query = 'INSERT OR IGNORE INTO Repositories (owner, name) VALUES (?, ?);';
                 return _run(query, [owner, name]);
-            }
+            },
+            // UNTESTED!
+            values: (repo_id, commit_id, commit_date, valuesByExt) => {
+                let stmt = db.prepare(`
+                    INSERT OR IGNORE INTO MetricValues
+                    (repo_id, commit_id, commit_date, file_extension, metric_type_id, metric_value)
+                    VALUES (?, ?, ?, ?, ?, ?)`);
+                for (const [ext, metrics] of Object.entries(valuesByExt)) {
+                    for (const [type, value] of Object.entries(metrics)) {
+                        // only add defined metrics
+                        if (type_id = metrics.byName[type]) {
+                            const row = [repo_id, commit_id, commit_date, ext, type_id, value];
+                            stmt.run(row);
+                        }
+                    }
+                }
+                stmt.finalize();
+            },
         }
     };
 }
