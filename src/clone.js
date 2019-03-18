@@ -20,7 +20,8 @@ class Clone {
      *  @return {Promise<Clone>} A promise to a {@link Clone} instance.
      */
     static async init(url, {
-            clonePath = ''
+            root = path.join(__dirname, 'repos'),
+            clonePath = '',
         } = {}) {
         logger.debug(`Initializing repository Clone from: '${url}'`);
 
@@ -28,7 +29,7 @@ class Clone {
         if (!clonePath) {
             logger.debug('clonePath not passed, creating from URL')
             const { owner, name } = utils.parseURL(url);
-            clonePath = path.join( __dirname, 'repos', owner, name);
+            clonePath = path.join(root, owner, name);
         }
 
         // check if repository was already cloned,
