@@ -39,16 +39,16 @@ class Clone {
             let repo;
             logger.debug('Pulling latest changes...');
             await Git.Repository.open(clonePath)
-            .then(r => {
-                repo = r;
-                repo.fetchAll({
-                    callbacks: {
-                        credentials: (url, user) => Git.Cred.sshKeyFromAgent(user),
-                        certificateCheck: () => 0
-                    }
+                .then(r => {
+                    repo = r;
+                    repo.fetchAll({
+                        callbacks: {
+                            credentials: (url, user) => Git.Cred.sshKeyFromAgent(user),
+                            certificateCheck: () => 0
+                        }
+                    })
                 })
-            })
-            .then(() => repo.mergeBranches('master', 'origin/master'))
+                .then(() => repo.mergeBranches('master', 'origin/master'))
             logger.debug('Changes successfuly pulled!');
             return new Clone(clonePath, repo);
         } else {
