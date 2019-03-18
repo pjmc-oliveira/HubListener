@@ -14,8 +14,17 @@ const logger = mkLogger({label: __filename});
  */
 class Clone {
     /**
+     *  Repository Cloning options
+     *  @typedef {object} CloneOptions
+     *  @property {string} [root=path.join(__dirname, 'repos')]
+     *      the root of the path to clone to
+     *  @property {string} [clonePath='']
+     *      the relative path to clone the repository to
+     */
+    /**
      *  Initialize and return an instance of the {@link Clone} class.
      *  @param {string} url - A valid URL to a Git repository.
+     *  @param {CloneOptions} [options] - cloning options
      *
      *  @return {Promise<Clone>} A promise to a {@link Clone} instance.
      */
