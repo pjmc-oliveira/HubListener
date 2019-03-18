@@ -16,7 +16,7 @@ async function loadMetricTypes(db) {
 }
 
 async function makeDB(name) {
-    // make our wrapped db pointer
+    // make our wrapped database pointer
     const _db = new sqlite3.Database(name, sqlite3.OPEN_READWRITE);
     // promisify functions
     // for this to work properly we need to bind the databse to the function
@@ -34,7 +34,6 @@ async function makeDB(name) {
             }
         })
     );
-    //promisify(_db.run.bind(_db));
 
     // Keep a local copy of metrics
     // so we can refer to it internally
@@ -85,7 +84,16 @@ async function makeDB(name) {
                         }
                     }
                 }
-                stmt.finalize();
+                // promisify the return
+                return new Promise((resolve, reject) => {
+                    stmt.finalize(function (err) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(this);
+                        }
+                    });
+                });
             },
         }
     };

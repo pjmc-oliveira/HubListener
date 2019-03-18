@@ -2,10 +2,12 @@ const express = require('express');
 
 const { Data } = require('./data.js');
 const { makeDB } = require('./database.js');
+const mkLogger = require('./log.js');
 const utils = require('./utils.js');
 
 const app = express();
 const port = 8080;
+const logger = mkLogger({label: __filename, level: 'info'});
 // promise to a database wrapper
 const _db = makeDB('hubdata.sqlite3');
 
@@ -49,7 +51,18 @@ app.post('/run', (req, res) => {
     });
 });
 
+/**
+ * API endpoint tp run the analysis on the given GitHub project URL.
+ * Parses JSON input.
+ * 
+ * @param {string} url - the GitHub URL to analyse
+ * @param {object} options - the analysis options
+ * 
+ * @return {object}
+ *      the object containing the metrics
+ */
 app.post('/analyse', async (req, res) => {
+    logger.info('[POST] request to /analyse');
     // wait for our db to load
     const db = await _db;
 
@@ -69,21 +82,24 @@ app.post('/analyse', async (req, res) => {
             // or the last id of the table after it's inserted
             rowOrInfo.lastID);
 
-    // clone and update repo
+    // begin clone and update local copy of repository
     const data = new Data(url, options);
     // begin static analysis when ready
     const analysis = data.clonePromise.then(_ => data.getStaticAnalysis());
 
-    // wait for both
+    // wait for repo to be cloned, analysis to be completed, and repo to be added to DB
     const results = Promise.all([data.clonePromise, analysis, repo_id])
+        // add analysis values to database
         .then(async ([clone, analysis, repo_id]) => {
             console.log('in promise...');
             console.log(repo_id);
 
+            // get the commit id & date
             const head = await clone.repo.getHeadCommit();
             const commit_id = head.id().tostrS();
             const commit_date = head.date();
 
+            // insert analysis values into database
             db.safeInsert.values(repo_id, commit_id, commit_date, analysis)
 
             return analysis;
