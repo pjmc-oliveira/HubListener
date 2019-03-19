@@ -57,7 +57,35 @@ async function makeDB(name) {
             repos: () => {
                 const query = 'SELECT * FROM Repositories;';
                 return _all(query, []);
-            }
+            },
+            lastCommit: (repo_id) => {
+                const query = `
+                    SELECT commit_id, commit_date
+                    FROM MetricValues
+                    WHERE
+                        repo_id = (?)
+                    ORDER BY commit_date DESC
+                    LIMIT 1;`;
+                return _get(query, [repo_id]);
+            },
+            valuesUntil: ({repo_id, end_date}) => {
+                const query = `
+                    SELECT
+                        v.repo_id,
+                        v.commit_id,
+                        v.commit_date,
+                        v.file_extension,
+                        t.name AS 'metric_type',
+                        v.metric_value
+                    FROM MetricValues v
+                        INNER JOIN MetricTypes t
+                        ON v.metric_type_id = t.id
+                    WHERE
+                        repo_id = (?) AND
+                        commit_date <= (?)
+                    ORDER BY commit_date DESC;`;
+                return _all(query, [repo_id, end_date]);
+            },
         },
         insert: {
             repo: ({owner, name}) => {

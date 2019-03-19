@@ -89,29 +89,85 @@ app.post('/analyse', async (req, res) => {
 
     // begin clone and update local copy of repository
     const data = new Data(url, options);
-    // begin static analysis when ready
-    const analyses = data.clonePromise.then(async clone => {
-        const commits = (await clone.headCommitHistory()).reverse();
-        return clone.foreachCommit(commits,
-            async (commit, index) => ({
-                commit_id: commit.id().tostrS(),
-                commit_date: commit.date(),
-                // have to wait for analysis to finish before
-                // checking out next commit
-                valuesByExt: await data.getStaticAnalysis()
+
+    // get last commit in database
+    const lastCommit = repo_id.then(id => db.get.lastCommit(id))
+        // convert date to Date object
+        .then(({commit_id, commit_date}) => ({
+            commit_id: commit_id,
+            commit_date: new Date(commit_date * 1000),
+        }));
+
+    // begin static analysis of new commits when ready
+    const newAnalyses = Promise.all([data.clonePromise, lastCommit])
+        .then(async ([clone, lastCommit]) => {
+            console.log(lastCommit);
+            console.log(typeof lastCommit);
+            // get commits not previously analysed
+            const commits = (await clone.headCommitHistory())
+                .filter((commit, index) => commit.date() > lastCommit.commit_date)
+                .reverse();
+
+            return clone.foreachCommit(commits,
+                async (commit, index) => ({
+                    commit_id: commit.id().tostrS(),
+                    commit_date: commit.date(),
+                    // have to wait for analysis to finish before
+                    // checking out next commit
+                    valuesByExt: await data.getStaticAnalysis()
             }));
     });
-    // const analysis = data.clonePromise.then(_ => data.getStaticAnalysis());
 
-    // wait for repo to be cloned, analysis to be completed, and repo to be added to DB
-    const results = await Promise.all([data.clonePromise, analyses, repo_id])
-        // add analysis values to database
-        .then(async ([clone, analyses, repo_id]) => {
-            // insert analysis values into database
-            db.safeInsert.values(repo_id, analyses);
-            return analyses;
-    });
+    // insert new analysis results into database
+    newAnalyses.then(analyses => db.safeInsert.values(repo_id, analyses));
 
+    // get already analysed commits if present
+    const oldAnalyses = Promise.all([repo_id, lastCommit])
+        .then(([repo_id, lastCommit]) => db.get.valuesUntil({
+            repo_id: repo_id,
+            end_date: lastCommit.commit_date,
+        }));
+    
+    // merge new and old analyses
+    const results = await Promise.all([newAnalyses, oldAnalyses, repo_id])
+        .then(([newAnalyses, oldAnalyses, repo_id]) => {
+            // old analyses serves as the start for our results
+            // after we can append the new results to it
+            let results = oldAnalyses;
+
+            console.log(`# of old results: ${oldAnalyses.length}`);
+
+            // new analyses is a list of objects
+            // with keys: commit_id, commit_date, and valuesByExt
+            // where valuesByExt is an object with different file extensions as keys
+            // and objects of metric types as keys and metric values as values
+            
+            let count = 0;
+
+            // convert it into a flat list of objects
+            // where each object key corresponds to a column in the table MetricValues
+            for (const {commit_id, commit_date, valuesByExt} of newAnalyses) {
+                for (const [ext, metricValues] of Object.entries(valuesByExt)) {
+                    for (const [type, value] of Object.entries(metricValues)) {
+                        // convert date string into UNIX timestamp
+                        const timestamp = Date.parse(commit_date);
+                        results.push({
+                            repo_id: repo_id,
+                            commit_id: commit_id,
+                            commit_date: timestamp,
+                            file_extension: ext,
+                            metric_type: type,
+                            metric_value: value,
+                        });
+                        count++;
+                    }
+                }
+            }
+
+            console.log(`# of new results: ${count}`);
+
+            return results;
+        });
 
     const end = Date.now();
     logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
