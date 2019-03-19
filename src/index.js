@@ -85,27 +85,29 @@ app.post('/analyse', async (req, res) => {
     // begin clone and update local copy of repository
     const data = new Data(url, options);
     // begin static analysis when ready
-    const analysis = data.clonePromise.then(_ => data.getStaticAnalysis());
+    const analyses = data.clonePromise.then(async clone => {
+        const commits = (await clone.headCommitHistory()).reverse();
+        return clone.foreachCommit(commits,
+            async (commit, index) => ({
+                commit_id: commit.id().tostrS(),
+                commit_date: commit.date(),
+                // have to wait for analysis to finish before
+                // checking out next commit
+                valuesByExt: await data.getStaticAnalysis()
+            }));
+    });
+    // const analysis = data.clonePromise.then(_ => data.getStaticAnalysis());
 
     // wait for repo to be cloned, analysis to be completed, and repo to be added to DB
-    const results = Promise.all([data.clonePromise, analysis, repo_id])
+    const results = await Promise.all([data.clonePromise, analyses, repo_id])
         // add analysis values to database
-        .then(async ([clone, analysis, repo_id]) => {
-            console.log('in promise...');
-            console.log(repo_id);
-
-            // get the commit id & date
-            const head = await clone.repo.getHeadCommit();
-            const commit_id = head.id().tostrS();
-            const commit_date = head.date();
-
+        .then(async ([clone, analyses, repo_id]) => {
             // insert analysis values into database
-            db.safeInsert.values(repo_id, commit_id, commit_date, analysis)
-
-            return analysis;
+            db.safeInsert.values(repo_id, analyses);
+            return analyses;
     });
 
-    res.send({data: await results});
+    res.send({data: results});
 });
 
 app.listen(port, () => console.log(`listening on ${port}`));

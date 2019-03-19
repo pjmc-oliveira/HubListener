@@ -70,17 +70,23 @@ async function makeDB(name) {
                 const query = 'INSERT OR IGNORE INTO Repositories (owner, name) VALUES (?, ?);';
                 return _run(query, [owner, name]);
             },
-            values: (repo_id, commit_id, commit_date, valuesByExt) => {
+            /**
+             *  Safe insert values
+             *  [{commit_id, commit_date, valuesByExt}]*
+             */
+            values: (repo_id, valuesToInsert) => {
                 let stmt = _db.prepare(`
                     INSERT OR IGNORE INTO MetricValues
                     (repo_id, commit_id, commit_date, file_extension, metric_type_id, metric_value)
                     VALUES (?, ?, ?, ?, ?, ?)`);
-                for (const [ext, metricsValues] of Object.entries(valuesByExt)) {
-                    for (const [type, value] of Object.entries(metricsValues)) {
-                        // only add defined metrics
-                        if (type_id = metrics.byName[type]) {
-                            const row = [repo_id, commit_id, commit_date, ext, type_id, value];
-                            stmt.run(row);
+                for (const {commit_id, commit_date, valuesByExt} of valuesToInsert) {
+                    for (const [ext, metricsValues] of Object.entries(valuesByExt)) {
+                        for (const [type, value] of Object.entries(metricsValues)) {
+                            // only add defined metrics
+                            if (type_id = metrics.byName[type]) {
+                                const row = [repo_id, commit_id, commit_date, ext, type_id, value];
+                                stmt.run(row);
+                            }
                         }
                     }
                 }
