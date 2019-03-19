@@ -62,7 +62,12 @@ app.post('/run', (req, res) => {
  *      the object containing the metrics
  */
 app.post('/analyse', async (req, res) => {
+    // disable request timeout...
+    req.setTimeout(0);
     logger.info('[POST] request to /analyse');
+
+    const start = Date.now();
+
     // wait for our db to load
     const db = await _db;
 
@@ -107,6 +112,9 @@ app.post('/analyse', async (req, res) => {
             return analyses;
     });
 
+
+    const end = Date.now();
+    logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
     res.send({data: results});
 });
 
