@@ -95,7 +95,7 @@ app.post('/analyse', async (req, res) => {
         // convert date to Date object
         .then(({commit_id, commit_date}) => ({
             commit_id: commit_id,
-            commit_date: new Date(commit_date * 1000),
+            commit_date: new Date(commit_date),
         }));
 
     // begin static analysis of new commits when ready
@@ -103,7 +103,7 @@ app.post('/analyse', async (req, res) => {
         .then(async ([clone, lastCommit]) => {
             // get commits not previously analysed
             const commits = (await clone.headCommitHistory())
-                .filter((commit, index) => commit.date() > lastCommit.commit_date)
+                .filter(commit => commit.date() > lastCommit.commit_date)
                 .reverse();
 
             return clone.foreachCommit(commits,
@@ -117,7 +117,8 @@ app.post('/analyse', async (req, res) => {
     });
 
     // insert new analysis results into database
-    newAnalyses.then(analyses => db.safeInsert.values(repo_id, analyses));
+    Promise.all([newAnalyses, repo_id])
+        .then(([analyses, repo_id]) => db.safeInsert.values(repo_id, analyses));
 
     // get already analysed commits if present
     const oldAnalyses = Promise.all([repo_id, lastCommit])
