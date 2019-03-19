@@ -101,8 +101,6 @@ app.post('/analyse', async (req, res) => {
     // begin static analysis of new commits when ready
     const newAnalyses = Promise.all([data.clonePromise, lastCommit])
         .then(async ([clone, lastCommit]) => {
-            console.log(lastCommit);
-            console.log(typeof lastCommit);
             // get commits not previously analysed
             const commits = (await clone.headCommitHistory())
                 .filter((commit, index) => commit.date() > lastCommit.commit_date)
