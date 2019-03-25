@@ -93,17 +93,25 @@ app.post('/analyse', async (req, res) => {
     // get last commit in database
     const lastCommit = repo_id.then(id => db.get.lastCommit(id))
         // convert date to Date object
-        .then(({commit_id, commit_date}) => ({
+        // if there are none, return `null`
+        .then(({commit_id, commit_date} = {}) => (commit_id ? {
             commit_id: commit_id,
             commit_date: new Date(commit_date),
-        }));
+        } : null));
 
     // begin static analysis of new commits when ready
     const newAnalyses = Promise.all([data.clonePromise, lastCommit])
         .then(async ([clone, lastCommit]) => {
-            // get commits not previously analysed
-            const commits = (await clone.headCommitHistory())
-                .filter(commit => commit.date() > lastCommit.commit_date)
+            // get all commits
+            const allCommits = (await clone.headCommitHistory());
+            // function to determine if commit is new
+            const isNew = commit => commit.date() > lastCommit.commit_date;
+            // if there is a last commit,
+            // only keep new commits, otherwise keep all
+            const commits = (lastCommit ?
+                (allCommits.filter(isNew)) :
+                allCommits)
+                // reverse into chronological order
                 .reverse();
 
             return clone.foreachCommit(commits,
@@ -120,12 +128,12 @@ app.post('/analyse', async (req, res) => {
     Promise.all([newAnalyses, repo_id])
         .then(([analyses, repo_id]) => db.safeInsert.values(repo_id, analyses));
 
-    // get already analysed commits if present
+    // get already analysed commits if present, otherwise empty list
     const oldAnalyses = Promise.all([repo_id, lastCommit])
-        .then(([repo_id, lastCommit]) => db.get.valuesUntil({
+        .then(([repo_id, lastCommit]) => lastCommit ? db.get.valuesUntil({
             repo_id: repo_id,
             end_date: lastCommit.commit_date,
-        }));
+        }) : []);
     
     // merge new and old analyses
     const results = await Promise.all([newAnalyses, oldAnalyses, repo_id])
@@ -164,7 +172,6 @@ app.post('/analyse', async (req, res) => {
             }
 
             console.log(`# of new results: ${count}`);
-
             return results;
         });
 
