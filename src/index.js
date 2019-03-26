@@ -177,7 +177,9 @@ app.post('/analyse', async (req, res) => {
 
     const end = Date.now();
     logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
-    res.send({data: results});
+    res.send({
+        points: utils.rows2points(results),
+    });
 });
 
 app.listen(port, () => console.log(`listening on ${port}`));

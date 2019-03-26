@@ -35,4 +35,4 @@ INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfComments');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfLogicalLines');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('effort');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('changeCost');
-INSERT OR IGNORE INTO MetricTypes (name) VALUES ('anumbervgDependencies');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('avgDependencies');
