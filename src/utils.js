@@ -197,6 +197,82 @@ const utils = {
         };
     },
 
+    /**
+     *  A row-like object outputted by a database query
+     *  @typedef {object} Row
+     *  @property {number} repo_id - The id of the repository
+     *  @property {string} commit_id - The id of the commit
+     *  @property {Date} commit_date - The date of the commit
+     *  @property {string} file_extension - The file extension
+     *  @property {string} metric_type - The name of the metric
+     *  @property {string} metric_value - The value of the metric
+     */
+
+    /**
+     *  A point-like object to be processed the the front-end graphs library
+     *  @typedef {object} Point
+     *  @property {number} repo_id - The id of the repository
+     *  @property {string} commit_id - The id of the commit
+     *  @property {Date} commit_date - The date of the commit
+     *  @property {string} file_extension - The file extension
+     *  @property {number} metric_type*
+     *      The value of metric of type `metric_type`, these properties are dynamically generated
+     *      and can differ for each point. Possibilities are subsets of the values in the MetricTypes
+     *      table. See [schema.sql]{@link schema.sql} for details.
+     */
+
+    /**
+     *  A function to get a unique identifier for a {@link Point} from a {@link Row}.
+     *  Used to index points.
+     *  @callback keyFunction
+     *  @param {Row} row - The row to get the unique identifier from.
+     *  @return {string} The unique identifier
+     */
+
+    /**
+     *  Transforms a list of row-like objects into a list of point-like objects.
+     *  Used to format the database output into something to be used by the graph in the front-end
+     *  
+     *  @param {Array<Row>} rows - The rows to be transformed
+     *  @param {keyFunction} [key=(({commit_id, file_extension}) => commit_id + ":" + file_extension)]
+     *      The function to identify each unique point from a row
+     *  @param {string} [nameCol='metric_type'] - The property of the metric name
+     *  @param {string} [valCol='metric_value'] - The property of the metric value
+     *  
+     *  @return {Array<Point>} The Points
+     */
+    rows2points: function (
+            rows,
+            key = (({commit_id, file_extension}) => commit_id + ":" + file_extension),
+            nameCol = 'metric_type',
+            valCol = 'metric_value') {
+
+        // we can build up our points without duplicates
+        // by indexing them based on the `key` function
+        let points = {};
+
+        // except unique columns
+        // i.e. columns that have unique values per row (of the same point)
+        const except = [nameCol, valCol];
+
+        // transforms a `row` into an base point
+        // i.e. only constant point information, striping any metrics
+        let init = row => Object.entries(row)
+            .filter(([k, v]) => !except.includes(k))
+            .reduce((obj, [k, v]) => ({...obj, [k]: v}), {});
+
+        for (const row of rows) {
+            // the identifier of the row
+            let id = key(row);
+            // ensure the point is initialized
+            points[id] = (points[id] || init(row));
+            // add the this row's metric to the point
+            points[id][row[nameCol]] = row[valCol];
+        }
+        // return only the point values
+        return Object.values(points);
+    },
+
    /**
      *    Gets values of the list excluding duplicates
      *    @param {Array<T>} duplicates - The list with potential duplicates
