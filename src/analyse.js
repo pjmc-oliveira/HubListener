@@ -151,16 +151,28 @@ const analyse = {
                 const pythonExe = os.platform() === 'darwin' ? 'python3' : 'python';
                 const scriptName = 'external/analyse.py';
 
-                // converts function that takes in JSON, into function that takes in bytes
-                const jsonifyBytes = fn => bytes => fn(JSON.parse(bytes.toString('utf8')));
-
-
+                // spawn separate process to analyse python
                 const program = spawn(pythonExe, [scriptName, ...paths]);
 
-                // Allow functions to take in bytes
-                resolve = jsonifyBytes(resolve);
+                // store partialy complete JSON strings
+                let buffer = '';
 
-                program.stdout.on('data', resolve);
+                // on every output, add chunk to buffer and try to parse buffer
+                // if JSON incomplete, wait for nexxt chunk
+                // otherwise resolve buffer
+                program.stdout.on('data', chunk => {
+                    buffer += chunk.toString('utf-8');
+                    try {
+                        const parsed = JSON.parse(buffer);
+                        resolve(parsed);
+                    } catch (err) {
+                        if (!(err instanceof SyntaxError)) {
+                            throw err;
+                        }
+                    }
+                });
+
+                // on error, reject
                 program.stderr.on('data', reject);
 
             } catch (e) {
