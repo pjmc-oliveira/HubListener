@@ -59,7 +59,7 @@ const analyse = {
      *  @property {number} numberOfLogicalLines
      *  @property {number} effort
      *  @property {number} changeCost
-     *  @property {number} anumbervgDependencies
+     *  @property {number} avgDependencies
      */
 
     /**
