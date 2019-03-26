@@ -12,7 +12,7 @@ function ajax(method, url, json) {
         xhr.onload = () => {
             console.log('in onload')
             if (xhr.status >= 200 && xhr.status < 300) {
-                resolve(xhr.response);
+                resolve(JSON.parse(xhr.response));
             } else {
                 reject(xhr);
             }

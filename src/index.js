@@ -83,7 +83,7 @@ app.post('/analyse', async (req, res) => {
                     commit_date: commit.date(),
                     // have to wait for analysis to finish before
                     // checking out next commit
-                    valuesByExt: await data.getStaticAnalysis()
+                    valuesByExt: await data.getStaticAnalysis(),
             }));
     });
 
