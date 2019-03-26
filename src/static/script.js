@@ -33,9 +33,15 @@ function form2json(form) {
 
 function submitForm(event) {
     event.preventDefault();
+    $("#form").hide();
+    $("#results").show();
     const json = form2json(event.target);
     ajax("POST", "/run", json)
         .then(x => console.log(x))
-        .catch(e => console.log("Error: ", e));
+        .catch(e => {
+            console.log("Error: ", e);
+            $("#results").hide();
+            $("#error").html(e.responseText).show();
+        });
     console.log('run');
 }
