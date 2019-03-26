@@ -36,7 +36,7 @@ function submitForm(event) {
     $("#form").hide();
     $("#results").show();
     const json = form2json(event.target);
-    ajax("POST", "/run", json)
+    ajax("POST", "/analyse", json)
         .then(x => console.log(x))
         .catch(e => {
             console.log("Error: ", e);
