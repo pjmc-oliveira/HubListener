@@ -34,14 +34,36 @@ function form2json(form) {
 function submitForm(event) {
     event.preventDefault();
     $("#form").hide();
-    $("#results").show();
+    $("#loading").show();
     const json = form2json(event.target);
     ajax("POST", "/analyse", json)
-        .then(x => console.log(x))
+        .then(x => {
+            console.log(x); // dump results to log
+
+            let data = JSON.parse(x).points;
+
+            $("#loading").hide();
+            $("#results").show();
+
+            new Taucharts.Chart({
+                data: data,
+                type: 'line',
+                x: 'commit_date',
+                y: 'numberOfFiles',
+                color: 'file_extension',
+                guide: {
+                    x: {nice: false},
+                    y: {nice: false},
+                    padding: {b:40,l:40,t:10,r:10}
+                }
+            }).renderTo('#chart');
+        })
         .catch(e => {
             console.log("Error: ", e);
             $("#results").hide();
+            $("#loading").hide();
             $("#error").html(e.responseText).show();
+            $("#form").show();
         });
     console.log('run');
 }
