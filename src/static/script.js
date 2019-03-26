@@ -40,7 +40,7 @@ function submitForm(event) {
         .then(x => {
             console.log(x); // dump results to log
 
-            let data = JSON.parse(x).points;
+            let data = x.points;
 
             $("#loading").hide();
             $("#results").show();
