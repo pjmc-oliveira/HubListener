@@ -159,7 +159,6 @@ const analyse = {
 
                 // Allow functions to take in bytes
                 resolve = jsonifyBytes(resolve);
-                reject = jsonifyBytes(reject);
 
                 program.stdout.on('data', resolve);
                 program.stderr.on('data', reject);
