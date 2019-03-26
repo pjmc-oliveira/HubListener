@@ -9,5 +9,5 @@ src/include/
 src/pip-selfcheck.json
 pyvenv.cfg
 src/logs/
-src/repos.*
+src/repos/*
 *.sqlite3
