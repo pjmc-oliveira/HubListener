@@ -1,7 +1,8 @@
 const fs = require('fs');
 const { spawn } = require('child_process');
 const os = require('os');
-const escomplex = require('escomplex');
+const escomplex = require('typhonjs-escomplex');
+
 const {isText} = require('istextorbinary');
 const mkLogger = require('./log.js');
 
@@ -78,8 +79,9 @@ const analyse = {
 
                 // Add file and contents to source object for later digestion by escomplex
                 source.push({
-                    path: path,
-                    code: code
+                    code: code,
+                    srcPath: path,
+                    filePath: path
                 });
 
                 // Count comments in each file
@@ -104,13 +106,12 @@ const analyse = {
             let escomplexReport;
 
             try {
-                escomplexReport = escomplex.analyse(source, {});
+                escomplexReport = escomplex.analyzeProject(source, {});
             } catch (e) {
                 // Parse failure, skip and return basic analysis
                 logger.warn(e);
                 resolve(analyse.generic(paths));
             }
-
 
             // Total physical lines of code
             let sloc = 0;
@@ -121,7 +122,7 @@ const analyse = {
             // Non unique dependencies
             let dependencies = 0;
 
-            for (let report of escomplexReport.reports) {
+            for (let report of escomplexReport.modules) {
                 sloc += report.aggregate.sloc.physical;
                 lsloc += report.aggregate.sloc.logical;
                 dependencies += report.dependencies.length;
@@ -129,14 +130,14 @@ const analyse = {
 
             let finalReport = {
                 numberOfFiles: paths.length,
-                cyclomatic: escomplexReport.cyclomatic,
-                maintainability: escomplexReport.maintainability,
+                cyclomatic: escomplexReport.moduleAverage.methodAverage.cyclomatic,
+                maintainability: escomplexReport.moduleAverage.maintainability,
                 numberOfComments: totalComments,
                 numberOfLines: sloc,
                 numberOfLogicalLines: lsloc,
-                effort: escomplexReport.effort,
+                effort: escomplexReport.moduleAverage.methodAverage.halstead.effort,
                 changeCost: escomplexReport.changeCost,
-                avgDependencies: dependencies / escomplexReport.reports.length
+                avgDependencies: dependencies / escomplexReport.modules.length
             };
 
             resolve(finalReport);

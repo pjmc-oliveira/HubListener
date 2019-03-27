@@ -42,6 +42,10 @@ function submitForm(event) {
 
             let data = x.points;
 
+            for (d of data) {
+                d['commit_date'] = new Date(d['commit_date']);
+            }
+
             $("#loading").hide();
             $("#results").show();
 
@@ -53,9 +57,13 @@ function submitForm(event) {
                 color: 'file_extension',
                 guide: {
                     x: {nice: false},
-                    y: {nice: false},
+                    y: {nice: true},
                     padding: {b:40,l:40,t:10,r:10}
-                }
+                },
+                plugins: [
+                    Taucharts.api.plugins.get('tooltip')(),
+                    Taucharts.api.plugins.get('legend')()
+                ]
             }).renderTo('#chart');
         })
         .catch(e => {

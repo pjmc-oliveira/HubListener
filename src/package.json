@@ -19,8 +19,6 @@
   },
   "homepage": "https://github.com/pjmc-oliveira/HubListener#readme",
   "dependencies": {
-    "escomplex": "^2.0.0-alpha",
-    "esprima": "^4.0.1",
     "express": "^4.16.4",
     "graphql-client": "^2.0.1",
     "istextorbinary": "^2.5.1",
@@ -28,6 +26,7 @@
     "node-dir": "^0.1.17",
     "nodegit": "^0.23.0",
     "sqlite3": "^4.0.6",
+    "typhonjs-escomplex": "^0.1.0",
     "winston": "^3.2.1"
   },
   "jshintConfig": {
