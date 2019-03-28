@@ -29,10 +29,16 @@ CREATE TABLE IF NOT EXISTS MetricValues (
 
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfFiles');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfLines');
-INSERT OR IGNORE INTO MetricTypes (name) VALUES ('cyclomatic');
-INSERT OR IGNORE INTO MetricTypes (name) VALUES ('maintainability');
-INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfComments');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfLogicalLines');
-INSERT OR IGNORE INTO MetricTypes (name) VALUES ('effort');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('numberOfComments');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('cyclomaticComplexity');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('maintainabilityIndex');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('changeCost');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('avgDependencies');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadEffort');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadBugs');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadLength');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadDifficulty');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadTime');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadVocabulary');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadVolume');

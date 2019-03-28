@@ -53,14 +53,18 @@ const analyse = {
      *  Static Analysis report for Javascript code
      *  @typedef {object} JsAnalysisReport
      *  @property {number} numberOfFiles
-     *  @property {number} cyclomatic
-     *  @property {number} maintainability
-     *  @property {number} numberOfComments
      *  @property {number} numberOfLines
      *  @property {number} numberOfLogicalLines
-     *  @property {number} effort
-     *  @property {number} changeCost
-     *  @property {number} avgDependencies
+     *  @property {number} numberOfComments
+     *  @property {number} cyclomaticComplexity
+     *  @property {number} maintabilityIndex
+     *  @property {number} halsteadEffort
+     *  @property {number} halsteadBugs
+     *  @property {number} halsteadLength
+     *  @property {number} halsteadDifficulty
+     *  @property {number} halsteadTime
+     *  @property {number} halsteadVocabulary
+     *  @property {number} halsteadVolume
      */
 
     /**
@@ -130,14 +134,20 @@ const analyse = {
 
             let finalReport = {
                 numberOfFiles: paths.length,
-                cyclomatic: escomplexReport.moduleAverage.methodAverage.cyclomatic,
-                maintainability: escomplexReport.moduleAverage.maintainability,
-                numberOfComments: totalComments,
                 numberOfLines: sloc,
                 numberOfLogicalLines: lsloc,
-                effort: escomplexReport.moduleAverage.methodAverage.halstead.effort,
+                numberOfComments: totalComments,
+                cyclomaticComplexity: escomplexReport.moduleAverage.methodAverage.cyclomatic,
+                maintainabilityIndex: escomplexReport.moduleAverage.maintainability,
                 changeCost: escomplexReport.changeCost,
-                avgDependencies: dependencies / escomplexReport.modules.length
+                avgDependencies: dependencies / escomplexReport.modules.length,
+                halsteadEffort: escomplexReport.moduleAverage.methodAverage.halstead.effort,
+                halsteadBugs: escomplexReport.moduleAverage.methodAverage.halstead.bugs,
+                halsteadLength: escomplexReport.moduleAverage.methodAverage.halstead.length,
+                halsteadDifficulty: escomplexReport.moduleAverage.methodAverage.halstead.difficulty,
+                halsteadTime: escomplexReport.moduleAverage.methodAverage.halstead.time,
+                halsteadVocabulary: escomplexReport.moduleAverage.methodAverage.halstead.vocabulary,
+                halsteadVolume: escomplexReport.moduleAverage.methodAverage.halstead.volume
             };
 
             resolve(finalReport);
