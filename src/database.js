@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3');
 const { promisify } = require('util');
+const fs = require('fs');
 
 async function loadMetricTypes(db) {
     let byId = {};
@@ -10,14 +11,19 @@ async function loadMetricTypes(db) {
         .then(rs => rs.forEach(r => {
             byId[r.id] = r.name;
             byName[r.name] = r.id;
-        }))
+        }));
         // .catch(err => console.log(err));
     return { byId, byName };
 }
 
 async function makeDB(name) {
     // make our wrapped database pointer
-    const _db = new sqlite3.Database(name, sqlite3.OPEN_READWRITE);
+    const _db = new sqlite3.Database(name);
+
+    // Execute schema.sql, the script does nothing it if has already been run
+    const schema = fs.readFileSync('schema.sql', 'utf-8');
+    _db.exec(schema);
+
     // promisify functions
     // for this to work properly we need to bind the databse to the function
     const _get = promisify(_db.get.bind(_db));
