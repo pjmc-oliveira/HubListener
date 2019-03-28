@@ -43,6 +43,65 @@ class Data {
     }
 
     /**
+     *  Get all the issues in the project
+     *
+     *  @param {number} [pageSize=100] - The number of issues per page
+     *
+     *  @return {Array<IssueInfo2>}
+     */
+    async getAllIssues(pageSize = 100) {
+        // create query to query first `pageSize` issues after cursor
+        // or first `pageSize` issues if no cursor is provided
+        const issuesQuery = cursor => `
+            query repo {
+                repository(name: "${this.repoName}", owner: "${this.owner}") {
+                    issues (
+                            first: ${pageSize}, ` + (cursor ? `after: "${cursor}", ` : '') + `
+                            orderBy: {field:CREATED_AT, direction:ASC}) {
+                        edges {
+                            cursor
+                            node {
+                                state
+                                createdAt
+                                closedAt
+                            }
+                        }
+                    }
+                }
+        }`;
+
+        let results = [];
+        let cursor = null;
+
+        // keep getting issues until there are less than a `pageSize`'s worth of issues
+        while (true) {
+            // query GitHub
+            const edges = await this.client.query(issuesQuery(cursor), {})
+                // unwrap data, if no issues, return []
+                .then(body => body.data ? body.data.repository.issues.edges : []);
+
+            // get cursor of last issues
+            cursor = edges[edges.length - 1].cursor;
+            // unwrap issue nodes
+            const issues = edges
+                .map(e => e.node)
+                // convert date strings to Date objects
+                .map(i => ({
+                    state: i.state,
+                    createdAt: new Date(i.createdAt),
+                    closedAt: new Date(i.closedAt),
+                }));
+
+            results.push(...issues);
+            // check if should continue
+            if (edges.length < pageSize)
+                break;
+        }
+
+        return results;
+    }
+
+    /**
      *  The number of issues in total and by state
      *  @typedef {object} IssuesCount
      *  @property {number} total - The total number of issues
@@ -132,6 +191,7 @@ class Data {
             }`;
 
         return this.client.query(query, {})
+            .then(x => {console.log(x); return x})
             .then(body => body.data.repository)
             .then(
                 repo => ({
