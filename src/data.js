@@ -89,7 +89,8 @@ class Data {
                 .map(i => ({
                     state: i.state,
                     createdAt: new Date(i.createdAt),
-                    closedAt: new Date(i.closedAt),
+                    // closed date might be null, propagate null
+                    closedAt: i.closedAt ? new Date(i.closedAt) : null,
                 }));
 
             results.push(...issues);
