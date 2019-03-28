@@ -7,7 +7,70 @@ const path = require('path');
  *  A namespace containing useful utility functions.
  *  @namespace
  */
-const utils = {  
+const utils = {
+    /**
+     *  The information for a GitHub issue
+     *  @typedef {object} IssueInfo
+     * 
+     *  @property {string} state - The state of the issue, i.e. OPEN or CLOSED
+     *  @property {Date} createdAt - The date the issue was created at
+     *  @property {Date} closedAt - The date the issue was closed at, `null` if not closed
+     */
+
+    /**
+     *  The information for a Git commit
+     *  @typedef {object} CommitInfo
+     *  
+     *  @property {string} commit_id - The id of the commit
+     *  @property {string} commit_date - The date of the commit
+     */
+
+    /**
+     *  The count of GitHub issues by state
+     *  @typedef {object} IssuesCount
+     *  
+     *  @property {number} total - The total number of GitHub issues
+     *  @property {number} open - The number of open GitHub issues
+     *  @property {number} closed - The number of closed GitHub issues
+     */
+
+    /**
+     *  Align issues to commits by date
+     * 
+     *  @param {Array<IssueInfo>} issues - The issues to align
+     *  @param {Array<CommitInfo>} commits -The commits to align the issues to
+     *  
+     *  @return {Array<IssuesCount>}
+     */
+    alignIssuesToCommits: function (issues, commits) {
+        // the offset to the current issues
+        let offset = 0;
+
+        let results = [];
+
+        // running tally of issues by state
+        let total = 0;
+        let open = 0;
+        let closed = 0;
+
+        // iterate through every commit, stepping up to the last issue at that commit date
+        for (const {commit_date} of commits) {
+            // step to new issues
+            for (;  offset < issues.length &&
+                    commit_date > issues[offset].createdAt; offset++) {
+
+                // increment `total`, and either `open` OR `closed`
+                total++;
+                issues[offset].state === 'OPEN' ? open++ : closed++;
+            }
+
+            // store tally
+            results.push({total, open, closed, commit_date});
+        }
+
+        return results;
+    },
+
     /**
      *  Parses an Array of strings (flags and values) into an object of flag keys,
      *  and value values.
