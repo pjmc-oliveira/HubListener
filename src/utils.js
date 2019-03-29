@@ -29,9 +29,9 @@ const utils = {
      *  The count of GitHub issues by state
      *  @typedef {object} IssuesCount
      *  
-     *  @property {number} total - The total number of GitHub issues
-     *  @property {number} open - The number of open GitHub issues
-     *  @property {number} closed - The number of closed GitHub issues
+     *  @property {number} totalIssues - The total number of GitHub issues
+     *  @property {number} openIssues - The number of open GitHub issues
+     *  @property {number} closedIssues - The number of closed GitHub issues
      */
 
     /**
@@ -40,32 +40,32 @@ const utils = {
      *  @param {Array<IssueInfo>} issues - The issues to align
      *  @param {Array<CommitInfo>} commits -The commits to align the issues to
      *  
-     *  @return {Array<IssuesCount>}
+     *  @return {Object<CommitId, IssuesCount>}
      */
     alignIssuesToCommits: function (issues, commits) {
         // the offset to the current issues
         let offset = 0;
 
-        let results = [];
+        let results = {};
 
         // running tally of issues by state
-        let total = 0;
-        let open = 0;
-        let closed = 0;
+        let totalIssues = 0;
+        let openIssues = 0;
+        let closedIssues = 0;
 
         // iterate through every commit, stepping up to the last issue at that commit date
-        for (const {commit_date} of commits) {
+        for (const {commit_id, commit_date} of commits) {
             // step to new issues
             for (;  offset < issues.length &&
                     commit_date > issues[offset].createdAt; offset++) {
 
-                // increment `total`, and either `open` OR `closed`
-                total++;
-                issues[offset].state === 'OPEN' ? open++ : closed++;
+                // increment `totalIssues`, and either `openIssues` OR `closedIssues`
+                totalIssues++;
+                issues[offset].state === 'OPEN' ? openIssues++ : closedIssues++;
             }
 
             // store tally
-            results.push({total, open, closed, commit_date});
+            results[commit_id] = {totalIssues, openIssues, closedIssues};
         }
 
         return results;

@@ -42,3 +42,6 @@ INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadDifficulty');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadTime');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadVocabulary');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadVolume');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('totalIssues');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('openIssues');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('closedIssues');

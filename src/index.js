@@ -78,18 +78,31 @@ app.post('/analyse', async (req, res) => {
                 .reverse();
             return commits;
         });
+    
+    // get the meta analysis for project
+    const newMeta = newCommits
+        .then(commits => commits.map(c => ({
+            commit_id: c.id().tostrS(),
+            commit_date: c.date(),
+        })))
+        .then(commits => data.getMetaAnalysis(commits));
 
     // begin static analysis of new commits when ready
-    const newAnalyses = Promise.all([data.clonePromise, newCommits, repo_id])
-        .then(async ([clone, newCommits, repo_id]) => {
-            const analyses = await clone.foreachCommit(newCommits,
+    const newStatic = Promise.all([data.clonePromise, newCommits])
+        .then(([clone, newCommits]) => 
+            clone.foreachCommit(newCommits,
                 async (commit, index) => ({
                     commit_id: commit.id().tostrS(),
                     commit_date: commit.date(),
                     // have to wait for analysis to finish before
                     // checking out next commit
                     valuesByExt: await data.getStaticAnalysis(),
-            }));
+        })));
+
+
+    // merge static and meta analysis
+    const newAnalyses = Promise.all([newStatic, newMeta, repo_id])
+        .then(([static, meta, repo_id]) => {
 
             // new analyses is a list of objects
             // with keys: commit_id, commit_date, and valuesByExt
@@ -99,8 +112,13 @@ app.post('/analyse', async (req, res) => {
             let results = [];
             // convert it into a flat list of objects
             // where each object key corresponds to a column in the table MetricValues
-            for (const {commit_id, commit_date, valuesByExt} of analyses) {
-                for (const [ext, metricValues] of Object.entries(valuesByExt)) {
+            for (const {commit_id, commit_date, valuesByExt} of static) {
+                for (const [ext, staticValues] of Object.entries(valuesByExt)) {
+
+                    // merge metrics
+                    const metricValues = {...staticValues, ...meta[commit_id]};
+                    
+                    // expand into separate rows
                     for (const [type, value] of Object.entries(metricValues)) {
                         // convert date string into UNIX timestamp
                         const timestamp = Date.parse(commit_date);
@@ -144,11 +162,11 @@ app.post('/analyse', async (req, res) => {
             return results;
         });
 
+    const points = utils.rows2points(results);
+
     const end = Date.now();
     logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
-    res.send({
-        points: utils.rows2points(results),
-    });
+    res.send({ points });
 });
 
 app.listen(port, () => console.log(`listening on ${port}`));

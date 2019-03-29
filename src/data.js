@@ -42,6 +42,13 @@ class Data {
         this.repoName = name;
     }
 
+    async getMetaAnalysis(commits = []) {
+        const unalignedIssues = await this.getAllIssues();
+        const issues = utils.alignIssuesToCommits(unalignedIssues, commits);
+
+        return issues;
+    }
+
     /**
      *  Get all the issues in the project
      *
