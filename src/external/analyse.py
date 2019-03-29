@@ -83,7 +83,6 @@ def analyse(paths):
     Halstead’s goal was to identify measurable properties of software, and the relations between them. 
     These numbers are statically computed from the source code: Effort, Bugs, Length, Difficulty, Time, Vocabulary , Volume
     """
-    # print("Evaluating Halstead")
     i = HCHarvester(paths, config2)
     hcResults = i._to_dicts()
   
@@ -125,7 +124,6 @@ def analyse(paths):
     Cyclomatic Complexity and Halstead volume. It is used in several automated software metric tools, including the Microsoft 
     Visual Studio 2010 development environment, which uses a shifted scale (0 to 100) derivative.
     """
-    # print("Evaluating MI")
     j = MIHarvester(paths, config3)
     miResults = dict(j.filtered_results)
 
@@ -152,7 +150,6 @@ def analyse(paths):
      - Multi: The number of lines which represent multi-line strings.  [multi] 
      - Blanks: The number of blank lines (or whitespace-only ones).  [blank]
     """
-    # print("Evaluating Raw")
     k = RawHarvester(paths, config4)
     rawResults = (dict(k.results))
 
