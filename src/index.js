@@ -62,8 +62,8 @@ app.post('/analyse', async (req, res) => {
             commit_date: new Date(commit_date),
         } : null));
 
-    // begin static analysis of new commits when ready
-    const newAnalyses = Promise.all([data.clonePromise, lastCommit])
+    // get new commits
+    const newCommits = Promise.all([data.clonePromise, lastCommit])
         .then(async ([clone, lastCommit]) => {
             // get all commits
             const allCommits = (await clone.headCommitHistory());
@@ -76,8 +76,13 @@ app.post('/analyse', async (req, res) => {
                 allCommits)
                 // reverse into chronological order
                 .reverse();
+            return commits;
+        });
 
-            return clone.foreachCommit(commits,
+    // begin static analysis of new commits when ready
+    const newAnalyses = Promise.all([data.clonePromise, newCommits, repo_id])
+        .then(async ([clone, newCommits, repo_id]) => {
+            const analyses = await clone.foreachCommit(newCommits,
                 async (commit, index) => ({
                     commit_id: commit.id().tostrS(),
                     commit_date: commit.date(),
@@ -85,38 +90,16 @@ app.post('/analyse', async (req, res) => {
                     // checking out next commit
                     valuesByExt: await data.getStaticAnalysis(),
             }));
-    });
-
-    // insert new analysis results into database
-    Promise.all([newAnalyses, repo_id])
-        .then(([analyses, repo_id]) => db.safeInsert.values(repo_id, analyses));
-
-    // get already analysed commits if present, otherwise empty list
-    const oldAnalyses = Promise.all([repo_id, lastCommit])
-        .then(([repo_id, lastCommit]) => lastCommit ? db.get.valuesUntil({
-            repo_id: repo_id,
-            end_date: lastCommit.commit_date,
-        }) : []);
-    
-    // merge new and old analyses
-    const results = await Promise.all([newAnalyses, oldAnalyses, repo_id])
-        .then(([newAnalyses, oldAnalyses, repo_id]) => {
-            // old analyses serves as the start for our results
-            // after we can append the new results to it
-            let results = oldAnalyses;
-
-            console.log(`# of old results: ${oldAnalyses.length}`);
 
             // new analyses is a list of objects
             // with keys: commit_id, commit_date, and valuesByExt
             // where valuesByExt is an object with different file extensions as keys
             // and objects of metric types as keys and metric values as values
-            
-            let count = 0;
 
+            let results = [];
             // convert it into a flat list of objects
             // where each object key corresponds to a column in the table MetricValues
-            for (const {commit_id, commit_date, valuesByExt} of newAnalyses) {
+            for (const {commit_id, commit_date, valuesByExt} of analyses) {
                 for (const [ext, metricValues] of Object.entries(valuesByExt)) {
                     for (const [type, value] of Object.entries(metricValues)) {
                         // convert date string into UNIX timestamp
@@ -129,12 +112,35 @@ app.post('/analyse', async (req, res) => {
                             metric_type: type,
                             metric_value: value,
                         });
-                        count++;
                     }
                 }
             }
 
-            console.log(`# of new results: ${count}`);
+            return results;
+        });
+
+    // insert new analysis results into database
+    newAnalyses.then(analyses => db.safeInsert.values(analyses))
+        .then(_ => console.log('done insert...'));
+
+    // get already analysed commits if present, otherwise empty list
+    const oldAnalyses = Promise.all([repo_id, lastCommit])
+        .then(([repo_id, lastCommit]) => lastCommit ? db.get.valuesUntil({
+            repo_id: repo_id,
+            end_date: lastCommit.commit_date,
+        }) : []);
+    
+    // merge new and old analyses
+    const results = await Promise.all([oldAnalyses, newAnalyses])
+        .then(([oldAnalyses, newAnalyses]) => {
+            // old analyses serves as the start for our results
+            // after we can append the new results to it
+            let results = [...oldAnalyses, ...newAnalyses];
+
+            console.log(`# of old results: ${oldAnalyses.length}`);
+
+
+            console.log(`# of new results: ${newAnalyses.length}`);
             return results;
         });
 

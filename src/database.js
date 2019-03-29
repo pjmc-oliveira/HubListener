@@ -108,22 +108,27 @@ async function makeDB(name) {
              *  Safe insert values
              *  [{commit_id, commit_date, valuesByExt}]*
              */
-            values: (repo_id, commitsToInsert) => {
+            values: (commitsToInsert) => {
                 let stmt = _db.prepare(`
                     INSERT OR IGNORE INTO MetricValues
                     (repo_id, commit_id, commit_date, file_extension, metric_type_id, metric_value)
                     VALUES (?, ?, ?, ?, ?, ?)`);
-                for (const {commit_id, commit_date, valuesByExt} of commitsToInsert) {
-                    for (const [ext, metricsValues] of Object.entries(valuesByExt)) {
-                        for (const [type, value] of Object.entries(metricsValues)) {
-                            // only add defined metrics
-                            if (type_id = metrics.byName[type]) {
-                                const row = [repo_id, commit_id, commit_date, ext, type_id, value];
-                                stmt.run(row);
-                            }
-                        }
+
+                for (const commit of commitsToInsert){
+                    // only add defined metrics
+                    if (type_id = metrics.byName[commit.metric_type]) {
+                        const row = [
+                            commit.repo_id,
+                            commit.commit_id,
+                            commit.commit_date,
+                            commit.file_extension,
+                            type_id,
+                            commit.metric_value,
+                        ];
+                        stmt.run(row);
                     }
                 }
+
                 // promisify the return
                 return new Promise((resolve, reject) => {
                     stmt.finalize(function (err) {
