@@ -121,7 +121,7 @@ app.post('/analyse', async (req, res) => {
 
     // insert new analysis results into database
     newAnalyses.then(analyses => db.safeInsert.values(analyses))
-        .then(_ => console.log('done insert...'));
+        .then(_ => logger.debug('Finished inserting values to database'));
 
     // get already analysed commits if present, otherwise empty list
     const oldAnalyses = Promise.all([repo_id, lastCommit])
