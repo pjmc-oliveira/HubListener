@@ -40,6 +40,8 @@ function updateChart() {
 
 function submitForm(event) {
     event.preventDefault();
+
+    // Hide form controls and display loading spinner and progress text
     $("#form").hide();
     $("#loading").show();
     const json = form2json(event.target);
@@ -53,10 +55,12 @@ function submitForm(event) {
 
             chartData = x.points;
 
+            // Hide loading spinner and display results div
+            // Must unhide results div before rendering chart to ensure chart is rendered at the correct resolution
             $("#loading").hide();
             $("#results").show();
 
-            // First time / default config
+            // First time / default tauchart config
             chartConfig = {
                 data: chartData,
                 type: 'line',
@@ -69,7 +73,7 @@ function submitForm(event) {
                 padding: {b:40,l:40,t:10,r:10}
             },
                 plugins: [
-                    Taucharts.api.plugins.get('quick-filter')(['commit_date']),
+                    Taucharts.api.plugins.get('quick-filter')(['commit_date']), // quick-filter must be plugin 0
                     Taucharts.api.plugins.get('tooltip')(),
                     Taucharts.api.plugins.get('legend')()
                 ]
@@ -81,14 +85,17 @@ function submitForm(event) {
             let xSelect = $("#x-axis");
             let ySelect = $("#y-axis");
 
+            // Populate x/y select dropdowns
             for (let prop in chartData[0]) {
                 xSelect.append($('<option>', {value: prop, text: prop}));
                 ySelect.append($('<option>', {value: prop, text: prop}));
             }
 
+            // Set default values for x/y select dropdowns
             xSelect.val('commit_date');
             ySelect.val('numberOfFiles');
 
+            // Wire onchange events for x/y select dropdowns
             xSelect.on('change', e => {
                 chartConfig.x = xSelect.val();
                 updateChart();
@@ -97,6 +104,25 @@ function submitForm(event) {
             ySelect.on('change', e => {
                 chartConfig.y = ySelect.val();
                 updateChart();
+            });
+
+            // Wire export button
+            $("#export").on('click', e => {
+                let data = JSON.stringify(chartData);
+
+                let blob = new Blob([data], {type: 'application/json'});
+                let url = URL.createObjectURL(blob);
+
+                let element = document.createElement('a');
+                element.setAttribute('href', url);
+                element.setAttribute('download', 'data.json');
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
             });
         })
         .catch(e => {
