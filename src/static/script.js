@@ -108,7 +108,7 @@ function submitForm(event) {
 
             // Wire export button
             $("#export").on('click', e => {
-                let data = JSON.stringify(chartData);
+                let data = JSON.stringify(chartData, null, 4);
 
                 let blob = new Blob([data], {type: 'application/json'});
                 let url = URL.createObjectURL(blob);
