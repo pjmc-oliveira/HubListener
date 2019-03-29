@@ -27,7 +27,7 @@ class Client {
              *  @name Client#token
              *  @type {string}
              */
-            this.token = givenToken || fs.readFileSync('./auth_token.txt', 'utf8');
+            this.token = givenToken || fs.readFileSync('./auth_token.txt', 'utf8').trim();
         } catch (err) {
             // catch common causes of errors
             console.log('An error occurred loading the authentication token!');
