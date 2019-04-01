@@ -12,6 +12,8 @@ const utils = require('./utils.js');
 const analyse = require('./analyse.js');
 const mkLogger = require('./log.js');
 
+const { makeDB } = require('./database.js');
+
 const logger = mkLogger({label: __filename});
 
 /**
@@ -40,6 +42,9 @@ class Data {
         this.clonePromise = options.noClone ? undefined : Clone.init(url);
         this.owner = owner;
         this.repoName = name;
+
+        // promise to a database wrapper
+        this._db = makeDB('hubdata.sqlite3');
     }
 
     async getMetaAnalysis(commits = []) {
@@ -352,6 +357,137 @@ class Data {
             // accumulate metrics into one object
             .then(files => files.reduce(buildFileDetails, {}))
             .then(fileDetails => processFiles(fileDetails));
+    }
+
+    async analyse() {
+        // wait for our db to load
+        const db = await this._db;
+
+        const owner = this.owner;
+        const name = this.repoName;
+
+        // ensure repo is in database
+        const repo_id = db.get.repo({owner, name})
+            // if repo not present, insert it
+            .then(repo => repo ?
+                repo :
+                db.insert.repo({owner, name}))
+            .then(rowOrInfo => rowOrInfo.id !== undefined ?
+                // return the id of the already present repo
+                rowOrInfo.id :
+                // or the last id of the table after it's inserted
+                rowOrInfo.lastID);
+
+        // get last commit in database
+        const lastCommit = repo_id.then(id => db.get.lastCommit(id))
+            // convert date to Date object
+            // if there are none, return `null`
+            .then(({commit_id, commit_date} = {}) => (commit_id ? {
+                commit_id: commit_id,
+                commit_date: new Date(commit_date),
+            } : null));
+
+        // begin static analysis of new commits when ready
+        const newCommits = Promise.all([this.clonePromise, lastCommit])
+            .then(async ([clone, lastCommit]) => {
+                // get all commits
+                const allCommits = (await clone.headCommitHistory());
+                // function to determine if commit is new
+                const isNew = commit => commit.date() > lastCommit.commit_date;
+                // if there is a last commit,
+                // only keep new commits, otherwise keep all
+                const commits = (lastCommit ?
+                    (allCommits.filter(isNew)) :
+                    allCommits)
+                    // reverse into chronological order
+                    .reverse();
+                return commits;
+            });
+
+        // get the meta analysis for project
+        const newMeta = newCommits
+            .then(commits => commits.map(c => ({
+                commit_id: c.id().tostrS(),
+                commit_date: c.date(),
+            })))
+            .then(commits => this.getMetaAnalysis(commits));
+
+        // begin static analysis of new commits when ready
+        const newStatic = Promise.all([this.clonePromise, newCommits])
+            .then(([clone, newCommits]) => 
+                clone.foreachCommit(newCommits,
+                    async (commit, index) => ({
+                        commit_id: commit.id().tostrS(),
+                        commit_date: commit.date(),
+                        // have to wait for analysis to finish before
+                        // checking out next commit
+                        valuesByExt: await this.getStaticAnalysis(),
+            })));
+
+
+        // merge static and meta analysis
+        const newAnalyses = Promise.all([newStatic, newMeta, repo_id])
+            .then(([static_, meta, repo_id]) => {
+
+                // new analyses is a list of objects
+                // with keys: commit_id, commit_date, and valuesByExt
+                // where valuesByExt is an object with different file extensions as keys
+                // and objects of metric types as keys and metric values as values
+
+                let results = [];
+
+                // convert it into a flat list of objects
+                // where each object key corresponds to a column in the table MetricValues
+                for (const {commit_id, commit_date, valuesByExt} of static_) {
+                    for (const [ext, staticValues] of Object.entries(valuesByExt)) {
+
+                        // merge metrics
+                        const metricValues = {...staticValues, ...meta[commit_id]};
+                        
+                        // expand into separate rows
+                        for (const [type, value] of Object.entries(metricValues)) {
+                            // convert date string into UNIX timestamp
+                            const timestamp = Date.parse(commit_date);
+                            results.push({
+                                repo_id: repo_id,
+                                commit_id: commit_id,
+                                commit_date: timestamp,
+                                file_extension: ext,
+                                metric_type: type,
+                                metric_value: value,
+                            });
+                        }
+                    }
+                }
+
+                return results;
+            });
+
+        // insert new analysis results into database
+        newAnalyses.then(analyses => db.safeInsert.values(analyses))
+            .then(_ => logger.debug('Finished inserting values to database'));
+
+        // get already analysed commits if present, otherwise empty list
+        const oldAnalyses = Promise.all([repo_id, lastCommit])
+            .then(([repo_id, lastCommit]) => lastCommit ? db.get.valuesUntil({
+                repo_id: repo_id,
+                end_date: lastCommit.commit_date,
+            }) : []);
+
+        // merge new and old analyses
+        const results = await Promise.all([oldAnalyses, newAnalyses])
+            .then(([oldAnalyses, newAnalyses]) => {
+                // old analyses serves as the start for our results
+                // after we can append the new results to it
+                let results = [...oldAnalyses, ...newAnalyses];
+                console.log(`# of old results: ${oldAnalyses.length}`);
+                console.log(`# of new results: ${newAnalyses.length}`);
+                return results;
+            });
+
+        const points = utils.rows2points(results);
+
+        return points;
     }
 }
 
