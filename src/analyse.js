@@ -153,7 +153,30 @@ const analyse = {
             resolve(finalReport);
         });
     },
+    /**
+     *  Static Analysis report for Python code
+     *  @typedef {object} PyAnalysisReport
+     *  @property {number} numberOfFiles
+     *  @property {number} numberOfLines
+     *  @property {number} numberOfLogicalLines
+     *  @property {number} numberOfComments
+     *  @property {number} cyclomaticComplexity
+     *  @property {number} maintabilityIndex
+     *  @property {number} halsteadEffort
+     *  @property {number} halsteadBugs
+     *  @property {number} halsteadLength
+     *  @property {number} halsteadDifficulty
+     *  @property {number} halsteadTime
+     *  @property {number} halsteadVocabulary
+     *  @property {number} halsteadVolume
+     */
 
+    /**
+     *  Performs static code analysis on a set of javascript files
+     *  @param {Array<string>} paths - An array of absolute file paths
+     *
+     *  @return {PyAnalysisReport} A report of static analysis performed on javascript code
+     */
     python: function(paths) {
         return new Promise((resolve, reject) => {
             try {
