@@ -1,11 +1,16 @@
 const express = require('express');
 
 const { Data } = require('./data.js');
+const { Database } = require('./database.js');
 const mkLogger = require('./log.js');
 
 const app = express();
 const port = 8080;
 const logger = mkLogger({label: __filename, level: 'info'});
+
+
+// promise to a database wrapper
+const db = Database.init('hubdata.sqlite3');
 
 app.use(express.static('static'));
 app.use(express.json());
@@ -31,7 +36,7 @@ app.post('/analyse', async (req, res) => {
     const { url, options } = req.body;
 
     // begin clone and update local copy of repository
-    const data = new Data(url, options);
+    const data = new Data(url, db, options);
 
     // analyse data
     const points = await data.analyse();

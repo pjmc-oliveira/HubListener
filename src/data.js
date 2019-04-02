@@ -7,8 +7,6 @@ const { Clone } = require('./clone.js');
 const utils = require('./utils.js');
 const mkLogger = require('./log.js');
 
-const { Database } = require('./database.js');
-
 const logger = mkLogger({label: __filename});
 
 /**
@@ -27,7 +25,7 @@ class Data {
      *  @param {string} options.auth_token - The GitHub authentication token
      *  @param {boolean} options.noClone - Flag on whether to clone the Git project or not
      */
-    constructor(url, options = {}) {
+    constructor(url, db, options = {}) {
         // Parse the GitHub URL into project owner and project name
         const {owner, name} = utils.parseURL(url);
         this.client = new Client({
@@ -41,9 +39,8 @@ class Data {
         this.clonePromise = options.noClone ? undefined : Clone.init(url);
         this.owner = owner;
         this.repoName = name;
-
-        // promise to a database wrapper
-        this._db = Database.init('hubdata.sqlite3');
+        
+        this._db = db;
     }
 
     async analyse() {
