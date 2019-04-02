@@ -12,7 +12,7 @@ const utils = require('./utils.js');
 const analyse = require('./analyse.js');
 const mkLogger = require('./log.js');
 
-const { makeDB } = require('./database.js');
+const { Database } = require('./database.js');
 
 const logger = mkLogger({label: __filename});
 
@@ -44,7 +44,7 @@ class Data {
         this.repoName = name;
 
         // promise to a database wrapper
-        this._db = makeDB('hubdata.sqlite3');
+        this._db = Database.init('hubdata.sqlite3');
     }
 
     async getMetaAnalysis(commits = []) {
@@ -367,25 +367,10 @@ class Data {
         const name = this.repoName;
 
         // ensure repo is in database
-        const repo_id = db.get.repo({owner, name})
-            // if repo not present, insert it
-            .then(repo => repo ?
-                repo :
-                db.insert.repo({owner, name}))
-            .then(rowOrInfo => rowOrInfo.id !== undefined ?
-                // return the id of the already present repo
-                rowOrInfo.id :
-                // or the last id of the table after it's inserted
-                rowOrInfo.lastID);
+        const repo_id = db.getRepoId({owner, name});
 
         // get last commit in database
-        const lastCommit = repo_id.then(id => db.get.lastCommit(id))
-            // convert date to Date object
-            // if there are none, return `null`
-            .then(({commit_id, commit_date} = {}) => (commit_id ? {
-                commit_id: commit_id,
-                commit_date: new Date(commit_date),
-            } : null));
+        const lastCommit = repo_id.then(id => db.getLastCommit(id));
 
         // begin static analysis of new commits when ready
         const newCommits = Promise.all([this.clonePromise, lastCommit])
@@ -416,13 +401,17 @@ class Data {
         const newStatic = Promise.all([this.clonePromise, newCommits])
             .then(([clone, newCommits]) => 
                 clone.foreachCommit(newCommits,
-                    async (commit, index) => ({
-                        commit_id: commit.id().tostrS(),
-                        commit_date: commit.date(),
-                        // have to wait for analysis to finish before
-                        // checking out next commit
-                        valuesByExt: await this.getStaticAnalysis(),
-            })));
+                    async (commit, index) => {
+                        console.log(`Analysing (${index}/${newCommits.length})`);
+                        return {
+                            commit_id: commit.id().tostrS(),
+                            commit_date: commit.date(),
+                            // have to wait for analysis to finish before
+                            // checking out next commit
+                            valuesByExt: await this.getStaticAnalysis(),
+                    };
+                }
+            ));
 
 
         // merge static and meta analysis
@@ -464,15 +453,12 @@ class Data {
             });
 
         // insert new analysis results into database
-        newAnalyses.then(analyses => db.safeInsert.values(analyses))
+        newAnalyses.then(values => db.insertValues(values))
             .then(_ => logger.debug('Finished inserting values to database'));
 
         // get already analysed commits if present, otherwise empty list
         const oldAnalyses = Promise.all([repo_id, lastCommit])
-            .then(([repo_id, lastCommit]) => lastCommit ? db.get.valuesUntil({
-                repo_id: repo_id,
-                end_date: lastCommit.commit_date,
-            }) : []);
+            .then(([id, commit]) => db.getValuesUntil(id, commit));
 
         // merge new and old analyses
         const results = await Promise.all([oldAnalyses, newAnalyses])
