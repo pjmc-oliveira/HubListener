@@ -234,19 +234,25 @@ class Clone {
         }
 
         // analyse files by extension
-        let output = {};
+        let promises = {};
         for (const [ext, files] of Object.entries(fileByExt)) {
             switch (ext) {
                 case '.js':
-                    output[ext] = await analyse.javascript(files);
+                    promises[ext] = analyse.javascript(files);
                     break;
                 case '.py':
-                    output[ext] = await analyse.python(files);
+                    promises[ext] = analyse.python(files);
                     break;
                 default:
-                    output[ext] = await analyse.generic(files);
+                    promises[ext] = analyse.generic(files);
                     break;
             }
+        }
+
+        // wait for all extension analyses to complete
+        let output = {};
+        for (const [ext, promise] of Object.entries(promises)) {
+            output[ext] = await promise;
         }
 
         return output;
