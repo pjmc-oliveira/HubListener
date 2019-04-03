@@ -12,6 +12,30 @@ const analyse = require('./analyse.js');
 const mkLogger = require('./log.js');
 const logger = mkLogger({label: __filename});
 
+// Returns true if the file path is in an excluded directory,
+// otherwise false
+function isInExcludedDir(relativePath, excludedDirs) {
+    for (const excludedDir of excludedDirs) {
+        if (relativePath.startsWith(excludedDir)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Returns true if the file name has an excluded extension,
+// otherwise false
+function hasExcludedExt(relativePath, excludedExts) {
+    for (const excludedExt of excludedExts) {
+        if (relativePath.endsWith(excludedExt)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
 /**
  *  @class The Clone class to clone and manage the Git repository
  */
@@ -183,97 +207,49 @@ class Clone {
      *      An object with file extensions as keys and an object with
      *      all static analyses results as the value.
      */
-    getStaticAnalysis({
-        excludedDirs = ['.git'],
-        excludedExts = []} = {}) {
+    async getStaticAnalysis({
+            excludedDirs = ['.git'],
+            excludedExts = []} = {}) {
 
-        // Build a map of file extensions to file paths
-        function buildFileDetails (fileDetails, file) {
+        // get all files in directory
+        let filepaths = await dir.promiseFiles(this.path);
 
-            // if the file extension key exists, add to existing key
-            if (fileDetails[file.ext]) {
-                fileDetails[file.ext].files.push(file.path);
-            // otherwise, create a new key
-            } else {
-                fileDetails[file.ext] = {
-                    files: [file.path]
-                };
-            }
-
-            return fileDetails;
+        // TODO: cycle through files only ONCE if both are provided
+        // filter unwanted files
+        if (excludedDirs.length) {
+            filepaths = filepaths.filter(f => !isInExcludedDir(f.slice(this.path.length + 1), excludedDirs));
+        }
+        
+        if (excludedExts.length) {
+            filepaths = filepaths.filter(f => !hasExcludedExt(f.slice(this.path.length + 1), excludedExts));
         }
 
-        // Process fully formed file details object
-        async function processFiles(fileDetails) {
-            let output = {};
+        // group files by extension
+        let fileByExt = {};
+        for (const filepath of filepaths) {
+            const ext = path.extname(filepath);
 
-            for (let ext in fileDetails) {
-                switch (ext) {
-                    case '.js':
-                        let jsReport = await analyse.javascript(fileDetails[ext].files);
-                        output[ext] = jsReport;
-                        break;
-                    case '.py':
-                        let pyReport = await analyse.python(fileDetails[ext].files);
-                        output[ext] = pyReport;
-                        break;
-                    default:
-                        let report = await analyse.generic(fileDetails[ext].files);
-                        output[ext] = report;
-                        break;
-                }
-            }
-
-            return output;
+            fileByExt[ext] = fileByExt[ext] || [];
+            fileByExt[ext].push(filepath);
         }
 
-        // Returns true if the file path is in an excluded directory,
-        // otherwise false
-        function isInExcludedDir(relativePath) {
-            for (const excludedDir of excludedDirs) {
-                if (relativePath.startsWith(excludedDir)) {
-                    return true;
-                }
+        // analyse files by extension
+        let output = {};
+        for (const [ext, files] of Object.entries(fileByExt)) {
+            switch (ext) {
+                case '.js':
+                    output[ext] = await analyse.javascript(files);
+                    break;
+                case '.py':
+                    output[ext] = await analyse.python(files);
+                    break;
+                default:
+                    output[ext] = await analyse.generic(files);
+                    break;
             }
-            return false;
         }
 
-        // Returns true if the file name has an excluded extension,
-        // otherwise false
-        function hasExcludedExt(relativePath) {
-            for (const excludedExt of excludedExts) {
-                if (relativePath.endsWith(excludedExt)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
-
-        return Promise.resolve(this)
-            // get information from clone paths
-            .then(async (clone) => ({
-                repoPath: clone.path,
-                files: await dir.promiseFiles(clone.path)}))
-            // filter out excluded directories, if there are any
-            .then(filesInfo => (excludedDirs.length ? {
-                repoPath: filesInfo.repoPath,
-                files: filesInfo.files.filter(file => !isInExcludedDir(file.slice(filesInfo.repoPath.length + 1)))
-            } : filesInfo))
-            // filter out excluded extensions, if there are any
-            .then(filesInfo => (excludedExts.length ? {
-                repoPath: filesInfo.repoPath,
-                files: filesInfo.files.filter(file => !hasExcludedExt(file.slice(filesInfo.repoPath.length + 1)))
-            } : filesInfo))
-            // map absolute file paths to a convenience object containing the path, basename and extension
-            .then(({files}) => files.map(file => ({
-                path: file,
-                name: path.basename(file),
-                ext: path.extname(file)})))
-            // accumulate metrics into one object
-            .then(files => files.reduce(buildFileDetails, {}))
-            .then(fileDetails => processFiles(fileDetails));
+        return output;
     }
 
 }
