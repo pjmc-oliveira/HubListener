@@ -139,6 +139,23 @@ class Clone {
         return commits;
     }
 
+    async commitsAfter(date) {
+        // get all commits
+        const allCommits = (await this.headCommitHistory());
+
+        // if no date provided, return all
+        if (!date) {
+            return allCommits;
+        }
+        // function to determine if commit is new
+        const isNew = commit => commit.date() > date;
+
+        // only keep new commits
+        const commits = allCommits.filter(isNew).reverse();
+        
+        return commits;
+    }
+
     /**
      *    @callback commitActionFunction
      *    @param {Commit} commit - The commit it's applied to.

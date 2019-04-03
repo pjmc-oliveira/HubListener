@@ -58,20 +58,7 @@ class Data {
 
         // begin static analysis of new commits when ready
         const newCommits = Promise.all([this.clonePromise, lastCommit])
-            .then(async ([clone, lastCommit]) => {
-                // get all commits
-                const allCommits = (await clone.headCommitHistory());
-                // function to determine if commit is new
-                const isNew = commit => commit.date() > lastCommit.commit_date;
-                // if there is a last commit,
-                // only keep new commits, otherwise keep all
-                const commits = (lastCommit ?
-                    (allCommits.filter(isNew)) :
-                    allCommits)
-                    // reverse into chronological order
-                    .reverse();
-                return commits;
-            });
+            .then(([clone, commit]) => clone.commitsAfter(commit ? commit.commit_date : null));
 
         // get the meta analysis for project
         const newMeta = newCommits
