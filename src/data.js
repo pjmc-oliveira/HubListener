@@ -95,6 +95,14 @@ class Data {
                             // checking out next commit
                             valuesByExt: await clone.getStaticAnalysis(),
                     };
+                },
+                (commit, error, index) => {
+                    console.log(error);
+                    return {
+                        commit_id: commit.id().tostrS(),
+                        commit_date: commit.date(),
+                        valuesByExt: {},
+                    }
                 }
             ));
 
