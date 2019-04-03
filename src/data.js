@@ -70,29 +70,7 @@ class Data {
 
         // begin static analysis of new commits when ready
         const newStatic = Promise.all([this.clonePromise, newCommits])
-            .then(([clone, newCommits]) => 
-                clone.foreachCommit(newCommits,
-                    async (commit, index) => {
-                        if (index % 10 === 0)
-                            console.log(`Analysing (${index}/${newCommits.length})`);
-                        return {
-                            commit_id: commit.id().tostrS(),
-                            commit_date: commit.date(),
-                            // have to wait for analysis to finish before
-                            // checking out next commit
-                            valuesByExt: await clone.getStaticAnalysis(),
-                    };
-                },
-                (commit, error, index) => {
-                    console.log(error);
-                    return {
-                        commit_id: commit.id().tostrS(),
-                        commit_date: commit.date(),
-                        valuesByExt: {},
-                    }
-                }
-            ));
-
+            .then(([clone, commits]) => clone.analyseCommits(commits));
 
         // merge static and meta analysis
         const newAnalyses = Promise.all([newStatic, newMeta, repo_id])

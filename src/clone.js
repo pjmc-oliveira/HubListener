@@ -156,6 +156,31 @@ class Clone {
         return commits;
     }
 
+    async analyseCommits(commits) {
+        const analyser = async (commit, index) => {
+            if (index % 10 === 0)
+                console.log(`Analysing (${index}/${commits.length})`);
+            return {
+                commit_id: commit.id().tostrS(),
+                commit_date: commit.date(),
+                // have to wait for analysis to finish before
+                // checking out next commit
+                valuesByExt: await this.staticAnalysis(),
+            };
+        };
+
+        const catcher = (commit, error, index) => {
+            console.log(error);
+            return {
+                commit_id: commit.id().tostrS(),
+                commit_date: commit.date(),
+                valuesByExt: {},
+            }
+        };
+
+        return this.foreachCommit(commits, analyser, catcher);
+    }
+
     /**
      *    @callback commitActionFunction
      *    @param {Commit} commit - The commit it's applied to.
@@ -224,7 +249,7 @@ class Clone {
      *      An object with file extensions as keys and an object with
      *      all static analyses results as the value.
      */
-    async getStaticAnalysis({
+    async staticAnalysis({
             excludedDirs = ['.git'],
             excludedExts = []} = {}) {
 
