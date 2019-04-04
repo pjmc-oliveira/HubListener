@@ -4,10 +4,11 @@
 // user defined modules
 const { Client } = require('./client.js');
 const { Clone } = require('./clone.js');
+const { parallelAnalysis } = require('./parallel.js');
 const utils = require('./utils.js');
 const mkLogger = require('./log.js');
-
 const logger = mkLogger({label: __filename});
+
 
 /**
  *  @class The Data class is used as the central point where all raw
@@ -44,6 +45,7 @@ class Data {
             name,
             auth_token: (options || {}).auth_token,
         });
+        this.url = url;
         this.clone = clone
         this.owner = owner;
         this.name = name;
@@ -71,8 +73,11 @@ class Data {
             }))
         );
 
-        // begin static analysis of new commits when ready
-        const newStatic = this.clone.analyseCommits(newCommits);
+        // begin static analysis of new commits
+        // analyse in parallel if many commits
+        const newStatic = newCommits.length < 10 ?
+            this.clone.analyseCommits({commits: newCommits}) :
+            parallelAnalysis(this, newCommits.map(c => c.id().tostrS()));
 
         // merge static and meta analysis
         const newAnalyses = Promise.all([newStatic, newMeta])

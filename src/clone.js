@@ -99,11 +99,9 @@ class Clone {
         }
     }
 
-    static async duplicate(from_path, to_path) {
-        logger.debug(`Duplicating repo from '${from_path}' to '${to_path}'...`);
-        const repo = await Git.Clone(from_path, to_path);
-        logger.debug(`Duplication successful!`);
-        return new Clone(to_path, repo);
+    static async fromPath(path) {
+        const repo = await Git.Repository.open(path);
+        return new Clone(path, repo);
     }
 
     /**
@@ -163,10 +161,13 @@ class Clone {
         return commits;
     }
 
-    async analyseCommits(commits) {
+    async analyseCommits({commits = [], commit_ids = []} = {}) {
+        if (commits.length === 0) {
+            let promises = commit_ids.map(id => Git.Commit.lookup(this.repo, id));
+            commits = await Promise.all(promises);
+        }
+
         const analyser = async (commit, index) => {
-            if (index % 10 === 0)
-                console.log(`Analysing (${index}/${commits.length})`);
             return {
                 commit_id: commit.id().tostrS(),
                 commit_date: commit.date(),
