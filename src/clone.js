@@ -56,7 +56,7 @@ class Clone {
      *  @return {Promise<Clone>} A promise to a {@link Clone} instance.
      */
     static async init(url, {
-            root = path.join(__dirname, 'repos'),
+            root = path.join(__dirname, 'repos', '0'),
             clonePath = '',
         } = {}) {
         logger.debug(`Initializing repository Clone from: '${url}'`);
@@ -97,6 +97,13 @@ class Clone {
             logger.debug('Successfully cloned!');
             return new Clone(clonePath, repo);
         }
+    }
+
+    static async duplicate(from_path, to_path) {
+        logger.debug(`Duplicating repo from '${from_path}' to '${to_path}'...`);
+        const repo = await Git.Clone(from_path, to_path);
+        logger.debug(`Duplication successful!`);
+        return new Clone(to_path, repo);
     }
 
     /**
