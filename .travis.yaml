@@ -2,5 +2,23 @@ language: node_js
 node_js:
   - "8.12.0"
 
+before_install: 
+  - npm install jsdoc
+  - cd src
+
+install:
+  - npm install 
+
+
 script:
-  - npm test
+  - npx ava
+  - cd ..
+  - jsdoc src -d src/jsdocs
+
+# deploy:
+#   provider: pages
+#   skip_cleanup: true 
+#   github_token: $GITHUB_TOKEN
+#   local_dir: site
+#   on:
+#     branch: master
