@@ -15,6 +15,17 @@ const logger = mkLogger({label: __filename});
  *  and a cloned instance of the Git repository.
  */
 class Data {
+    static async init(url, db, options) {
+        const clone = await Clone.init(url);
+        return new Data({
+            url,
+            db: await db,
+            clone,
+            options,
+        });
+    }
+
+
     /**
      *  Construct a {@link Data} object, create a [clone]{@link Clone} from the
      *  Git repository asynchronously, and initialize
@@ -25,57 +36,47 @@ class Data {
      *  @param {string} options.auth_token - The GitHub authentication token
      *  @param {boolean} options.noClone - Flag on whether to clone the Git project or not
      */
-    constructor(url, db, options = {}) {
+    constructor({url, db, clone, options} = {}) {
         // Parse the GitHub URL into project owner and project name
         const {owner, name} = utils.parseURL(url);
         this.client = new Client({
             owner,
             name,
-            auth_token: options.auth_token,
+            auth_token: (options || {}).auth_token,
         });
-        // If `noClone` option is specified, don't clone the repository
-        // Useful to get metrics only depending on the GitHub API
-        // without waiting for the repository to clone
-        this.clonePromise = options.noClone ? undefined : Clone.init(url);
+        this.clone = clone
         this.owner = owner;
-        this.repoName = name;
-        
-        this._db = db;
+        this.name = name;
+        this.db = db;
     }
 
     async analyse() {
-        // wait for our db to load
-        const db = await this._db;
-
-        const owner = this.owner;
-        const name = this.repoName;
-
         // ensure repo is in database
-        const repo_id = db.getRepoId({owner, name});
+        const repo_id = await this.db.getRepoId({
+            owner: this.owner, 
+            name: this.name
+        });
 
         // get last commit in database
-        const lastCommit = repo_id.then(id => db.getLastCommit(id));
+        const lastCommit = await this.db.getLastCommit(repo_id);
 
-        // begin static analysis of new commits when ready
-        const newCommits = Promise.all([this.clonePromise, lastCommit])
-            .then(([clone, commit]) => clone.commitsAfter(commit ? commit.commit_date : null));
+        // get new commits 
+        const newCommits = await this.clone.commitsAfter(lastCommit ? lastCommit.commit_date : null)
 
         // get the meta analysis for project
-        const newMeta = newCommits
-            .then(commits => commits.map(c => ({
+        const newMeta = this.client.getMetaAnalysis(
+            newCommits.map(c => ({
                 commit_id: c.id().tostrS(),
                 commit_date: c.date(),
-            })))
-            .then(commits => this.client.getMetaAnalysis(commits));
+            }))
+        );
 
         // begin static analysis of new commits when ready
-        const newStatic = Promise.all([this.clonePromise, newCommits])
-            .then(([clone, commits]) => clone.analyseCommits(commits));
+        const newStatic = this.clone.analyseCommits(newCommits);
 
         // merge static and meta analysis
-        const newAnalyses = Promise.all([newStatic, newMeta, repo_id])
-            .then(([static_, meta, repo_id]) => {
-
+        const newAnalyses = Promise.all([newStatic, newMeta])
+            .then(([static_, meta]) => {
                 // new analyses is a list of objects
                 // with keys: commit_id, commit_date, and valuesByExt
                 // where valuesByExt is an object with different file extensions as keys
@@ -111,12 +112,11 @@ class Data {
             });
 
         // insert new analysis results into database
-        newAnalyses.then(values => db.insertValues(values))
+        newAnalyses.then(values => this.db.insertValues(values))
             .then(_ => logger.debug('Finished inserting values to database'));
 
         // get already analysed commits if present, otherwise empty list
-        const oldAnalyses = Promise.all([repo_id, lastCommit])
-            .then(([id, commit]) => db.getValuesUntil(id, commit));
+        const oldAnalyses = this.db.getValuesUntil(repo_id, lastCommit);
 
         // merge new and old analyses
         const results = await Promise.all([oldAnalyses, newAnalyses])

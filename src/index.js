@@ -36,7 +36,7 @@ app.post('/analyse', async (req, res) => {
     const { url, options } = req.body;
 
     // begin clone and update local copy of repository
-    const data = new Data(url, db, options);
+    const data = await Data.init(url, db, options);
 
     // analyse data
     const points = await data.analyse();
