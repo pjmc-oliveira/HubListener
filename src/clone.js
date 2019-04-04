@@ -6,11 +6,11 @@ const fs = require('fs-extra');
 const path = require('path');
 const dir = require('node-dir');
 
-
 const utils = require('./utils.js');
 const analyse = require('./analyse.js');
 const mkLogger = require('./log.js');
 const logger = mkLogger({label: __filename});
+
 
 // Returns true if the file path is in an excluded directory,
 // otherwise false
@@ -33,8 +33,6 @@ function hasExcludedExt(relativePath, excludedExts) {
     }
     return false;
 }
-
-
 
 /**
  *  @class The Clone class to clone and manage the Git repository
@@ -258,55 +256,55 @@ class Clone {
      *      all static analyses results as the value.
      */
     async staticAnalysis({
-            excludedDirs = ['.git'],
-            excludedExts = []} = {}) {
+        excludedDirs = ['.git'],
+        excludedExts = []} = {}) {
 
-        // get all files in directory
-        let filepaths = await dir.promiseFiles(this.path);
+    // get all files in directory
+    let filepaths = await dir.promiseFiles(this.path);
 
-        // TODO: cycle through files only ONCE if both are provided
-        // filter unwanted files
-        if (excludedDirs.length) {
-            filepaths = filepaths.filter(f => !isInExcludedDir(f.slice(this.path.length + 1), excludedDirs));
-        }
-        
-        if (excludedExts.length) {
-            filepaths = filepaths.filter(f => !hasExcludedExt(f.slice(this.path.length + 1), excludedExts));
-        }
-
-        // group files by extension
-        let fileByExt = {};
-        for (const filepath of filepaths) {
-            const ext = path.extname(filepath);
-
-            fileByExt[ext] = fileByExt[ext] || [];
-            fileByExt[ext].push(filepath);
-        }
-
-        // analyse files by extension
-        let promises = {};
-        for (const [ext, files] of Object.entries(fileByExt)) {
-            switch (ext) {
-                case '.js':
-                    promises[ext] = analyse.javascript(files);
-                    break;
-                case '.py':
-                    promises[ext] = analyse.python(files);
-                    break;
-                default:
-                    promises[ext] = analyse.generic(files);
-                    break;
-            }
-        }
-
-        // wait for all extension analyses to complete
-        let output = {};
-        for (const [ext, promise] of Object.entries(promises)) {
-            output[ext] = await promise;
-        }
-
-        return output;
+    // TODO: cycle through files only ONCE if both are provided
+    // filter unwanted files
+    if (excludedDirs.length) {
+        filepaths = filepaths.filter(f => !isInExcludedDir(f.slice(this.path.length + 1), excludedDirs));
     }
+    
+    if (excludedExts.length) {
+        filepaths = filepaths.filter(f => !hasExcludedExt(f.slice(this.path.length + 1), excludedExts));
+    }
+
+    // group files by extension
+    let fileByExt = {};
+    for (const filepath of filepaths) {
+        const ext = path.extname(filepath);
+
+        fileByExt[ext] = fileByExt[ext] || [];
+        fileByExt[ext].push(filepath);
+    }
+
+    // analyse files by extension
+    let promises = {};
+    for (const [ext, files] of Object.entries(fileByExt)) {
+        switch (ext) {
+            case '.js':
+                promises[ext] = analyse.javascript(files);
+                break;
+            case '.py':
+                promises[ext] = analyse.python(files);
+                break;
+            default:
+                promises[ext] = analyse.generic(files);
+                break;
+        }
+    }
+
+    // wait for all extension analyses to complete
+    let output = {};
+    for (const [ext, promise] of Object.entries(promises)) {
+        output[ext] = await promise;
+    }
+
+    return output;
+}
 
 }
 

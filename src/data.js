@@ -1,5 +1,9 @@
 'use strict';
 
+// node and npm modules
+const moment = require('moment');
+const dir = require('node-dir');
+const path = require('path');
 
 // user defined modules
 const { Client } = require('./client.js');
@@ -26,7 +30,6 @@ class Data {
         });
     }
 
-
     /**
      *  Construct a {@link Data} object, create a [clone]{@link Clone} from the
      *  Git repository asynchronously, and initialize
@@ -45,7 +48,6 @@ class Data {
             name,
             auth_token: (options || {}).auth_token,
         });
-        this.url = url;
         this.clone = clone
         this.owner = owner;
         this.name = name;
