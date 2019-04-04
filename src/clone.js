@@ -3,38 +3,11 @@
 // node and npm modules
 const Git = require('nodegit');
 const fs = require('fs-extra');
-const path = require('path');
-const dir = require('node-dir');
-
-
 const utils = require('./utils.js');
-const analyse = require('./analyse.js');
+const path = require('path');
+
 const mkLogger = require('./log.js');
 const logger = mkLogger({label: __filename});
-
-// Returns true if the file path is in an excluded directory,
-// otherwise false
-function isInExcludedDir(relativePath, excludedDirs) {
-    for (const excludedDir of excludedDirs) {
-        if (relativePath.startsWith(excludedDir)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Returns true if the file name has an excluded extension,
-// otherwise false
-function hasExcludedExt(relativePath, excludedExts) {
-    for (const excludedExt of excludedExts) {
-        if (relativePath.endsWith(excludedExt)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-
 
 /**
  *  @class The Clone class to clone and manage the Git repository
@@ -139,48 +112,6 @@ class Clone {
         return commits;
     }
 
-    async commitsAfter(date) {
-        // get all commits
-        const allCommits = (await this.headCommitHistory());
-
-        // if no date provided, return all
-        if (!date) {
-            return allCommits;
-        }
-        // function to determine if commit is new
-        const isNew = commit => commit.date() > date;
-
-        // only keep new commits
-        const commits = allCommits.filter(isNew).reverse();
-        
-        return commits;
-    }
-
-    async analyseCommits(commits) {
-        const analyser = async (commit, index) => {
-            if (index % 10 === 0)
-                console.log(`Analysing (${index}/${commits.length})`);
-            return {
-                commit_id: commit.id().tostrS(),
-                commit_date: commit.date(),
-                // have to wait for analysis to finish before
-                // checking out next commit
-                valuesByExt: await this.staticAnalysis(),
-            };
-        };
-
-        const catcher = (commit, error, index) => {
-            console.log(error);
-            return {
-                commit_id: commit.id().tostrS(),
-                commit_date: commit.date(),
-                valuesByExt: {},
-            }
-        };
-
-        return this.foreachCommit(commits, analyser, catcher);
-    }
-
     /**
      *    @callback commitActionFunction
      *    @param {Commit} commit - The commit it's applied to.
@@ -228,76 +159,6 @@ class Clone {
             i++;
         }
         return results;
-    }
-
-    /**
-     *  A summary of a file extension
-     *  @typedef {object} ExtensionSummary
-     *  @property {number} numberOfFiles - The number of files with that extension
-     *  @property {number} numberOfLines - The lines of code with that extension
-     */
-
-    /**
-     *  Performs static analysis of code on disk and returns a report of the results.
-     *  @param {Object} [options] - The options
-     *  @param {Array<string>} [options.excludedDirs=['.git']]
-     *      A list of directories to be excluded. Only '.git' by default.
-     *  @param {Array<string>} [options.excludedExts=[]]
-     *      A list of extensions to be excluded.
-     *
-     *  @return {Object<string, ExtensionSummary>}
-     *      An object with file extensions as keys and an object with
-     *      all static analyses results as the value.
-     */
-    async staticAnalysis({
-            excludedDirs = ['.git'],
-            excludedExts = []} = {}) {
-
-        // get all files in directory
-        let filepaths = await dir.promiseFiles(this.path);
-
-        // TODO: cycle through files only ONCE if both are provided
-        // filter unwanted files
-        if (excludedDirs.length) {
-            filepaths = filepaths.filter(f => !isInExcludedDir(f.slice(this.path.length + 1), excludedDirs));
-        }
-        
-        if (excludedExts.length) {
-            filepaths = filepaths.filter(f => !hasExcludedExt(f.slice(this.path.length + 1), excludedExts));
-        }
-
-        // group files by extension
-        let fileByExt = {};
-        for (const filepath of filepaths) {
-            const ext = path.extname(filepath);
-
-            fileByExt[ext] = fileByExt[ext] || [];
-            fileByExt[ext].push(filepath);
-        }
-
-        // analyse files by extension
-        let promises = {};
-        for (const [ext, files] of Object.entries(fileByExt)) {
-            switch (ext) {
-                case '.js':
-                    promises[ext] = analyse.javascript(files);
-                    break;
-                case '.py':
-                    promises[ext] = analyse.python(files);
-                    break;
-                default:
-                    promises[ext] = analyse.generic(files);
-                    break;
-            }
-        }
-
-        // wait for all extension analyses to complete
-        let output = {};
-        for (const [ext, promise] of Object.entries(promises)) {
-            output[ext] = await promise;
-        }
-
-        return output;
     }
 
 }
