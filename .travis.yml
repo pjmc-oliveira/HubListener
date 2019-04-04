@@ -12,8 +12,8 @@ install:
 
 script:
   - npx ava
-  - cd ..
-  - jsdoc src -d src/jsdocs
+  # - cd ..
+  # - jsdoc src -d src/jsdocs
 
 # deploy:
 #   provider: pages
