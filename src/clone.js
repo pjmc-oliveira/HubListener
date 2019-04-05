@@ -148,7 +148,7 @@ class Clone {
 
         // if no date provided, return all
         if (!date) {
-            return allCommits;
+            return allCommits.reverse();
         }
         // function to determine if commit is new
         const isNew = commit => commit.date() > date;
