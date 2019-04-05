@@ -207,7 +207,9 @@ const analyse = {
                 });
 
                 // on error, reject
-                program.stderr.on('data', reject);
+                program.stderr.on('data', bytes => {
+                    reject(bytes.toString('utf-8'));
+                });
 
             } catch (e) {
                 logger.warn("Python analysis failed.  Falling back to default.  Details:");
