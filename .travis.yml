@@ -12,13 +12,13 @@ install:
 
 script:
   - npx ava
-  # - cd ..
-  # - jsdoc src -d src/jsdocs
+  - cd ..
+  - jsdoc src -d src/jsdocs
 
-# deploy:
-#   provider: pages
-#   skip_cleanup: true 
-#   github_token: $GITHUB_TOKEN
-#   local_dir: site
-#   on:
-#     branch: master
+deploy:
+  provider: pages
+  skip_cleanup: true 
+  github_token: $GITHUB_TOKEN
+  local_dir: src/jsdocs
+  on:
+    branch: master
