@@ -6,17 +6,20 @@ const { Clone } = require('./clone.js');
 
 async function parallelAnalysis(data, commit_ids, n_cpus = (os.cpus().length)) {
     console.log(`Starting analysis in ${n_cpus} cores...`);
-    
-    // split commits into equal sized chunks
-    const size = Math.ceil(commit_ids.length / n_cpus);
+
+
+    // split commits into alternating equal sized chunks
     let params = [];
-    for (let i = 0, n = 0; i < commit_ids.length; i += size, n++) {
+    for (let n = 0; n < n_cpus; n++) {
+       let chunk = [];
+        for (let i = n; i < commit_ids.length; i += n_cpus) {
+            chunk.push(commit_ids[i]);
+        }
         const repo_path = path.join(__dirname, 'repos', `${n}`, data.owner, data.name);
-        // clone into separate directory
         await Clone.init(data.clone.path, {clonePath: repo_path});
         params.push({
             path: repo_path,
-            commit_ids: commit_ids.slice(i, i + size),
+            commit_ids: chunk,
         });
     }
 
