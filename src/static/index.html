@@ -21,28 +21,36 @@
 </head>
 <body class="bg-light">
     <div class="container">
-        <h1 id="title">
-            <a href="/">HubListener</a>
-        </h1>
-        <hr>
-
         <!-- Form view -->
-        <form id="form" class="view">
-            <label for="url">GitHub URL:</label>
-            <input id="url" type="text" name="url">
-            <input type="submit" name="submit">
-        </form>
+        <div id="main" class="view">
+            <h1 id="title">
+                <a href="/">HubListener</a>
+            </h1>
+            <form id="form">
+                <label for="url">GitHub URL:</label>
+                <input id="url" type="text" name="url">
+                <input type="submit" name="submit">
+            </form>
+        </div>
 
         <!-- Loading view -->
         <div id="loading" class="view">
+            <h1 id="title">
+                <a href="/">HubListener</a>
+            </h1>
+            <hr>
             <div id="spinner" class="spinner-border text-primary" role="status"></div>
             <span id="progressText">Running...</span>
         </div>
 
         <!-- Results view -->
         <div id="results" class="view">
-            <div id="chart"></div>
+            <h1 id="title">
+                <a href="/">HubListener</a>
+            </h1>
+            <hr>
 
+            <div id="chart"></div>
             <div id="chart-controls">
                 <label for="x-axis">X-Axis</label>
                 <select id="x-axis"></select>
