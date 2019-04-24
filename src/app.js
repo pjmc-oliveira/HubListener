@@ -34,7 +34,7 @@ function main(args) {
     --no-clone          : Don't clone repository
     -o, --out <file>    : Optional output file to output results
     --csv               : If output file specified, output as CSV
-    --json              : If output file specified, output as JSON (default)
+    --json              : If output file specified, output as JSON
     -a, --append        : Append to file if exists (and output file specified)
 
     Documentation can be found at:
