@@ -65,7 +65,7 @@ class Data {
         const lastCommit = await this.db.getLastCommit(repo_id);
 
         // get new commits 
-        const newCommits = await this.clone.commitsAfter(lastCommit ? lastCommit.commit_date : null)
+        const newCommits = await this.clone.commitsAfter(lastCommit ? lastCommit.commit_date : null);
 
         // get the meta analysis for project
         const newMeta = this.client.getMetaAnalysis(
@@ -120,7 +120,7 @@ class Data {
 
         // insert new analysis results into database
         newAnalyses.then(values => this.db.insertValues(values))
-            .then(_ => logger.debug('Finished inserting values to database'));
+            .then(() => logger.debug('Finished inserting values to database'));
 
         // get already analysed commits if present, otherwise empty list
         const oldAnalyses = this.db.getValuesUntil(repo_id, lastCommit);
