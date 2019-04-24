@@ -1,0 +1,18 @@
+
+#title {
+    margin-top: 40px;
+}
+
+#title a {
+    color: black;
+}
+
+#chart {
+    width: 100%;
+    height: 600px;
+}
+
+#spinner {
+    width: 20px;
+    height: 20px;
+}

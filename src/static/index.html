@@ -21,7 +21,7 @@
 </head>
 <body class="bg-light">
     <div class="container">
-        <h1 style="margin-top: 40px;">
+        <h1 id="title">
             <a href="/">HubListener</a>
         </h1>
         <hr>
@@ -35,13 +35,13 @@
 
         <!-- Loading view -->
         <div id="loading" class="view">
-            <div id="spinner" class="spinner-border text-primary" role="status" style="width: 20px; height: 20px;"></div>
+            <div id="spinner" class="spinner-border text-primary" role="status"></div>
             <span id="progressText">Running...</span>
         </div>
 
         <!-- Results view -->
         <div id="results" class="view">
-            <div id="chart" style="width:100%;height: 600px;"></div>
+            <div id="chart"></div>
 
             <div id="chart-controls">
                 <label for="x-axis">X-Axis</label>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div id="error" style="display:none"></div>
+        <div id="error" class="view"></div>
     </div>
 </body>
 </html>
