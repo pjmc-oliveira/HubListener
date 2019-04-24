@@ -35,21 +35,22 @@ HubListener uses Travis CI to do its automated testing and JSDoc Documentation. 
 
 **Doc** <br />
 Documentation for the project
+- Architecture & Design
 - Development Plan
 - Final Presentation
-- Onboarding Material
-- GO/ NO GO Poster
+- Onboarding
+- Poster
 - Requirements Specifications Document
-- Test Plan
-- User Guide 
 - Verification & Validation Plan  
-- Architecture & Design
   
 **ReferenceMaterial** 
   - Research Material used as foundations for the project
 
 **src**
   - The main folder for HubListener source code
+  
+.travis.yml 
+  - Used for automated testing and documentation
   
 .gitignore
   - Used by git (specifies which file(type)s to ignore when committing)  
