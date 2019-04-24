@@ -1,4 +1,11 @@
 [![Build Status](https://travis-ci.com/pjmc-oliveira/HubListener.svg?branch=master)](https://travis-ci.com/pjmc-oliveira/HubListener)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![GitHub language count](https://img.shields.io/github/languages/count/pjmc-oliveira/HubListener.svg)
+![GitHub top language](https://img.shields.io/github/languages/top/pjmc-oliveira/HubListener.svg)
+![GitHub Open Issues](https://img.shields.io/github/issues-raw/pjmc-oliveira/HubListener.svg)
+![GitHub Closed Issues](https://img.shields.io/github/issues-closed/pjmc-oliveira/HubListener.svg)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pjmc-oliveira/HubListener.svg)
+![Website](https://img.shields.io/website/https/pjmc-oliveira.github.io/HubListener.svg)
 
 
 HubListener
