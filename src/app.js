@@ -3,9 +3,13 @@
 const utils = require('./utils');
 const mkLogger = require('./log.js');
 const { Data } = require ('./data');
+const { Database } = require('./database.js');
 
 // create our logger object
 const logger = mkLogger({label: __filename});
+
+// promise to a database wrapper
+const db = Database.init('hubdata.sqlite3');
 
 /**
  *  Serves as the main entry point to the HubListener CLI app
@@ -15,6 +19,8 @@ const logger = mkLogger({label: __filename});
 function main(args) {
     logger.debug('Started main function, with args:');
     logger.debug(args);
+
+    const start = Date.now();
 
     // Available options and flags
     // NOTE: Update options message whenever a new option is added or removed
@@ -27,6 +33,8 @@ function main(args) {
     -u, --url <url>     : GitHub project url
     --no-clone          : Don't clone repository
     -o, --out <file>    : Optional output file to output results
+    --csv               : If output file specified, output as CSV
+    --json              : If output file specified, output as JSON (default)
     -a, --append        : Append to file if exists (and output file specified)
 
     Documentation can be found at:
@@ -57,53 +65,41 @@ function main(args) {
         return;
     }
 
-    const repoUrl = options['u'] || options['url'];
+    const url = options['u'] || options['url'];
     // If no repository url was provided, display options and exit
-    if (repoUrl === undefined) {
+    if (url === undefined) {
         logger.debug('No URL provided, printing help message...');
         console.log(optionsMsg);
         return;
     }
 
     // Create new Data object
-    const data = new Data(repoUrl, {noClone: options['no-clone']});
+    const data = Data.init(url, db, {});
+    // const data = new Data(repoUrl, {noClone: options['no-clone']});
 
     // Set the output function. default is console.log,
     // but can optionally write to file.
     const outputFilename = options['o'] || options['out'];
     const shouldAppend = options['a'] || options['append'];
-    const output =  outputFilename ?
-                    (obj => utils.writeToJSONFile(
-                        obj, outputFilename, {append: shouldAppend})) :
-                    console.log;
+    const outputToJSON = options['json'] || !options['csv'];
+    const fmtOutput = outputToJSON
+        ? (o => ({data: o}))
+        : utils.jsonToCsv;
+    const output =  outputFilename
+        ? (obj => utils.writeToFile(
+            fmtOutput(obj),
+            outputFilename, {
+                append: shouldAppend
+            }))
+        : console.log;
+    
 
-    data.clonePromise.then(async (clone) => {
-        console.log(clone.path);
-        const commits = (await clone.headCommitHistory()).reverse();
-        const results = await clone.foreachCommit(commits,
-            async (commit, index) => ({
-                commit: commit.id().tostrS(),
-                author: commit.author().toString(),
-                index: index,
-                date: commit.date().toISOString(),
-                analysis: await data.getStaticAnalysis()}),
-            (commit, error, index) => ({
-                commit: commit.id().tostrS(),
-                author: commit.author().toString(),
-                index: index,
-                date: commit.date().toISOString(),
-                error: error
-            }));
+    data.then(data => data.analyse())
+        .then(points => {
+        output(points);
 
-        let flattened = [];
-        for (const result of results) {
-            flattened.push(utils.flatten(result));
-        }
-
-        const csv = utils.jsonToCsv(flattened);
-        // Need to make writeToJSONFile polymorphic enough to take in CSV strings
-        const fs = require('fs');
-        fs.writeFileSync(outputFilename, csv);
+        const end = Date.now();
+        logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
     });
 }
 

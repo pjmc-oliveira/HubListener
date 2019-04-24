@@ -382,26 +382,30 @@ const utils = {
 
     /**
      *  Write an object to a JSON File .
-     *  @param {object} obj - The object to be written to the file
+     *  @param {Object|string} source - The Object or string to be written to the file
      *  @param {string} filename - The filename that will be written to
      *  @param {WriteToFileOptions} [options] - The writing options
      */
-    writeToJSONFile: function (obj, filename, {
+    writeToFile: function (source, filename, {
             dirname = __dirname,
             append = false,
             indentation = 4
         } = {}){
-        // stringify to a JSON object
-        const JsonString = JSON.stringify(obj, null, indentation);
+        let contents;
+        if (typeof source === 'object') {
+            // stringify to a JSON object
+            contents = JSON.stringify(source, null, indentation);
+        } else {
+            contents = source;
+        }
         // join path of directory and file
         const filepath = path.join(dirname, filename);
-
         // if file exists and append is set to true, append to file
         if (fs.existsSync(filepath) && append) {
-            fs.appendFileSync(filepath, JsonString);
+            fs.appendFileSync(filepath, contents);
         // else create new file and write.
         } else {
-            fs.writeFileSync(filepath, JsonString);
+            fs.writeFileSync(filepath, contents);
         }
     },
 
