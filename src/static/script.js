@@ -5,7 +5,19 @@ let chartConfig;
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form');
     form.addEventListener('submit', submitForm);
+    loadView('form');
 });
+
+function loadView(viewName) {
+    let views = document.getElementsByClassName('view');
+    for (const view of views) {
+        if (view.id === viewName) {
+            view.style.display = 'block';
+        } else {
+            view.style.display = 'none';
+        }
+    }
+}
 
 function ajax(method, url, json) {
     return new Promise((resolve, reject) => {
@@ -42,8 +54,7 @@ function submitForm(event) {
     event.preventDefault();
 
     // Hide form controls and display loading spinner and progress text
-    $("#form").hide();
-    $("#loading").show();
+    loadView('loading');
     const json = form2json(event.target);
     ajax("POST", "/analyse", json)
         .then(x => {
@@ -57,8 +68,7 @@ function submitForm(event) {
 
             // Hide loading spinner and display results div
             // Must unhide results div before rendering chart to ensure chart is rendered at the correct resolution
-            $("#loading").hide();
-            $("#results").show();
+            loadView('results');
 
             // First time / default tauchart config
             chartConfig = {
