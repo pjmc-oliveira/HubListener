@@ -15,9 +15,12 @@ HubListener is an analysis tool designed to provide users with relevant metrics,
 See [Quick Start Guide](https://github.com/pjmc-oliveira/HubListener/wiki/Quick-Start)
 
 
-## Finding / Building JSDoc Documentation
-See [Contributor's Guide](https://github.com/pjmc-oliveira/HubListener/wiki/Contributor%27s-Guide#jsdoc)
+## JSDoc Documentation
+- See [Contributor's Guide](https://github.com/pjmc-oliveira/HubListener/wiki/Contributor%27s-Guide#jsdoc) for details on how to run the JSDoc's manually. 
+- See https://pjmc-oliveira.github.io/HubListener/ for latest JSDoc. The JSDoc's is updated on every commit and pushed to our GitHub Pages.
 
+## Travis CI 
+HubListener uses Travis CI to do its automated testing and JSDoc Documentation. After every commit, Travis CI runs the automated testing and regenerates the JSDocs. The JSDocs are pushed to the gh-pages branch which is viewable via our webpage. If there are any failed tests or issues with the JSDocs an email will be sent to the developer who last committed. 
 
 -------------------------------------------------
 ### Summary of Folder Structure and File Contents 
