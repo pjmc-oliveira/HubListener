@@ -1,7 +1,9 @@
 const express = require('express');
 
 const { Data } = require('./data.js');
+const { Client } = require('./client.js');
 const { Database } = require('./database.js');
+const utils = require('./utils.js');
 const mkLogger = require('./log.js');
 
 const app = express();
@@ -44,6 +46,26 @@ app.post('/analyse', async (req, res) => {
     const end = Date.now();
     logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
     res.send({ points });
+});
+
+
+app.post('/github', async (req, res) => {
+    logger.info('[POST] request to /github');
+
+    // parse url from body
+    const { url } = req.body;
+    const {owner, name} = utils.parseURL(url);
+    const client = new Client({
+        owner,
+        name,
+    });
+
+    res.send({
+        issues: await client.getAllIssues(),
+        forks: await client.getNumberOfForks(),
+        pulls: await client.getPullRequests(),
+    });
+
 });
 
 app.listen(port, () => console.log(`listening on ${port}`));

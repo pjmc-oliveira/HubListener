@@ -45,3 +45,7 @@ INSERT OR IGNORE INTO MetricTypes (name) VALUES ('halsteadVolume');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('totalIssues');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('openIssues');
 INSERT OR IGNORE INTO MetricTypes (name) VALUES ('closedIssues');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('totalPulls');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('openPulls');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('closedPulls');
+INSERT OR IGNORE INTO MetricTypes (name) VALUES ('mergedPulls');

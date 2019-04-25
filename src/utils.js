@@ -71,6 +71,42 @@ const utils = {
         return results;
     },
 
+    alignPullsToCommits: function (pulls, commits) {
+        // the offset to the current pulls
+        let offset = 0;
+
+        let results = {};
+
+        // running tally of pulls by state
+        let totalPulls = 0;
+        let openPulls = 0;
+        let closedPulls = 0;
+        let mergedPulls = 0;
+
+        // iterate through every commit, stepping up to the last issue at that commit date
+        for (const {commit_id, commit_date} of commits) {
+            // step to new pulls
+            for (;  offset < pulls.length &&
+                    commit_date > pulls[offset].createdAt; offset++) {
+
+                // increment `totalPulls`, and either `openPulls` OR `closedPulls`
+                totalPulls++;
+                if (pulls[offset].state === 'OPEN') {
+                    openPulls++;
+                } else if (pulls[offset].state === 'CLOSED') {
+                    closedPulls++;
+                } else if (pulls[offset].state === 'MERGED') {
+                    mergedPulls++;
+                }
+            }
+
+            // store tally
+            results[commit_id] = {totalPulls, openPulls, closedPulls, mergedPulls};
+        }
+
+        return results;
+    },
+
     /**
      *  Parses an Array of strings (flags and values) into an object of flag keys,
      *  and value values.

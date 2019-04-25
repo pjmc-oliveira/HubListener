@@ -70,9 +70,86 @@ class Client {
 
     async getMetaAnalysis(commits = []) {
         const unalignedIssues = await this.getAllIssues();
+        const unalignedPulls = await this.getPullRequests();
         const issues = utils.alignIssuesToCommits(unalignedIssues, commits);
+        const pulls = utils.alignPullsToCommits(unalignedPulls, commits);
 
-        return issues;
+        let results = {};
+        for (const {commit_id} of commits) {
+            results[commit_id] = {}
+            for (const source of [issues, pulls]) {
+                results[commit_id] = {...results[commit_id], ...source[commit_id]};
+            }
+        }
+
+        return results;
+    }
+
+    async getNumberOfForks() {
+        const query = `
+            query repo {
+                repository(name: "${this.name}", owner: "${this.owner}") {
+                    forks {
+                        totalCount
+                    }
+                }
+        }`;
+
+        return await this.query(query, {})
+            .then(body => body.data.repository.forks.totalCount);
+    }
+
+    async getPullRequests(pageSize = 100) {
+        // create query to query first `pageSize` issues after cursor
+        // or first `pageSize` issues if no cursor is provided
+        const issuesQuery = cursor => `
+            query repo {
+                repository(name: "${this.name}", owner: "${this.owner}") {
+                    pullRequests (
+                            first: ${pageSize}, ` + (cursor ? `after: "${cursor}", ` : '') + `
+                            orderBy: {field:CREATED_AT, direction:ASC}) {
+                        edges {
+                            cursor
+                            node {
+                                state
+                                createdAt
+                                closedAt
+                            }
+                        }
+                    }
+                }
+        }`;
+
+        let results = [];
+        let cursor = null;
+
+        // keep getting issues until there are less than a `pageSize`'s worth of issues
+        while (true) {
+            // query GitHub
+            const edges = await this.query(issuesQuery(cursor), {})
+                // unwrap data, if no issues, return []
+                .then(body => body.data ? body.data.repository.pullRequests.edges : []);
+
+            // get cursor of last issues
+            cursor = edges[edges.length - 1].cursor;
+            // unwrap issue nodes
+            const issues = edges
+                .map(e => e.node)
+                // convert date strings to Date objects
+                .map(i => ({
+                    state: i.state,
+                    createdAt: new Date(i.createdAt),
+                    // closed date might be null, propagate null
+                    closedAt: i.closedAt ? new Date(i.closedAt) : null,
+                }));
+
+            results.push(...issues);
+            // check if should continue
+            if (edges.length < pageSize)
+                break;
+        }
+
+        return results;
     }
 
     /**
