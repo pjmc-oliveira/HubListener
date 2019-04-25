@@ -14,8 +14,8 @@ const logger = mkLogger({label: __filename, level: 'info'});
 // promise to a database wrapper
 const db = Database.init('hubdata.sqlite3');
 
-app.use(express.static('static'));
-app.use(express.json());
+app.use(express.static('static')); // Serve static files from the 'static' directory
+app.use(express.json()); // Parse json encoded request bodies
 
 /**
  * API endpoint tp run the analysis on the given GitHub project URL.
@@ -35,13 +35,16 @@ app.post('/analyse', async (req, res) => {
     const start = Date.now();
 
     // parse url from body
-    const { url, options } = req.body;
+    const url = req.body.url;
+    const options = {
+        quick: req.body.quick
+    };
 
     // begin clone and update local copy of repository
     const data = await Data.init(url, db, options);
 
     // analyse data
-    const points = await data.analyse();
+    const points = await data.analyse(options);
 
     const end = Date.now();
     logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);

@@ -20,6 +20,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-light">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="https://github.com/pjmc-oliveira/HubListener/wiki">About</a></li>
+        <li><a href="https://github.com/pjmc-oliveira/HubListener/tree/master/src">Source</a></li>
+        <li><a href="https://pjmc-oliveira.github.io/HubListener/">JSDocs</a></li>
+        <li class="current"><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
+  </div>
     <div class="container">
         <!-- Form view -->
         <div id="main" class="view">
@@ -27,9 +37,13 @@
                 <a href="/">HubListener</a>
             </h1>
             <form id="form">
-                <label for="url">GitHub URL:</label>
-                <input id="url" type="text" name="url">
-                <input type="submit" name="submit">
+                <input id="url" type="text" name="url" placeholder="Enter GitHub URL">
+
+                <input id="quick" type="checkbox" name="quick">
+                <label for="quick">Quick Analyze</label>
+
+                <br>
+                <input type="submit" name="submit" >
             </form>
         </div>
 
