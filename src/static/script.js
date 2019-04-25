@@ -63,6 +63,7 @@ function submitForm(event) {
     // Hide form controls and display loading spinner and progress text
     loadView('loading');
     const json = form2json(event.target);
+
     ajax("POST", "/analyse", json)
         .then(x => {
             // Make any necessary transformations to the parsed JSON results
@@ -72,11 +73,7 @@ function submitForm(event) {
             }
 
             chartData = x.points;
-            barchartData = [
-                {name: 'issues', value: x.issues.length},
-                {name: 'forks', value: x.forks},
-                {name: 'pull requests', value: x.pulls.length}
-            ];
+            barchartData = Object.entries(x.bar).map(([k, v]) => ({key: k, value: v}));
 
             // Hide loading spinner and display results div
             // Must unhide results div before rendering chart to ensure chart is rendered at the correct resolution
@@ -106,9 +103,10 @@ function submitForm(event) {
 
             barchart = new Taucharts.Chart({
                 data: barchartData,
-                type: 'bar',
-                x: 'name',
+                x: 'key',
                 y: 'value',
+                type: 'bar',
+                color: 'key',
                 plugins: [
                     Taucharts.api.plugins.get('tooltip')(),
                     Taucharts.api.plugins.get('legend')()
