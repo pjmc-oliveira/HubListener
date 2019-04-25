@@ -1,16 +1,20 @@
 
 .title {
     margin-top: 13%;
+    font-size: 5em;
+    text-align: center;
 }
 
 .title a {
     color: black;
-   
 }
 
-#main h1 {
-    font-size: 5em;
-    text-align: center;
+#repo-url {
+    font-weight: 400;
+}
+
+#repo-name {
+    font-weight: 600;
 }
 
 .chart {

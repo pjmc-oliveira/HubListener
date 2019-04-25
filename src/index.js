@@ -75,6 +75,11 @@ app.post('/analyse', async (req, res) => {
             mergedPullRequests: pulls.filter(p => p.state === 'MERGED').length,
             numberOfStargazers: stargazers,
             commitsInMaster: commitsInMaster,
+        },
+        repo: {
+            owner: owner,
+            name: name,
+            url: url
         }
     });
 

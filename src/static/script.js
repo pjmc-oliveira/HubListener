@@ -66,6 +66,13 @@ function submitForm(event) {
 
     ajax("POST", "/analyse", json)
         .then(x => {
+            $("#repo-url").attr({
+                "href": x.repo.url,
+                "target": "_blank"
+            });
+            $("#repo-owner").text(x.repo.owner);
+            $("#repo-name").text(x.repo.name);
+
             // Make any necessary transformations to the parsed JSON results
             for (data of x.points) {
                 // Parse dates into date objects
