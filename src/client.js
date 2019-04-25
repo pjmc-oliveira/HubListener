@@ -129,7 +129,8 @@ class Client {
             const edges = await this.query(issuesQuery(cursor), {})
                 // unwrap data, if no issues, return []
                 .then(body => body.data ? body.data.repository.pullRequests.edges : []);
-
+            if (edges.length === 0)
+                break;
             // get cursor of last issues
             cursor = edges[edges.length - 1].cursor;
             // unwrap issue nodes
@@ -189,7 +190,8 @@ class Client {
             const edges = await this.query(issuesQuery(cursor), {})
                 // unwrap data, if no issues, return []
                 .then(body => body.data ? body.data.repository.issues.edges : []);
-
+            if (edges.length === 0)
+                break;
             // get cursor of last issues
             cursor = edges[edges.length - 1].cursor;
             // unwrap issue nodes
