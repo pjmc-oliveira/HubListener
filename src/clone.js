@@ -142,20 +142,20 @@ class Clone {
         return commits;
     }
 
-    async commitsAfter(date) {
+    async commitsAfter(date, quick) {
         // get all commits
-        const allCommits = (await this.headCommitHistory());
+        let commits = (await this.headCommitHistory()).reverse();
 
-        // if no date provided, return all
-        if (!date) {
-            return allCommits.reverse();
+        // if date is provided, only keep new commits
+        if (date) commits = commits.filter(commit => commit.date() > date);
+
+        // if quick analyze selected, return roughly 100 commits
+        // TODO: add more flexibility to the behaviour of quick analyze???  just hardcoded to 100 commits for now lol
+        if (quick && commits.length > 100) {
+            let n = Math.round(commits.length / 100);
+            commits = commits.filter((commit, index) => index % n === 0);
         }
-        // function to determine if commit is new
-        const isNew = commit => commit.date() > date;
 
-        // only keep new commits
-        const commits = allCommits.filter(isNew).reverse();
-        
         return commits;
     }
 

@@ -38,8 +38,13 @@ function ajax(method, url, json) {
 function form2json(form) {
     var result = {};
     for (const input of form) {
-        if (input.type !== 'submit')
-            result[input.name] = form[input.name].value;
+        if (input.type !== 'submit') {
+            if (input.type === 'checkbox') {
+                result[input.name] = form[input.name].checked;
+            } else {
+                result[input.name] = form[input.name].value;
+            }
+        }
     }
     return result;
 }
