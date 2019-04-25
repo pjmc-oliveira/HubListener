@@ -74,7 +74,7 @@ def analyse(paths):
             numOfFunctions += 1
             complexity += i["complexity"] if isinstance(i, dict) else 0
 
-    cc = complexity/numOfFunctions
+    cc = complexity/numOfFunctions if numOfFunctions != 0 else 0
 
     """
     -------------------
