@@ -115,8 +115,10 @@ class Data {
             });
 
         // insert new analysis results into database
-        newAnalyses.then(values => this.db.insertValues(values))
-            .then(() => logger.debug('Finished inserting values to database'));
+        if (!options.quick) {
+            newAnalyses.then(values => this.db.insertValues(values))
+                .then(() => logger.debug('Finished inserting values to database'));
+        }
 
         // get already analysed commits if present, otherwise empty list
         const oldAnalyses = this.db.getValuesUntil(repo_id, lastCommit);
