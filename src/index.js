@@ -66,25 +66,20 @@ app.post('/github', async (req, res) => {
     const issues = await client.getAllIssues();
     const forks = await client.getNumberOfForks();
     const pulls = await client.getPullRequests();
-    const commitsByTime = await client.getNumberOfCommitsByTime();
     const stargazers = await client.getNumberOfStargazers();
     const commitsInMaster = await client.getNumberOfCommitsInMaster();
 
-
     res.send({
-        bar: {
-            totalIssues: issues.length,
-            openIssues: issues.filter(i => i.state === 'OPEN').length,
-            closedIssues: issues.filter(i => i.state === 'CLOSED').length,
-            numberOfForks: forks,
-            totalPullRequests: pulls.length,
-            openPullRequests: pulls.filter(p => p.state === 'OPEN').length,
-            closedPullRequests: pulls.filter(p => p.state === 'CLOSED').length,
-            mergedPullRequests: pulls.filter(p => p.state === 'MERGED').length,
-            numberOfStargazers: stargazers,
-            commitsInMaster: commitsInMaster,
-        },
-        commitsByTime: commitsByTime,
+        totalIssues: issues.length,
+        openIssues: issues.filter(i => i.state === 'OPEN').length,
+        closedIssues: issues.filter(i => i.state === 'CLOSED').length,
+        numberOfForks: forks,
+        totalPullRequests: pulls.length,
+        openPullRequests: pulls.filter(p => p.state === 'OPEN').length,
+        closedPullRequests: pulls.filter(p => p.state === 'CLOSED').length,
+        mergedPullRequests: pulls.filter(p => p.state === 'MERGED').length,
+        numberOfStargazers: stargazers,
+        commitsInMaster: commitsInMaster,
     });
 
 });
