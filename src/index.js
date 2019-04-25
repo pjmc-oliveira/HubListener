@@ -43,32 +43,23 @@ app.post('/analyse', async (req, res) => {
     // begin clone and update local copy of repository
     const data = await Data.init(url, db, options);
 
-    // analyse data
-    const points = await data.analyse(options);
-
-    const end = Date.now();
-    logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
-    res.send({ points });
-});
-
-
-app.post('/github', async (req, res) => {
-    logger.info('[POST] request to /github');
-
-    // parse url from body
-    const { url } = req.body;
     const {owner, name} = utils.parseURL(url);
     const client = new Client({
         owner,
         name,
     });
 
+    // analyse data
+    const points = await data.analyse(options);
+
+    const end = Date.now();
+    logger.info(`time elapsed: ${Math.round((end - start) / 1000)}s`);
     res.send({
+        points: points,
         issues: await client.getAllIssues(),
         forks: await client.getNumberOfForks(),
-        pulls: await client.getPullRequests(),
+        pulls: await client.getPullRequests()
     });
-
 });
 
 app.listen(port, () => console.log(`listening on ${port}`));

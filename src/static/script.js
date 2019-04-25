@@ -1,5 +1,7 @@
 let chart;
+let barchart;
 let chartData;
+let barchartData;
 let chartConfig;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -70,6 +72,11 @@ function submitForm(event) {
             }
 
             chartData = x.points;
+            barchartData = [
+                {name: 'issues', value: x.issues.length},
+                {name: 'forks', value: x.forks},
+                {name: 'pull requests', value: x.pulls.length}
+            ];
 
             // Hide loading spinner and display results div
             // Must unhide results div before rendering chart to ensure chart is rendered at the correct resolution
@@ -96,6 +103,18 @@ function submitForm(event) {
 
             chart = new Taucharts.Chart(chartConfig);
             chart.renderTo("#chart");
+
+            barchart = new Taucharts.Chart({
+                data: barchartData,
+                type: 'bar',
+                x: 'name',
+                y: 'value',
+                plugins: [
+                    Taucharts.api.plugins.get('tooltip')(),
+                    Taucharts.api.plugins.get('legend')()
+                ]
+            });
+            barchart.renderTo("#barchart");
 
             let xSelect = $("#x-axis");
             let ySelect = $("#y-axis");
