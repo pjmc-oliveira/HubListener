@@ -58,7 +58,6 @@ app.post('/analyse', async (req, res) => {
     const issues = await client.getAllIssues();
     const forks = await client.getNumberOfForks();
     const pulls = await client.getPullRequests();
-    const commitsByTime = await client.getNumberOfCommitsByTime();
     const stargazers = await client.getNumberOfStargazers();
     const commitsInMaster = await client.getNumberOfCommitsInMaster();
 
@@ -76,8 +75,7 @@ app.post('/analyse', async (req, res) => {
             mergedPullRequests: pulls.filter(p => p.state === 'MERGED').length,
             numberOfStargazers: stargazers,
             commitsInMaster: commitsInMaster,
-        },
-        commitsByTime: commitsByTime,
+        }
     });
 
 });
