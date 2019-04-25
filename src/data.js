@@ -50,7 +50,7 @@ class Data {
         this.db = db;
     }
 
-    async analyse() {
+    async analyse(options) {
         // ensure repo is in database
         const repo_id = await this.db.getRepoId({
             owner: this.owner, 
@@ -61,7 +61,7 @@ class Data {
         const lastCommit = await this.db.getLastCommit(repo_id);
 
         // get new commits 
-        const newCommits = await this.clone.commitsAfter(lastCommit ? lastCommit.commit_date : null);
+        const newCommits = await this.clone.commitsAfter(lastCommit ? lastCommit.commit_date : null, options.quick);
 
         // get the meta analysis for project
         const newMeta = this.client.getMetaAnalysis(
